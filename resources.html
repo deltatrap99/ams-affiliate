@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS — Tài nguyên nội dung</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="campaigns.css">
+  <link rel="stylesheet" href="resources.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <a href="index.html" class="logo"><div class="logo-icon">AMS</div><span class="logo-text">Agent Management System</span></a>
+    <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
+  </div>
+  <div class="header-right">
+    <span class="com-label">Cơ chế hoa hồng:</span>
+    <button class="tog">Theo lead</button>
+    <button class="tog on">Theo doanh số <i class="fas fa-check" style="font-size:9px"></i></button>
+    <button class="bell"><i class="fas fa-bell"></i><span class="dot">4</span></button>
+    <div class="avatar">NA</div>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-nav">
+    <div><div class="s-label">Tổng quan</div>
+      <div class="s-item" onclick="location.href='index.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-home"></i></span>Tổng quan</div></div>
+    <div><div class="s-label">Chiến dịch</div>
+      <div class="s-item" onclick="location.href='campaigns.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-bullhorn"></i></span>Chiến dịch</div>
+      <div class="s-item" onclick="location.href='leads.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-file-invoice"></i></span>Lead &amp; đơn hàng</div></div>
+    <div><div class="s-label">Hoa hồng &amp; đối soát</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-coins"></i></span>Hoa hồng &amp; đối soát</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-file-upload"></i></span>Nộp kết quả</div></div>
+    <div><div class="s-label">Tài nguyên</div>
+      <div class="s-item on"><span class="ic"><i class="fas fa-images"></i></span>Tài nguyên nội dung</div></div>
+    <div><div class="s-label">Cộng đồng</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-ranking-star"></i></span>Bảng xếp hạng</div></div>
+    <div><div class="s-label">Hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-life-ring"></i></span>Trung tâm hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-headset"></i></span>Liên hệ AS Team</div></div>
+  </div>
+  <div class="s-promo">
+    <h4>📦 Bứt tốc thu nhập!</h4>
+    <p>Sử dụng đúng content kit để tăng chuyển đổi mỗi ngày.</p>
+    <a href="#" class="s-promo-btn">Xem cấp phát mới <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+    <div>
+      <h1 class="page-title" style="font-size:22px">Tài nguyên nội dung</h1>
+      <p class="page-sub">Truy cập content kit, banner, caption, kịch bản và tài liệu thương hiệu để triển khai campaign hiệu quả hơn.</p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-o" style="padding:10px 18px"><i class="fas fa-download" style="font-size:11px"></i> Tải tất cả kit</button>
+      <button class="btn-f" style="padding:10px 18px;background:var(--orange)"><i class="fas fa-plus" style="font-size:10px"></i> Yêu cầu tài nguyên mới</button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <div class="search-box" style="min-width:220px">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Tìm theo tên tài nguyên / campaign / từ khóa">
+    </div>
+    <div class="filter-group"><div class="filter-label">Chiến dịch</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <div class="filter-group"><div class="filter-label">Định dạng</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <div class="filter-group"><div class="filter-label">Ngành hàng</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <div class="filter-group"><div class="filter-label">Mức độ ưu tiên</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <label class="toggle-switch">Mới trong 7 ngày <div class="toggle-track"></div></label>
+  </div>
+
+  <!-- KPI -->
+  <div class="ckpi-row">
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-folder-open"></i></div><div><div class="ckpi-label">Bộ tài nguyên khả dụng</div><div class="ckpi-val">128 <span class="ckpi-change up">+12</span></div><div class="ckpi-sub"></div></div></div>
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-sparkles"></i></div><div><div class="ckpi-label">Tài nguyên mới tuần này</div><div class="ckpi-val">24 <span class="ckpi-change up">+6</span></div><div class="ckpi-sub"></div></div></div>
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-cloud-arrow-down"></i></div><div><div class="ckpi-label">Đã tải xuống</div><div class="ckpi-val">87 <span class="ckpi-change up">+18%</span></div><div class="ckpi-sub"></div></div></div>
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-box-open"></i></div><div><div class="ckpi-label">Campaign có content kit</div><div class="ckpi-val">19 <span class="ckpi-change up">+3</span></div><div class="ckpi-sub"></div></div></div>
+  </div>
+
+  <!-- Featured Kit -->
+  <div class="feat-kit">
+    <div class="feat-kit-badge">🔥 Content kit nổi bật tuần này</div>
+    <div class="feat-kit-icon">V-ACT<br>HÈ 2026</div>
+    <div class="feat-kit-content">
+      <div class="feat-kit-top">
+        <div class="feat-kit-name">V-ACT Hè 2026 — Bộ nội dung tuyển sinh cấp tốc</div>
+        <span class="feat-kit-priority">Nên dùng trước</span>
+      </div>
+      <p class="feat-kit-desc">Đầy đủ banner, caption, kịch bản video ngắn và checklist triển khai cho tập học sinh THPT.</p>
+      <div class="feat-kit-tags">
+        <span class="fk-tag">Banner</span><span class="fk-tag">Caption mẫu</span><span class="fk-tag">Video script</span><span class="fk-tag">Voucher</span><span class="fk-tag">Hashtag</span><span class="fk-tag">Landing assets</span>
+      </div>
+    </div>
+    <div class="feat-kit-stats">
+      <div class="fks"><div class="fks-label">Tài nguyên</div><div class="fks-val">18</div></div>
+      <div class="fks"><div class="fks-label">Cập nhật</div><div class="fks-val" style="font-size:14px">2 giờ trước</div></div>
+      <div class="fks"><div class="fks-label">Đã tải</div><div class="fks-val">126 lần</div></div>
+    </div>
+  </div>
+
+  <div class="leads-layout">
+    <div class="leads-main">
+      <!-- Tabs -->
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+        <div class="res-tabs">
+          <button class="res-tab on">Tất cả</button>
+          <button class="res-tab">Content kit</button>
+          <button class="res-tab">Banner</button>
+          <button class="res-tab">Caption</button>
+          <button class="res-tab">Video script</button>
+          <button class="res-tab">Brand guideline</button>
+        </div>
+        <div class="res-count">Hiển thị 1–6 trong 128 tài nguyên</div>
+      </div>
+
+      <!-- Resource Grid -->
+      <div class="res-grid">
+        <!-- 1 -->
+        <div class="res-card">
+          <div class="res-card-body">
+            <div class="res-thumb rt-blue" style="font-size:10px">V-ACT<br>TĂNG TỐC<br>TUYỂN SINH</div>
+            <div class="res-info">
+              <div class="res-name">Banner social — V-ACT Hè 2026</div>
+              <div class="res-campaign">V-ACT Hè 2026</div>
+              <div class="res-desc">Bộ 6 banner vuông và dọc cho Facebook, TikTok, Zalo.</div>
+              <div class="res-tags">
+                <span class="tag tag-blue">PNG</span><span class="tag tag-purple">1080x1080</span><span class="tag tag-orange">Ưu tiên</span>
+              </div>
+              <div class="res-meta"><span><i class="fas fa-clock"></i> Cập nhật 1 giờ trước</span><span><i class="fas fa-download"></i> Đã tải 42 lần</span></div>
+              <div class="res-actions">
+                <button class="btn-o" style="padding:5px 12px;font-size:11px">Xem trước</button>
+                <button class="btn-f" style="padding:5px 12px;font-size:11px"><i class="fas fa-download" style="font-size:9px"></i> Tải xuống</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 2 -->
+        <div class="res-card">
+          <div class="res-card-body">
+            <div class="res-thumb rt-purple" style="font-size:10px">FUNiX<br>AI CƠ BẢN</div>
+            <div class="res-info">
+              <div class="res-name">Caption mẫu — FUNiX AI Cơ bản</div>
+              <div class="res-campaign">Hội thảo FUNiX – AI Cơ bản</div>
+              <div class="res-desc">10 mẫu caption theo angle: tò mò, giá trị, chuyển đổi.</div>
+              <div class="res-tags">
+                <span class="tag tag-blue">Caption</span><span class="tag tag-green">Lead đổi</span><span class="tag tag-purple">Copy-ready</span>
+              </div>
+              <div class="res-meta"><span><i class="fas fa-clock"></i> Cập nhật hôm nay</span><span><i class="fas fa-download"></i> Đã lưu 31 lần</span></div>
+              <div class="res-actions">
+                <button class="btn-o" style="padding:5px 12px;font-size:11px">Xem chi tiết</button>
+                <button class="btn-f" style="padding:5px 12px;font-size:11px"><i class="fas fa-copy" style="font-size:9px"></i> Sao chép</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 3 -->
+        <div class="res-card">
+          <div class="res-card-body">
+            <div class="res-thumb rt-green" style="font-size:10px">EASY<br>IELTS<br>TEST DRIVE</div>
+            <div class="res-info">
+              <div class="res-name">Kịch bản video ngắn — Easy IELTS Test Drive</div>
+              <div class="res-campaign">Easy IELTS</div>
+              <div class="res-desc">Hook 5s + body + CTA cho Reels/TikTok.</div>
+              <div class="res-tags">
+                <span class="tag tag-teal">Video script</span><span class="tag tag-orange">Flash sale</span><span class="tag tag-green">CTA mạnh</span>
+              </div>
+              <div class="res-meta"><span><i class="fas fa-clock"></i> Cập nhật 3 giờ trước</span><span><i class="fas fa-download"></i> Đã tải 27 lần</span></div>
+              <div class="res-actions">
+                <button class="btn-o" style="padding:5px 12px;font-size:11px">Xem chi tiết</button>
+                <button class="btn-f" style="padding:5px 12px;font-size:11px"><i class="fas fa-download" style="font-size:9px"></i> Tải xuống</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 4 -->
+        <div class="res-card">
+          <div class="res-card-body">
+            <div class="res-thumb rt-orange" style="font-size:10px">BRAND<br>GUIDE<br>LINE</div>
+            <div class="res-info">
+              <div class="res-name">Brand guideline rút gọn</div>
+              <div class="res-campaign">Toàn bộ hệ thống</div>
+              <div class="res-desc">Màu sắc, logo, cách dùng hashtag và lưu ý nội dung quảng bá.</div>
+              <div class="res-tags">
+                <span class="tag tag-purple">Guideline</span><span class="tag tag-red">Bắt buộc</span><span class="tag tag-green">Brand-safe</span>
+              </div>
+              <div class="res-meta"><span><i class="fas fa-file"></i> Phiên bản 2.1</span><span><i class="fas fa-clock"></i> Cập nhật tuần này</span></div>
+              <div class="res-actions">
+                <button class="btn-o" style="padding:5px 12px;font-size:11px">Mở tài liệu</button>
+                <button class="btn-f" style="padding:5px 12px;font-size:11px"><i class="fas fa-file-pdf" style="font-size:9px"></i> Tải PDF</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 5 -->
+        <div class="res-card">
+          <div class="res-card-body">
+            <div class="res-thumb rt-teal" style="font-size:10px">vuihoc<br>ƯU ĐÃI<br>ĐẶC BIỆT</div>
+            <div class="res-info">
+              <div class="res-name">Voucher & hashtag set — Vuihoc</div>
+              <div class="res-campaign">Vuihoc – Toán lớp 9 luyện thi</div>
+              <div class="res-desc">Mã ưu đãi, Hashtag chính thức và gợi ý CTA.</div>
+              <div class="res-tags">
+                <span class="tag tag-orange">Voucher</span><span class="tag tag-blue">Hashtag</span><span class="tag tag-green">CTA</span>
+              </div>
+              <div class="res-meta"><span><i class="fas fa-download"></i> Đã dùng 19 lần</span><span><i class="fas fa-clock"></i> Cập nhật tuần qua</span></div>
+              <div class="res-actions">
+                <button class="btn-o" style="padding:5px 12px;font-size:11px">Xem chi tiết</button>
+                <button class="btn-f" style="padding:5px 12px;font-size:11px"><i class="fas fa-copy" style="font-size:9px"></i> Sao chép</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- 6 -->
+        <div class="res-card">
+          <div class="res-card-body">
+            <div class="res-thumb rt-red" style="font-size:10px">Sapo<br>LANDING</div>
+            <div class="res-info">
+              <div class="res-name">Landing assets — Sapo</div>
+              <div class="res-campaign">Sapo – Phần mềm bán hàng</div>
+              <div class="res-desc">Ảnh sản phẩm, icon USP và block tài liệu cho landing page.</div>
+              <div class="res-tags">
+                <span class="tag tag-blue">Landing</span><span class="tag tag-orange">Ảnh sản phẩm</span><span class="tag tag-green">USP</span>
+              </div>
+              <div class="res-meta"><span><i class="fas fa-download"></i> Đã tải 15 lần</span><span><i class="fas fa-clock"></i> Cập nhật 2 ngày trước</span></div>
+              <div class="res-actions">
+                <button class="btn-o" style="padding:5px 12px;font-size:11px">Xem trước</button>
+                <button class="btn-f" style="padding:5px 12px;font-size:11px"><i class="fas fa-download" style="font-size:9px"></i> Tải xuống</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <div class="pag-info">Hiển thị <select class="pag-select"><option>12</option></select> trên mỗi trang</div>
+        <div class="pag-pages">
+          <button class="pag-btn">‹</button>
+          <button class="pag-btn on">1</button>
+          <button class="pag-btn">2</button>
+          <button class="pag-btn">3</button>
+          <button class="pag-btn">4</button>
+          <button class="pag-btn dots">…</button>
+          <button class="pag-btn">11</button>
+          <button class="pag-btn">›</button>
+        </div>
+        <div class="pag-goto">Đi tới trang <input type="number" value="1"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <!-- Saved -->
+      <div class="summary-card">
+        <div class="summary-title">📌 Tài nguyên đã lưu</div>
+        <div class="saved-item"><span class="saved-icon">📄</span><span class="saved-name">Banner tuyển sinh THPT</span><span class="saved-count">9 mục</span></div>
+        <div class="saved-item"><span class="saved-icon">📋</span><span class="saved-name">Caption webinar</span><span class="saved-count">9 mục</span></div>
+        <div class="saved-item"><span class="saved-icon">🎬</span><span class="saved-name">Video script chuyên đổi</span><span class="saved-count">12 mục</span></div>
+        <a href="#" class="summary-link">Xem bộ sưu tập →</a>
+      </div>
+
+      <!-- Recent -->
+      <div class="summary-card">
+        <div class="summary-title">🕐 Tài gần đây</div>
+        <div class="recent-item"><div class="recent-dot r-blue"></div><span class="recent-name">V-ACT Hè 2026 — Banner social</span><span class="recent-time">10 phút trước</span></div>
+        <div class="recent-item"><div class="recent-dot r-purple"></div><span class="recent-name">FUNiX AI — Caption mẫu</span><span class="recent-time">1 giờ trước</span></div>
+        <div class="recent-item"><div class="recent-dot r-green"></div><span class="recent-name">Easy IELTS — Kịch bản video</span><span class="recent-time">3 giờ trước</span></div>
+        <div class="recent-item"><div class="recent-dot r-orange"></div><span class="recent-name">Brand guideline rút gọn</span><span class="recent-time">Hôm qua</span></div>
+        <div class="recent-item"><div class="recent-dot r-teal"></div><span class="recent-name">Sapo — Landing assets</span><span class="recent-time">2 ngày trước</span></div>
+        <a href="#" class="summary-link">Xem tất cả →</a>
+      </div>
+
+      <!-- Quick Tools -->
+      <div class="summary-card">
+        <div class="summary-title">⚡ Quick tools</div>
+        <div class="qt-item"><i class="fas fa-copy"></i> Sao chép hashtag <span class="qt-arrow"><i class="fas fa-chevron-right"></i></span></div>
+        <div class="qt-item"><i class="fas fa-palette"></i> Tài logo thương hiệu <span class="qt-arrow"><i class="fas fa-chevron-right"></i></span></div>
+        <div class="qt-item"><i class="fas fa-list-check"></i> Xem checklist triển khai <span class="qt-arrow"><i class="fas fa-chevron-right"></i></span></div>
+        <div class="qt-item"><i class="fas fa-headset"></i> Liên hệ AS Team <span class="qt-arrow"><i class="fas fa-chevron-right"></i></span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

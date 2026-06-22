@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS — Chiến dịch</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="campaigns.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <a href="index.html" class="logo"><div class="logo-icon">AMS</div><span class="logo-text">Agent Management System</span></a>
+    <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
+  </div>
+  <div class="header-right">
+    <span class="com-label">Cơ chế hoa hồng:</span>
+    <button class="tog">Theo lead</button>
+    <button class="tog on">Theo doanh số <i class="fas fa-check" style="font-size:9px"></i></button>
+    <button class="bell"><i class="fas fa-bell"></i><span class="dot">3</span></button>
+    <div class="avatar">NA</div>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-nav">
+    <div><div class="s-label">Tổng quan</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-home"></i></span><a href="index.html">Tổng quan</a></div></div>
+    <div><div class="s-label">Chiến dịch</div>
+      <div class="s-item on"><span class="ic"><i class="fas fa-bullhorn"></i></span>Chiến dịch</div>
+      <div class="s-item" onclick="location.href='leads.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-file-invoice"></i></span>Lead &amp; đơn hàng</div></div>
+    <div><div class="s-label">Hoa hồng &amp; đối soát</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-coins"></i></span>Hoa hồng &amp; đối soát</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-file-upload"></i></span>Nộp kết quả</div></div>
+    <div><div class="s-label">Tài nguyên</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-images"></i></span>Tài nguyên nội dung</div></div>
+    <div><div class="s-label">Cộng đồng</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-ranking-star"></i></span>Bảng xếp hạng</div></div>
+    <div><div class="s-label">Hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-life-ring"></i></span>Trung tâm hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-headset"></i></span>Liên hệ AS Team</div></div>
+  </div>
+  <div class="s-promo">
+    <h4>🚀 Bứt tốc thu nhập!</h4>
+    <p>Hoàn thành mục tiêu cấp bậc để mở khóa quyền lợi cao hơn.</p>
+    <a href="#" class="s-promo-btn">Xem cấp bậc của tôi <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <!-- Page Header -->
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+    <div>
+      <h1 class="page-title" style="font-size:22px">Chiến dịch</h1>
+      <p class="page-sub">Khám phá, lọc và chọn các campaign phù hợp để tối ưu thu nhập Affiliate.</p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-o" style="padding:10px 18px"><i class="fas fa-copy" style="font-size:11px"></i> Sao chép link của tôi</button>
+      <button class="btn-f" style="padding:10px 18px;background:var(--orange)"><i class="fas fa-plus" style="font-size:10px"></i> Khám phá chiến dịch mới</button>
+    </div>
+  </div>
+
+  <!-- Search & Filters -->
+  <div class="filters">
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Tìm theo tên campaign / sản phẩm">
+    </div>
+    <div class="filter-group"><div class="filter-label">Trạng thái</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <div class="filter-group"><div class="filter-label">Ngành hàng</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <div class="filter-group"><div class="filter-label">Hoa hồng</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <div class="filter-group"><div class="filter-label">Deadline</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <label class="toggle-switch">Ưu tiên cho tôi <div class="toggle-track"></div></label>
+  </div>
+
+  <!-- KPI -->
+  <div class="ckpi-row">
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-rocket"></i></div><div><div class="ckpi-label">Campaign đang tham gia</div><div class="ckpi-val">12 <span class="ckpi-change up">+2</span></div><div class="ckpi-sub">So với tuần trước</div></div></div>
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-bullseye"></i></div><div><div class="ckpi-label">Campaign phù hợp</div><div class="ckpi-val">24 <span class="ckpi-change up">+6</span></div><div class="ckpi-sub">Gợi ý dành cho bạn</div></div></div>
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-fire"></i></div><div><div class="ckpi-label">Sắp hết hạn</div><div class="ckpi-val">5 <span class="ckpi-change down">-1</span></div><div class="ckpi-sub">Trong 7 ngày tới</div></div></div>
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-gift"></i></div><div><div class="ckpi-label">Campaign có bonus</div><div class="ckpi-val">8 <span class="ckpi-change up">+3</span></div><div class="ckpi-sub">Cơ hội tăng thu nhập</div></div></div>
+  </div>
+
+  <!-- Featured -->
+  <div class="featured">
+    <div class="featured-badge">💡 Gợi ý cho bạn</div>
+    <div class="featured-icon">📘</div>
+    <div class="featured-content">
+      <div class="featured-top">
+        <div class="featured-name">V-ACT Hè 2026 – Luyện thi cấp tốc</div>
+        <span class="featured-priority">Nên ưu tiên</span>
+      </div>
+      <p class="featured-desc">Phù hợp với lớp học sinh THPT, CR ước tính cao, còn 7 ngày để bứt tốc bonus.</p>
+      <div class="featured-tags">
+        <span class="ftag">CR tốt</span><span class="ftag">Lead đỏ</span><span class="ftag">Bonus đến +30%</span><span class="ftag">Content kit</span><span class="ftag">Voucher siêu</span>
+      </div>
+    </div>
+    <div class="featured-stats">
+      <div class="fstat"><div class="fstat-label">Hoa hồng</div><div class="fstat-val">14%</div></div>
+      <div class="fstat"><div class="fstat-label">CR ước tính</div><div class="fstat-val">18.4%</div></div>
+      <div class="fstat"><div class="fstat-label">EPC ước tính</div><div class="fstat-val">₫12,600</div></div>
+      <div class="fstat"><div class="fstat-label">Còn lại</div><div class="fstat-val fire">7 ngày 🔥</div></div>
+    </div>
+  </div>
+
+  <div class="page-layout">
+    <div>
+      <!-- Campaign List -->
+      <div class="clist">
+        <!-- 1. FUNiX -->
+        <div class="citem">
+          <div class="citem-icon c-purple">🤖</div>
+          <div class="citem-body">
+            <div class="citem-header"><span class="citem-name">Hội thảo FUNiX – AI Cơ bản</span><span class="citem-status joining">Đang tham gia</span></div>
+            <div class="citem-meta"><span><i class="fas fa-calendar"></i> 01/05 – 31/05/2026</span><span><i class="fas fa-building"></i> FUNiX</span></div>
+            <p class="citem-desc">Giới thiệu AI miễn phí cho FUNiX tổ chức — mở ra cánh cửa vào thế giới công nghệ.</p>
+            <div class="citem-tags">
+              <span class="tag tag-green">CR tốt</span><span class="tag tag-blue">COM 13.5%</span><span class="tag tag-teal">Hội thảo online</span><span class="tag tag-purple">Content kit</span>
+            </div>
+            <div class="citem-stats">
+              <div class="cs"><div class="cs-label">Hoa hồng</div><div class="cs-val">₫60,000<span style="font-size:10px;color:var(--txt3)">/lead</span></div></div>
+              <div class="cs"><div class="cs-label">CR TB</div><div class="cs-val">16.2%</div></div>
+              <div class="cs"><div class="cs-label">Lead TB/ngày</div><div class="cs-val">125</div></div>
+              <div class="cs"><div class="cs-label">EPC ước tính</div><div class="cs-val sm">₫9,800</div></div>
+            </div>
+          </div>
+          <div class="citem-right">
+            <button class="citem-menu"><i class="fas fa-ellipsis-vertical"></i></button>
+            <div class="citem-btns"><button class="btn-o">Xem brief</button><button class="btn-f">Sao chép link</button></div>
+          </div>
+        </div>
+
+        <!-- 2. IELTS -->
+        <div class="citem">
+          <div class="citem-icon c-green">📝</div>
+          <div class="citem-body">
+            <div class="citem-header"><span class="citem-name">Easy IELTS Test Drive</span><span class="citem-status expiring">Sắp hết hạn</span></div>
+            <div class="citem-meta"><span><i class="fas fa-calendar"></i> 20/05 – 27/08/2026</span><span><i class="fas fa-building"></i> Easy IELTS</span></div>
+            <p class="citem-desc">Trải nghiệm thi thử IELTS 4 kỹ năng với đề chuẩn và chấm điểm chi tiết.</p>
+            <div class="citem-tags">
+              <span class="tag tag-green">CR tốt</span><span class="tag tag-yellow">Flash sale</span><span class="tag tag-orange">Voucher siêu</span>
+            </div>
+            <div class="citem-stats">
+              <div class="cs"><div class="cs-label">Hoa hồng</div><div class="cs-val sm">₫20,000<span style="font-size:10px;color:var(--txt3)">/lead</span></div></div>
+              <div class="cs"><div class="cs-label">CR TB</div><div class="cs-val">22.1%</div></div>
+              <div class="cs"><div class="cs-label">Lead TB/ngày</div><div class="cs-val">98</div></div>
+              <div class="cs"><div class="cs-label">Còn lại</div><div class="cs-val" style="color:var(--red)">3 ngày</div></div>
+            </div>
+          </div>
+          <div class="citem-right">
+            <button class="citem-menu"><i class="fas fa-ellipsis-vertical"></i></button>
+            <div class="citem-btns"><button class="btn-o">Xem brief</button><button class="btn-f">Sao chép link</button></div>
+          </div>
+        </div>
+
+        <!-- 3. Sapo -->
+        <div class="citem">
+          <div class="citem-icon c-orange">🛒</div>
+          <div class="citem-body">
+            <div class="citem-header"><span class="citem-name">Sapo – Phần mềm bán hàng</span><span class="citem-status joining">Đang tham gia</span></div>
+            <div class="citem-meta"><span><i class="fas fa-calendar"></i> 01/05 – 30/06/2026</span><span><i class="fas fa-building"></i> Sapo</span></div>
+            <p class="citem-desc">Giải pháp quản lý bán hàng đa kênh toàn diện cho doanh nghiệp vừa và nhỏ.</p>
+            <div class="citem-tags">
+              <span class="tag tag-green">CR tốt</span><span class="tag tag-orange">Bonus đến +25%</span><span class="tag tag-purple">Content kit</span><span class="tag tag-blue">Tài liệu bán hàng</span>
+            </div>
+            <div class="citem-stats">
+              <div class="cs"><div class="cs-label">Hoa hồng</div><div class="cs-val">12%</div></div>
+              <div class="cs"><div class="cs-label">CR TB</div><div class="cs-val">9.8%</div></div>
+              <div class="cs"><div class="cs-label">EPC ước tính</div><div class="cs-val sm">₫18,200</div></div>
+              <div class="cs"><div class="cs-label">Còn lại</div><div class="cs-val">29 ngày</div></div>
+            </div>
+          </div>
+          <div class="citem-right">
+            <button class="citem-menu"><i class="fas fa-ellipsis-vertical"></i></button>
+            <div class="citem-btns"><button class="btn-o">Xem brief</button><button class="btn-f">Sao chép link</button></div>
+          </div>
+        </div>
+
+        <!-- 4. TopCV -->
+        <div class="citem">
+          <div class="citem-icon c-blue">💼</div>
+          <div class="citem-body">
+            <div class="citem-header"><span class="citem-name">TopCV – CV Pro 2026</span><span class="citem-status new">Mới</span></div>
+            <div class="citem-meta"><span><i class="fas fa-calendar"></i> 18/05 – 30/06/2026</span><span><i class="fas fa-building"></i> TopCV</span></div>
+            <p class="citem-desc">Bộ công cụ viết CV chuyên nghiệp, tăng tỉ lệ trúng tuyển.</p>
+            <div class="citem-tags">
+              <span class="tag tag-blue">Lead đổi</span><span class="tag tag-green">CR tốt</span><span class="tag tag-orange">Voucher siêu</span><span class="tag tag-purple">Content kit</span>
+            </div>
+            <div class="citem-stats">
+              <div class="cs"><div class="cs-label">Hoa hồng</div><div class="cs-val sm">₫35,000<span style="font-size:10px;color:var(--txt3)">/lead</span></div></div>
+              <div class="cs"><div class="cs-label">CR TB</div><div class="cs-val">15.3%</div></div>
+              <div class="cs"><div class="cs-label">Lead TB/ngày</div><div class="cs-val">76</div></div>
+              <div class="cs"><div class="cs-label">EPC ước tính</div><div class="cs-val sm">₫6,900</div></div>
+            </div>
+          </div>
+          <div class="citem-right">
+            <button class="citem-menu"><i class="fas fa-ellipsis-vertical"></i></button>
+            <div class="citem-btns"><button class="btn-o" style="background:var(--green);color:#fff;border-color:var(--green)">Tham gia ngay</button><button class="btn-f">Sao chép link</button></div>
+          </div>
+        </div>
+
+        <!-- 5. Vuihoc -->
+        <div class="citem">
+          <div class="citem-icon c-teal">📚</div>
+          <div class="citem-body">
+            <div class="citem-header"><span class="citem-name">Vuihoc – Toán lớp 9 luyện thi</span></div>
+            <div class="citem-meta"><span><i class="fas fa-calendar"></i> 01/06 – 30/01/2026</span><span><i class="fas fa-building"></i> Vuihoc</span></div>
+            <p class="citem-desc">Ôn thi vào 10 hiệu quả - Dành cho học sinh lớp 9.</p>
+            <div class="citem-tags">
+              <span class="tag tag-green">CR tốt</span><span class="tag tag-orange">Flash sale</span><span class="tag tag-purple">Content kit</span>
+            </div>
+            <div class="citem-stats">
+              <div class="cs"><div class="cs-label">Hoa hồng</div><div class="cs-val">15%</div></div>
+              <div class="cs"><div class="cs-label">CR TB</div><div class="cs-val">17.6%</div></div>
+              <div class="cs"><div class="cs-label">Lead TB/ngày</div><div class="cs-val">110</div></div>
+              <div class="cs"><div class="cs-label">Còn lại</div><div class="cs-val" style="color:var(--orange)">12 ngày</div></div>
+            </div>
+          </div>
+          <div class="citem-right">
+            <button class="citem-menu"><i class="fas fa-ellipsis-vertical"></i></button>
+            <div class="citem-btns"><button class="btn-o">Xem brief</button><button class="btn-f">Sao chép link</button></div>
+          </div>
+        </div>
+
+        <!-- 6. GreenLife -->
+        <div class="citem">
+          <div class="citem-icon c-red">🌿</div>
+          <div class="citem-body">
+            <div class="citem-header"><span class="citem-name">GreenLife – Thực phẩm sạch</span><span class="citem-status expiring">Sắp hết hạn</span></div>
+            <div class="citem-meta"><span><i class="fas fa-calendar"></i> 01/05 – 25/05/2026</span><span><i class="fas fa-building"></i> GreenLife</span></div>
+            <p class="citem-desc">Thực phẩm sạch – Giao tận nhà – Sống khỏe mỗi ngày.</p>
+            <div class="citem-tags">
+              <span class="tag tag-green">CR tốt</span><span class="tag tag-orange">Voucher siêu</span><span class="tag tag-purple">Content kit</span>
+            </div>
+            <div class="citem-stats">
+              <div class="cs"><div class="cs-label">Hoa hồng</div><div class="cs-val">10%</div></div>
+              <div class="cs"><div class="cs-label">CR TB</div><div class="cs-val">8.7%</div></div>
+              <div class="cs"><div class="cs-label">EPC ước tính</div><div class="cs-val sm">₫7,100</div></div>
+              <div class="cs"><div class="cs-label">Còn lại</div><div class="cs-val" style="color:var(--red)">2 ngày</div></div>
+            </div>
+          </div>
+          <div class="citem-right">
+            <button class="citem-menu"><i class="fas fa-ellipsis-vertical"></i></button>
+            <div class="citem-btns"><button class="btn-o">Xem brief</button><button class="btn-f">Sao chép link</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <!-- Saved Filters -->
+      <div class="rpanel">
+        <div class="rpanel-title">🔖 Bộ lọc đã lưu</div>
+        <div class="rpanel-item"><span>Ưu tiên CR cao</span><span class="count">24 campaign</span></div>
+        <div class="rpanel-item"><span>Deadline trong 7 ngày</span><span class="count">5 campaign</span></div>
+        <div class="rpanel-item"><span>Hoa hồng > 15%</span><span class="count">11 campaign</span></div>
+        <div class="rpanel-item"><span>Lưu bộ lọc mới</span><span class="count" style="color:var(--blue)">+</span></div>
+      </div>
+
+      <!-- Recent -->
+      <div class="rpanel">
+        <div class="rpanel-title">🕐 Campaign đã xem gần đây</div>
+        <div class="recent-item"><div class="recent-dot r-purple"></div><span class="recent-name">Hội thảo FUNiX – AI Cơ bản</span><span class="recent-time">Vừa xem</span></div>
+        <div class="recent-item"><div class="recent-dot r-blue"></div><span class="recent-name">V-ACT Hè 2026 – Luyện thi cấp tốc</span><span class="recent-time">3 phút trước</span></div>
+        <div class="recent-item"><div class="recent-dot r-green"></div><span class="recent-name">Easy IELTS Test Drive</span><span class="recent-time">5 giờ trước</span></div>
+        <div class="recent-item"><div class="recent-dot r-orange"></div><span class="recent-name">Sapo – Phần mềm bán hàng</span><span class="recent-time">Hôm qua</span></div>
+        <div class="recent-item"><div class="recent-dot r-teal"></div><span class="recent-name">TopCV – CV Pro 2026</span><span class="recent-time">2 ngày trước</span></div>
+        <a href="#" class="rpanel-link">Xem tất cả →</a>
+      </div>
+
+      <!-- Deadlines -->
+      <div class="rpanel">
+        <div class="rpanel-title">📅 Lịch deadline (5) <a href="#" class="rpanel-link" style="margin:0;margin-left:auto">Xem tất cả</a></div>
+        <div class="dl-item"><span class="dl-badge urgent">3 ngày</span><span class="dl-name">Easy IELTS Test Drive</span><span class="dl-date">Hết hạn 27/05/2026</span></div>
+        <div class="dl-item"><span class="dl-badge urgent">5 ngày</span><span class="dl-name">GreenLife – Thực phẩm sạch</span><span class="dl-date">Hết hạn 25/05/2026</span></div>
+        <div class="dl-item"><span class="dl-badge soon">7 ngày</span><span class="dl-name">V-ACT Hè 2026 – Luyện thi cấp tốc</span><span class="dl-date">Hết hạn 25/06/2026</span></div>
+        <div class="dl-item"><span class="dl-badge normal">12 ngày</span><span class="dl-name">Vuihoc – Toán lớp 9 luyện thi</span><span class="dl-date">Hết hạn 30/01/2026</span></div>
+        <div class="dl-item"><span class="dl-badge normal">29 ngày</span><span class="dl-name">Sapo – Phần mềm bán hàng</span><span class="dl-date">Hết hạn 30/06/2026</span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

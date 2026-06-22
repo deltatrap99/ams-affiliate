@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS — Lead & Đơn hàng</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="campaigns.css">
+  <link rel="stylesheet" href="leads.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <a href="index.html" class="logo"><div class="logo-icon">AMS</div><span class="logo-text">Agent Management System</span></a>
+    <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
+  </div>
+  <div class="header-right">
+    <span class="com-label">Cơ chế hoa hồng:</span>
+    <button class="tog">Theo lead</button>
+    <button class="tog on">Theo doanh số <i class="fas fa-check" style="font-size:9px"></i></button>
+    <button class="bell"><i class="fas fa-bell"></i><span class="dot">3</span></button>
+    <div class="avatar">NA</div>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-nav">
+    <div><div class="s-label">Tổng quan</div>
+      <div class="s-item" onclick="location.href='index.html'"><span class="ic"><i class="fas fa-home"></i></span>Tổng quan</div></div>
+    <div><div class="s-label">Chiến dịch</div>
+      <div class="s-item" onclick="location.href='campaigns.html'"><span class="ic"><i class="fas fa-bullhorn"></i></span>Chiến dịch</div>
+      <div class="s-item on"><span class="ic"><i class="fas fa-file-invoice"></i></span>Lead &amp; đơn hàng</div></div>
+    <div><div class="s-label">Hoa hồng &amp; đối soát</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-coins"></i></span>Hoa hồng &amp; đối soát</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-file-upload"></i></span>Nộp kết quả</div></div>
+    <div><div class="s-label">Tài nguyên</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-images"></i></span>Tài nguyên nội dung</div></div>
+    <div><div class="s-label">Cộng đồng</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-ranking-star"></i></span>Bảng xếp hạng</div></div>
+    <div><div class="s-label">Hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-life-ring"></i></span>Trung tâm hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-headset"></i></span>Liên hệ AS Team</div></div>
+  </div>
+  <div class="s-promo">
+    <h4>🚀 Bứt tốc thu nhập!</h4>
+    <p>Hoàn thành mục tiêu cấp bậc để mở khóa quyền lợi cao hơn.</p>
+    <a href="#" class="s-promo-btn">Xem cấp bậc của tôi <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+    <div>
+      <h1 class="page-title" style="font-size:22px">Lead & đơn hàng</h1>
+      <p class="page-sub">Theo dõi lead, trạng thái xử lý và đơn hàng phát sinh từ link Affiliate của bạn.</p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn-o" style="padding:10px 18px"><i class="fas fa-file-export" style="font-size:11px"></i> Xuất báo cáo</button>
+      <button class="btn-f" style="padding:10px 18px"><i class="fas fa-copy" style="font-size:11px"></i> Sao chép link của tôi</button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <div class="search-box" style="min-width:220px">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Tìm theo tên lead / số điện thoại / mã đơn">
+    </div>
+    <div class="filter-group"><div class="filter-label">Trạng thái lead</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <div class="filter-group"><div class="filter-label">Chiến dịch</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <div class="filter-group"><div class="filter-label">Nguồn</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <div class="filter-group"><div class="filter-label">Thời gian</div><select class="filter-select"><option>7 ngày qua</option></select></div>
+    <div class="filter-group"><div class="filter-label">Trạng thái đơn</div><select class="filter-select"><option>Tất cả</option></select></div>
+    <label class="toggle-switch">Chỉ hiện thị lead của tôi <div class="toggle-track"></div></label>
+  </div>
+
+  <!-- KPI -->
+  <div class="ckpi-row">
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-user-plus"></i></div><div><div class="ckpi-label">Lead mới</div><div class="ckpi-val">52 <span class="ckpi-change up">+14%</span></div><div class="ckpi-sub">so với 7 ngày trước</div></div></div>
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-user-check"></i></div><div><div class="ckpi-label">Lead hợp lệ</div><div class="ckpi-val">38 <span class="ckpi-change up">+9%</span></div><div class="ckpi-sub">so với 7 ngày trước</div></div></div>
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-shopping-bag"></i></div><div><div class="ckpi-label">Đơn hàng phát sinh</div><div class="ckpi-val">7 <span class="ckpi-change up">+2</span></div><div class="ckpi-sub">so với 7 ngày trước</div></div></div>
+    <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-chart-line"></i></div><div><div class="ckpi-label">Tỷ lệ chuyển đổi</div><div class="ckpi-val">18.4% <span class="ckpi-change up">+3.2%</span></div><div class="ckpi-sub">so với 7 ngày trước</div></div></div>
+  </div>
+
+  <!-- Pipeline -->
+  <div class="pipeline">
+    <div class="pipeline-head">
+      <div class="pipeline-title">📊 Tổng quan pipeline lead <i class="fas fa-circle-info" style="font-size:11px;color:var(--txt3)"></i></div>
+      <a href="#" class="pipeline-link">Xem chi tiết pipeline →</a>
+    </div>
+    <div class="pipeline-flow">
+      <div class="pipeline-step"><div class="ps-label">Mới</div><div class="ps-val v-blue">52</div></div>
+      <div class="pipeline-step"><div class="ps-label">Đang gọi</div><div class="ps-val v-orange">18</div></div>
+      <div class="pipeline-step"><div class="ps-label">Hợp lệ</div><div class="ps-val v-green">38</div></div>
+      <div class="pipeline-step"><div class="ps-label">Trùng</div><div class="ps-val v-yellow">4</div></div>
+      <div class="pipeline-step"><div class="ps-label">Đang xác minh</div><div class="ps-val v-purple">6</div></div>
+      <div class="pipeline-step"><div class="ps-label">Bị loại</div><div class="ps-val v-red">4</div></div>
+    </div>
+  </div>
+
+  <div class="leads-layout">
+    <div class="leads-main">
+      <!-- Table Header -->
+      <div class="table-header">
+        <div class="table-title">Danh sách lead & đơn hàng</div>
+        <div class="table-count">Hiển thị 1–10 trong 124 lead</div>
+      </div>
+
+      <!-- Data Table -->
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Lead</th><th>Chiến dịch</th><th>Nguồn / Mã Affiliate</th><th>Trạng thái lead</th><th>Đơn hàng</th><th>Giá trị đơn</th><th>Hoa hồng dự kiến</th><th>Cập nhật gần nhất</th><th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="lead-cell"><div class="lead-avatar la-blue">NM</div><div><div class="lead-name">Nguyễn Hoàng Minh</div><div class="lead-phone">0987 854 321</div></div></div></td>
+            <td><div style="display:flex;align-items:center;gap:6px">📘 V-ACT Hè 2026</div></td>
+            <td><div style="font-size:11px">Facebook / AFF123<br><span style="color:var(--txt3)">UTM_H1_06</span></div></td>
+            <td><span class="status st-new">Lead mới</span></td>
+            <td style="color:var(--txt3)">Chưa phát sinh</td>
+            <td>—</td><td>—</td>
+            <td style="font-size:11px;color:var(--txt3)">Hôm nay, 10:24</td>
+            <td><button class="act-btn act-view">Xem chi tiết</button></td>
+          </tr>
+          <tr>
+            <td><div class="lead-cell"><div class="lead-avatar la-green">TB</div><div><div class="lead-name">Trần Bảo Ngọc</div><div class="lead-phone">0912 345 678</div></div></div></td>
+            <td>📝 Easy IELTS Test Drive</td>
+            <td><div style="font-size:11px">Zalo / AFF123<br><span style="color:var(--txt3)">ZAL0_06</span></div></td>
+            <td><span class="status st-calling">Đang gọi</span></td>
+            <td style="color:var(--txt3)">Chưa phát sinh</td>
+            <td>—</td><td>—</td>
+            <td style="font-size:11px;color:var(--txt3)">Hôm nay, 09:58</td>
+            <td><button class="act-btn act-view">Xem chi tiết</button></td>
+          </tr>
+          <tr>
+            <td><div class="lead-cell"><div class="lead-avatar la-purple">LĐ</div><div><div class="lead-name">Lê Đức Anh</div><div class="lead-phone">0933 346 135</div></div></div></td>
+            <td>🤖 Hội thảo FUNiX – AI Cơ bản</td>
+            <td><div style="font-size:11px">Website / AFF123<br><span style="color:var(--txt3)">WEB_06</span></div></td>
+            <td><span class="status st-valid">Hợp lệ</span></td>
+            <td><div class="order-cell">Đã đăng ký<br><span class="order-id">#DH12607</span></div></td>
+            <td>3,000,000đ</td><td>420,000đ</td>
+            <td style="font-size:11px;color:var(--txt3)">Hôm nay, 09:45</td>
+            <td><button class="act-btn act-view">Xem chi tiết</button></td>
+          </tr>
+          <tr>
+            <td><div class="lead-cell"><div class="lead-avatar la-orange">PQ</div><div><div class="lead-name">Phạm Quỳnh Trang</div><div class="lead-phone">0938 765 432</div></div></div></td>
+            <td>🛒 Sapo – Phần mềm bán hàng</td>
+            <td><div style="font-size:11px">TikTok / AFF456<br><span style="color:var(--txt3)">TT_04</span></div></td>
+            <td><span class="status st-verify">Đang xác minh</span></td>
+            <td style="color:var(--txt3)">Chưa phát sinh</td>
+            <td>—</td><td>—</td>
+            <td style="font-size:11px;color:var(--txt3)">Hôm nay, 21:30</td>
+            <td><button class="act-btn act-view">Xem chi tiết</button></td>
+          </tr>
+          <tr>
+            <td><div class="lead-cell"><div class="lead-avatar la-teal">VH</div><div><div class="lead-name">Vũ Hoàng Nam</div><div class="lead-phone">0876 543 210</div></div></div></td>
+            <td>💼 TopCV – CV Pro 2026</td>
+            <td><div style="font-size:11px">Facebook / AFF123<br><span style="color:var(--txt3)">UTM_H1_05</span></div></td>
+            <td><span class="status st-valid">Hợp lệ</span></td>
+            <td><div class="order-cell">Đã thanh toán<br><span class="order-id">#DH11512</span></div></td>
+            <td>1,200,000đ</td><td>216,000đ</td>
+            <td style="font-size:11px;color:var(--txt3)">Hôm qua, 18:12</td>
+            <td><button class="act-btn act-check">Đối soát</button></td>
+          </tr>
+          <tr>
+            <td><div class="lead-cell"><div class="lead-avatar la-pink">NP</div><div><div class="lead-name">Nguyễn Phương Linh</div><div class="lead-phone">0901 234 567</div></div></div></td>
+            <td>📘 V-ACT Hè 2026</td>
+            <td><div style="font-size:11px">Zalo / AFF789<br><span style="color:var(--txt3)">ZAL0_06</span></div></td>
+            <td><span class="status st-dup">Trùng</span></td>
+            <td style="color:var(--txt3)">Chưa phát sinh</td>
+            <td>—</td><td>—</td>
+            <td style="font-size:11px;color:var(--txt3)">Hôm qua, 16:55</td>
+            <td><button class="act-btn act-view">Xem chi tiết</button></td>
+          </tr>
+          <tr>
+            <td><div class="lead-cell"><div class="lead-avatar la-red">HT</div><div><div class="lead-name">Hoàng Tuấn Anh</div><div class="lead-phone">0989 876 543</div></div></div></td>
+            <td>📝 Easy IELTS Test Drive</td>
+            <td><div style="font-size:11px">Website / AFF123<br><span style="color:var(--txt3)">WEB_06</span></div></td>
+            <td><span class="status st-reject">Bị loại</span></td>
+            <td style="color:var(--txt3)">—</td>
+            <td>—</td><td>—</td>
+            <td style="font-size:11px;color:var(--txt3)">Hôm qua, 15:20</td>
+            <td><button class="act-btn act-view">Xem chi tiết</button></td>
+          </tr>
+          <tr>
+            <td><div class="lead-cell"><div class="lead-avatar la-gray">KL</div><div><div class="lead-name">Kim Liên</div><div class="lead-phone">0911 222 333</div></div></div></td>
+            <td>🤖 Hội thảo FUNiX – AI Cơ bản</td>
+            <td><div style="font-size:11px">Email / AFF456<br><span style="color:var(--txt3)">EM_04</span></div></td>
+            <td><span class="status st-valid">Hợp lệ</span></td>
+            <td><div class="order-cell">Đã đăng ký<br><span class="order-id">#DH11308</span></div></td>
+            <td>—</td><td>350,000đ</td>
+            <td style="font-size:11px;color:var(--txt3)">Hôm qua, 14:05</td>
+            <td><button class="act-btn act-check">Đối soát</button></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <div class="pag-info">Hiển thị <select class="pag-select"><option>10</option></select> trên mỗi trang</div>
+        <div class="pag-pages">
+          <button class="pag-btn">«</button>
+          <button class="pag-btn">‹</button>
+          <button class="pag-btn on">1</button>
+          <button class="pag-btn">2</button>
+          <button class="pag-btn">3</button>
+          <button class="pag-btn">4</button>
+          <button class="pag-btn">5</button>
+          <button class="pag-btn dots">…</button>
+          <button class="pag-btn">13</button>
+          <button class="pag-btn">›</button>
+          <button class="pag-btn">»</button>
+        </div>
+        <div class="pag-goto">Đi tới trang <input type="number" value="1"></div>
+      </div>
+    </div>
+
+    <!-- RIGHT PANEL -->
+    <div class="right-panel">
+      <!-- Summary -->
+      <div class="summary-card">
+        <div class="summary-title">📋 Tóm tắt xử lý hôm nay</div>
+        <div class="summary-row"><span class="summary-label">🔵 Lead cần gọi lại</span><span class="summary-val">18</span></div>
+        <div class="summary-row"><span class="summary-label">🟣 Lead chờ xác minh</span><span class="summary-val">6</span></div>
+        <div class="summary-row"><span class="summary-label">🟢 Đơn đã phát sinh</span><span class="summary-val">2</span></div>
+        <a href="#" class="summary-link">Xem tất cả công việc →</a>
+      </div>
+
+      <!-- High score leads -->
+      <div class="summary-card">
+        <div class="summary-title">🏆 Lead có điểm năng cao</div>
+        <div class="hs-item">
+          <div class="hs-avatar la-purple">LĐ</div>
+          <div class="hs-info"><div class="hs-name">Lê Đức Anh</div><div class="hs-detail">Đã đăng ký · 3,000,000đ</div></div>
+          <span class="hs-badge" style="background:#d1fae5;color:#065f46">Hợp lệ</span>
+        </div>
+        <div class="hs-item">
+          <div class="hs-avatar la-pink">PL</div>
+          <div class="hs-info"><div class="hs-name">Kim Liên</div><div class="hs-detail">Đã đăng ký · 2,500,000đ</div></div>
+          <span class="hs-badge" style="background:#d1fae5;color:#065f46">Hợp lệ</span>
+        </div>
+        <div class="hs-item">
+          <div class="hs-avatar la-blue">PT</div>
+          <div class="hs-info"><div class="hs-name">Phan Thanh Tùng</div><div class="hs-detail">TopCV · 1,500,000đ</div></div>
+          <span class="hs-badge" style="background:#dbeafe;color:#1e40af">Mới</span>
+        </div>
+        <div class="hs-item">
+          <div class="hs-avatar la-teal">VH</div>
+          <div class="hs-info"><div class="hs-name">Vũ Hoàng Nam</div><div class="hs-detail">TopCV · CV Pro 2026 · 1,200,000đ</div></div>
+          <span class="hs-badge" style="background:#d1fae5;color:#065f46">Hợp lệ</span>
+        </div>
+        <a href="#" class="summary-link">Xem tất cả →</a>
+      </div>
+
+      <!-- Rejection reasons -->
+      <div class="summary-card">
+        <div class="summary-title">🚫 Lý do lead bị loại</div>
+        <div class="reason-item"><span class="reason-label">Trùng data</span><div class="reason-bar-wrap"><div class="reason-bar" style="width:45%"></div></div><span class="reason-pct">45%</span></div>
+        <div class="reason-item"><span class="reason-label">Không liên lạc được</span><div class="reason-bar-wrap"><div class="reason-bar" style="width:25%;background:var(--orange)"></div></div><span class="reason-pct">25%</span></div>
+        <div class="reason-item"><span class="reason-label">Không có nhu cầu</span><div class="reason-bar-wrap"><div class="reason-bar" style="width:20%;background:var(--yellow)"></div></div><span class="reason-pct">20%</span></div>
+        <div class="reason-item"><span class="reason-label">Thông tin không chính xác</span><div class="reason-bar-wrap"><div class="reason-bar" style="width:10%;background:var(--red)"></div></div><span class="reason-pct">10%</span></div>
+        <a href="#" class="summary-link">Xem chi tiết →</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
