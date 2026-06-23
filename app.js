@@ -36,12 +36,25 @@ function initTabs() {
 
 // ===== Commission Model Toggle =====
 function initToggles() {
-  const toggleBtns = document.querySelectorAll('.toggle-btn');
-  toggleBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      toggleBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    });
+  const togLead = document.getElementById('togLead');
+  const togRevenue = document.getElementById('togRevenue');
+  
+  if (!togLead || !togRevenue) return;
+  
+  togLead.addEventListener('click', () => {
+    togLead.classList.add('on');
+    togLead.innerHTML = 'Theo lead <i class="fas fa-check" style="font-size:9px"></i>';
+    togRevenue.classList.remove('on');
+    togRevenue.innerHTML = 'Theo doanh số';
+    document.body.classList.add('mode-lead');
+  });
+  
+  togRevenue.addEventListener('click', () => {
+    togRevenue.classList.add('on');
+    togRevenue.innerHTML = 'Theo doanh số <i class="fas fa-check" style="font-size:9px"></i>';
+    togLead.classList.remove('on');
+    togLead.innerHTML = 'Theo lead';
+    document.body.classList.remove('mode-lead');
   });
 }
 

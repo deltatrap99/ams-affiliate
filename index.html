@@ -20,9 +20,11 @@
     <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
   </div>
   <div class="header-right">
-    <span class="com-label">Cơ chế hoa hồng:</span>
-    <button class="tog">Theo lead</button>
-    <button class="tog on">Theo doanh số <i class="fas fa-check" style="font-size:9px"></i></button>
+    <div style="display:flex;align-items:center;background:rgba(0,0,0,.04);padding:4px;border-radius:100px;gap:4px">
+      <span class="com-label" style="margin-left:8px;margin-right:4px">Hình thức Affiliate:</span>
+      <button class="tog" id="togLead">Theo lead</button>
+      <button class="tog on" id="togRevenue">Theo doanh số <i class="fas fa-check" style="font-size:10px"></i></button>
+    </div>
     <div class="notif-wrapper">
       <button class="bell" id="bellTrigger"><i class="fas fa-bell"></i><span class="dot">3</span></button>
       <div class="notif-dropdown" id="notifDropdown">
@@ -169,8 +171,10 @@
     <p class="page-sub">Theo dõi hiệu suất, đối soát minh bạch và biết ngay việc cần làm tiếp theo để tăng thu nhập.</p>
   </div>
 
+  <!-- REVENUE VIEW -->
+<div class="view-revenue">
   <!-- REVENUE BANNER -->
-  <div class="rev-banner">
+  <div class="rev-banner ani ani-1">
     <div class="rev-illust" style="width:150px;height:100px">
       <div class="coin c1">₫</div>
       <div class="coin c2">%</div>
@@ -199,7 +203,7 @@
   </div>
 
   <!-- KPI ROW -->
-  <div class="kpi-row">
+  <div class="kpi-row ani ani-2">
     <div class="kpi">
       <div class="kpi-head"><div class="kpi-label">Qualified Lead hợp lệ</div><div class="kpi-ic"><i class="fas fa-user-check"></i></div></div>
       <div class="kpi-val" data-target="38">0</div>
@@ -223,14 +227,14 @@
   </div>
 
   <!-- SUGGESTION -->
-  <div class="suggest">
+  <div class="suggest ani ani-3">
     <span>💡</span>
     <span class="stxt"><strong>Gợi ý hôm nay:</strong> Đăng thêm 1 Story cho V-ACT và nộp 2 kết quả còn thiếu để không bỏ lỡ bonus cuối tháng.</span>
     <a href="#">Xem chi tiết gợi ý →</a>
   </div>
 
   <!-- TWO COLUMNS -->
-  <div class="two-col">
+  <div class="two-col ani ani-3">
     <!-- TIER PROGRESS -->
     <div class="tier-card">
       <div class="tier-title">⭐ Tiến độ cấp bậc Affiliate</div>
@@ -279,11 +283,11 @@
   </div>
 
   <!-- CAMPAIGNS -->
-  <div class="camp-header">
+  <div class="camp-header ani ani-4">
     <div class="camp-title">Chiến dịch nên ưu tiên hôm nay</div>
     <a href="#" class="camp-link">Xem tất cả chiến dịch <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
   </div>
-  <div class="camp-grid">
+  <div class="camp-grid ani ani-4">
     <!-- TopUni 2027 - STARRED -->
     <div class="camp starred" onclick="location.href='campaign-detail.html'" style="cursor:pointer">
       <div class="camp-top">
@@ -366,6 +370,162 @@
       </div>
     </div>
   </div>
+</div> <!-- End view-revenue -->
+
+<!-- LEAD VIEW -->
+<div class="view-lead">
+  <!-- SUGGESTION -->
+  <div class="suggest blue ani ani-1">
+    <span style="color:var(--blue)">💡</span>
+    <span class="stxt" style="color:#1e3a8a"><strong>Gợi ý hôm nay:</strong> Tập trung tạo thêm lead chất lượng & gửi kết quả còn thiếu cho 1 Story V-ACT để tối ưu hoa hồng của bạn.</span>
+    <a href="#" style="color:var(--blue)">Xem chi tiết gợi ý &rarr;</a>
+  </div>
+
+  <!-- TWO COLUMNS -->
+  <div class="two-col ani ani-2">
+    <!-- TIER PROGRESS -->
+    <div class="tier-card">
+      <div class="tier-title">⭐ Tiến độ cấp bậc Affiliate (Theo lead)</div>
+      <div class="tier-flow">
+        <div class="tier-badge">
+          <div class="tier-badge-label">Hiện tại</div>
+          <div class="tier-badge-icon bronze">🥉</div>
+          <div class="tier-badge-name">Bronze</div>
+        </div>
+        <div class="tier-arrow">➡️</div>
+        <div class="tier-badge">
+          <div class="tier-badge-label">Tiếp theo</div>
+          <div class="tier-badge-icon silver">🥈</div>
+          <div class="tier-badge-name">Silver</div>
+        </div>
+        <div class="tier-progress" style="flex:1;margin-left:16px">
+          <div class="tier-prog-info">
+            <div class="tier-prog-text">14 <span>/ 20 Qualified Lead hợp lệ</span></div>
+            <div class="tier-prog-sub">CR hiện tại: 35% &nbsp;|&nbsp; Mục tiêu Silver: 20 Qualified Lead</div>
+            <div class="tier-pbar"><div class="tier-pfill" style="width:70%"></div></div>
+          </div>
+          <div class="tier-pct">70%</div>
+        </div>
+      </div>
+      <div class="tier-note">💎 Còn 6 lead hợp lệ để mở khóa quyền lợi Silver.</div>
+      <div class="tier-perks-title">Quyền lợi Silver</div>
+      <div class="tier-perks">
+        <span class="tier-perk">✅ Co-brand tag</span>
+        <span class="tier-perk">✅ Ưu tiên campaign</span>
+        <span class="tier-perk">✅ Thưởng theo số lead</span>
+      </div>
+    </div>
+
+    <!-- LEAD STATUS -->
+    <div class="lead-card">
+      <div class="lead-title">📊 Trạng thái đối soát lead</div>
+      <div style="font-size:11px;color:var(--txt3);margin-top:-14px;margin-bottom:14px">Cập nhật theo dữ liệu AMS</div>
+      <div class="lead-pipeline">
+        <div class="lead-stat new"><div class="lead-stat-label">Lead mới</div><div class="lead-stat-val">52</div><div class="lead-stat-sub">+18% so với tuần trước</div></div>
+        <div class="lead-stat valid"><div class="lead-stat-label">Hợp lệ</div><div class="lead-stat-val">38</div><div class="lead-stat-sub">73% tỉ lệ hợp lệ</div></div>
+        <div class="lead-stat dup"><div class="lead-stat-label">Trùng</div><div class="lead-stat-val">4</div><div class="lead-stat-sub">7%</div></div>
+        <div class="lead-stat verify"><div class="lead-stat-label">Đang xác minh</div><div class="lead-stat-val">6</div><div class="lead-stat-sub">12%</div></div>
+        <div class="lead-stat reject"><div class="lead-stat-label">Bị loại</div><div class="lead-stat-val">4</div><div class="lead-stat-sub">8%</div></div>
+      </div>
+      <div class="lead-note"><i class="fas fa-info-circle"></i> Tỉ lệ lead hợp lệ = Lead hợp lệ / Lead mới</div>
+      <div class="lead-action-row" style="display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding:12px;background:#f0f9ff;border-radius:var(--r-sm);border:1px solid #bae6fd">
+        <div style="font-size:11.5px;color:#0369a1;display:flex;align-items:center;gap:6px"><i class="fas fa-shield-halved"></i> Giữ tỉ lệ hợp lệ &ge; 70% để đảm bảo hoa hồng và thăng hạng nhanh hơn.</div>
+        <button class="btn-o" style="padding:6px 12px;font-size:11px;border-color:#7dd3fc;color:#0284c7;background:#fff">Xem chi tiết đối soát &rarr;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CAMPAIGNS -->
+  <div class="camp-header ani ani-3">
+    <div class="camp-title">Chiến dịch nên ưu tiên hôm nay</div>
+    <a href="#" class="camp-link">Xem tất cả chiến dịch <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+  </div>
+  <div class="camp-grid ani ani-3">
+    <!-- TopUni 2027 -->
+    <div class="camp starred" onclick="location.href='campaign-detail.html'" style="cursor:pointer">
+      <div class="camp-top">
+        <div class="camp-icon blue">📘</div>
+        <div class="camp-info">
+          <div class="camp-name">TopUni 2027 – Lộ trình S V-ACT</div>
+          <div class="camp-meta"><span><i class="fas fa-calendar"></i> 01/06 – 31/10/2026</span><span><i class="fas fa-building"></i> HMO</span></div>
+        </div>
+        <button class="camp-menu" onclick="event.stopPropagation()"><i class="fas fa-ellipsis-vertical"></i></button>
+      </div>
+      <p class="camp-desc">Tuyển sinh khóa học V-ACT lộ trình S cho học sinh lớp 12 / 2K9 — hệ thống hóa kiến thức, luyện đề theo giai đoạn, tối ưu điểm số xét tuyển đại học.</p>
+      <div class="camp-tags">
+        <span class="tag tag-blue">COM 50K / lead</span>
+        <span class="tag tag-green">Lead dễ</span>
+        <span class="tag tag-orange">Thưởng theo số lead</span>
+        <span class="tag tag-purple">Content kit</span>
+      </div>
+      <div class="camp-stats">
+        <span><i class="fas fa-users"></i> 1,250 lead tiềm năng</span>
+        <span><i class="fas fa-clock"></i> Cập nhật 3 giờ trước</span>
+        <span><i class="fas fa-hourglass-half"></i> Deadline còn 5 ngày</span>
+      </div>
+      <div class="camp-btns">
+        <button class="btn-o" onclick="event.stopPropagation()"><i class="fas fa-copy" style="font-size:11px"></i> Sao chép link</button>
+        <button class="btn-f" onclick="event.stopPropagation()">Xem brief</button>
+      </div>
+    </div>
+
+    <!-- FUNiX -->
+    <div class="camp">
+      <div class="camp-top">
+        <div class="camp-icon purple">🤖</div>
+        <div class="camp-info">
+          <div class="camp-name">Hội thảo FUNiX – AI Cơ bản</div>
+          <div class="camp-meta"><span><i class="fas fa-calendar"></i> 15/06 – 15/07/2026</span><span><i class="fas fa-building"></i> FUNiX</span></div>
+        </div>
+        <button class="camp-menu"><i class="fas fa-ellipsis-vertical"></i></button>
+      </div>
+      <p class="camp-desc">Giới thiệu AI miễn phí do FUNiX tổ chức — mở ra cánh cửa vào thế giới công nghệ.</p>
+      <div class="camp-tags">
+        <span class="tag tag-blue">COM 40K / lead</span>
+        <span class="tag tag-green">Lead dễ</span>
+        <span class="tag tag-orange">Thưởng theo số lead</span>
+        <span class="tag tag-teal">Hội thảo online</span>
+      </div>
+      <div class="camp-stats">
+        <span><i class="fas fa-users"></i> 980 lead tiềm năng</span>
+        <span><i class="fas fa-clock"></i> Cập nhật 2 giờ trước</span>
+        <span><i class="fas fa-hourglass-half"></i> Deadline còn 7 ngày</span>
+      </div>
+      <div class="camp-btns">
+        <button class="btn-o"><i class="fas fa-copy" style="font-size:11px"></i> Sao chép link</button>
+        <button class="btn-f">Xem brief</button>
+      </div>
+    </div>
+
+    <!-- IELTS -->
+    <div class="camp">
+      <div class="camp-top">
+        <div class="camp-icon green">📝</div>
+        <div class="camp-info">
+          <div class="camp-name">Easy IELTS Test Drive</div>
+          <div class="camp-meta"><span><i class="fas fa-calendar"></i> 20/05 – 31/05/2026</span><span><i class="fas fa-building"></i> Easy IELTS</span></div>
+        </div>
+        <button class="camp-menu"><i class="fas fa-ellipsis-vertical"></i></button>
+      </div>
+      <p class="camp-desc">Trải nghiệm thi thử IELTS 4 kỹ năng với đề chuẩn và chấm điểm chi tiết.</p>
+      <div class="camp-tags">
+        <span class="tag tag-blue">COM 30K / lead</span>
+        <span class="tag tag-green">Lead dễ</span>
+        <span class="tag tag-orange">Thưởng theo số lead</span>
+        <span class="tag tag-red">Voucher ưu đãi</span>
+      </div>
+      <div class="camp-stats">
+        <span><i class="fas fa-users"></i> 620 lead tiềm năng</span>
+        <span><i class="fas fa-clock"></i> Cập nhật 1 giờ trước</span>
+        <span><i class="fas fa-hourglass-half"></i> Deadline còn 2 ngày</span>
+      </div>
+      <div class="camp-btns">
+        <button class="btn-o"><i class="fas fa-copy" style="font-size:11px"></i> Sao chép link</button>
+        <button class="btn-f">Xem brief</button>
+      </div>
+    </div>
+  </div>
+</div>
 </main>
 
 <script src="app.js"></script>
