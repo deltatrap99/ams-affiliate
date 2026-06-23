@@ -98,10 +98,147 @@ function initProgressBars() {
   });
 }
 
-// ===== Sidebar Active State =====
 document.querySelectorAll('.sidebar-item').forEach(item => {
   item.addEventListener('click', () => {
     document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
     item.classList.add('active');
   });
+});
+
+// ===== Profile Dropdown Toggle =====
+function initProfileDropdown() {
+  const trigger = document.getElementById('avatarTrigger');
+  const dropdown = document.getElementById('profileDropdown');
+  const wrapper = trigger ? trigger.closest('.profile-wrapper') : null;
+
+  if (!trigger || !dropdown) return;
+
+  // Stop ALL clicks inside wrapper from reaching document
+  if (wrapper) wrapper.addEventListener('click', (e) => e.stopPropagation());
+
+  trigger.addEventListener('click', () => {
+    const isOpen = dropdown.classList.contains('open');
+    closeAllDropdowns();
+    if (!isOpen) {
+      dropdown.classList.add('open');
+    }
+  });
+
+  // Close only on menu item / logout click
+  dropdown.querySelectorAll('.pd-item, .pd-logout').forEach(item => {
+    item.addEventListener('click', () => closeAllDropdowns());
+  });
+}
+
+// ===== Notification Dropdown =====
+function initNotifDropdown() {
+  const trigger = document.getElementById('bellTrigger');
+  const dropdown = document.getElementById('notifDropdown');
+  const wrapper = trigger ? trigger.closest('.notif-wrapper') : null;
+
+  if (!trigger || !dropdown) return;
+
+  // Stop ALL clicks inside wrapper from reaching document
+  if (wrapper) wrapper.addEventListener('click', (e) => e.stopPropagation());
+
+  trigger.addEventListener('click', () => {
+    const isOpen = dropdown.classList.contains('open');
+    closeAllDropdowns();
+    if (!isOpen) {
+      dropdown.classList.add('open');
+      showOverlay();
+    }
+  });
+
+  // Tab filtering
+  const tabs = dropdown.querySelectorAll('.nd-tab');
+  const items = dropdown.querySelectorAll('.nd-item');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('on'));
+      tab.classList.add('on');
+
+      const filter = tab.getAttribute('data-filter');
+      items.forEach(item => {
+        if (filter === 'all') {
+          item.style.display = '';
+        } else if (filter === 'unread') {
+          item.style.display = item.classList.contains('unread') ? '' : 'none';
+        } else {
+          item.style.display = item.getAttribute('data-type') === filter ? '' : 'none';
+        }
+      });
+    });
+  });
+
+  // Mark all as read
+  const markReadBtn = dropdown.querySelector('.nd-mark-read');
+  if (markReadBtn) {
+    markReadBtn.addEventListener('click', () => {
+      items.forEach(item => item.classList.remove('unread'));
+      const countBadge = dropdown.querySelector('.nd-count');
+      if (countBadge) countBadge.textContent = '0';
+      const dot = document.querySelector('.bell .dot');
+      if (dot) dot.style.display = 'none';
+      markReadBtn.textContent = '✓ Đã đọc hết';
+      markReadBtn.style.color = 'var(--green)';
+    });
+  }
+
+  // Footer link closes dropdown
+  const footerLink = dropdown.querySelector('.nd-footer a');
+  if (footerLink) footerLink.addEventListener('click', () => closeAllDropdowns());
+}
+
+// ===== Close Logic =====
+function closeAllDropdowns() {
+  const profileDD = document.getElementById('profileDropdown');
+  const notifDD = document.getElementById('notifDropdown');
+  if (profileDD) profileDD.classList.remove('open');
+  if (notifDD) notifDD.classList.remove('open');
+}
+
+function initCloseHandlers() {
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeAllDropdowns();
+  });
+  // Close on any click outside wrappers
+  document.addEventListener('click', () => closeAllDropdowns());
+}
+
+// ===== Copy to Clipboard =====
+function copyText(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const originalHTML = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.innerHTML = '<i class="fas fa-check"></i> Đã sao chép!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = originalHTML;
+    }, 1500);
+  }).catch(() => {
+    const textarea = document.createElement('textarea');
+    textarea.value = text;
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand('copy');
+    document.body.removeChild(textarea);
+
+    const originalHTML = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.innerHTML = '<i class="fas fa-check"></i> Đã sao chép!';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = originalHTML;
+    }, 1500);
+  });
+}
+
+// Initialize all dropdowns on page load
+document.addEventListener('DOMContentLoaded', () => {
+  initProfileDropdown();
+  initNotifDropdown();
+  initCloseHandlers();
 });

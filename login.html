@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập — AMS | Hệ thống Quản lý Đối tác</title>
+  <meta name="description" content="Đăng nhập vào AMS - Hệ thống quản lý đối tác, Affiliate và Đại sứ của Galaxy Education.">
+  <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="login-page">
+
+<!-- ANIMATED BACKGROUND -->
+<div class="login-bg">
+  <!-- Blur orbs -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <!-- Network lines -->
+  <div class="network-line nl-1"></div>
+  <div class="network-line nl-2"></div>
+  <div class="network-line nl-3"></div>
+  <!-- Decorative circles (like reference site) -->
+  <div class="deco-circle dc-1"></div>
+  <div class="deco-circle dc-2"></div>
+  <div class="deco-circle dc-3"></div>
+  <div class="deco-circle dc-4"></div>
+  <div class="deco-circle dc-5"></div>
+  <div class="deco-circle dc-6"></div>
+  <!-- Plus decorations -->
+  <div class="deco-plus dp-1"></div>
+  <div class="deco-plus dp-2"></div>
+  <div class="deco-plus dp-3"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<main class="login-main">
+
+  <!-- Logo: Galaxy Education (accurate SVG) -->
+  <div class="login-logo">
+    <svg width="260" height="40" viewBox="0 0 260 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- "Gala" -->
+      <text x="0" y="33" font-family="Inter, sans-serif" font-weight="900" font-size="32" fill="#FFFFFF" letter-spacing="-1">Gala</text>
+      <!-- Multicolor X -->
+      <g transform="translate(74, 5)">
+        <!-- Top triangle - Blue -->
+        <polygon points="12,0 18,10 6,10" fill="#1a5fb4"/>
+        <!-- Right triangle - Orange -->
+        <polygon points="24,10 18,10 18,20" fill="#ee7623"/>
+        <!-- Bottom triangle - Cyan -->
+        <polygon points="12,30 6,20 18,20" fill="#00aeef"/>
+        <!-- Left triangle - Green -->
+        <polygon points="0,10 6,10 6,20" fill="#7bc143"/>
+        <!-- Center overlap pieces -->
+        <polygon points="6,10 12,10 12,15 6,15" fill="#ec6723"/>
+        <polygon points="12,10 18,10 18,15 12,15" fill="#f5a623"/>
+        <polygon points="6,15 12,15 12,20 6,20" fill="#2fa84f"/>
+        <polygon points="12,15 18,15 18,20 12,20" fill="#00aeef"/>
+      </g>
+      <!-- "y" -->
+      <text x="98" y="33" font-family="Inter, sans-serif" font-weight="900" font-size="32" fill="#FFFFFF" letter-spacing="-1">y</text>
+      <!-- "ONLINE" text above E -->
+      <text x="122" y="12" font-family="Inter, sans-serif" font-weight="800" font-size="7" fill="#1a5fb4" letter-spacing="2">ONLINE</text>
+      <!-- Green accent bar -->
+      <rect x="122" y="14" width="4" height="3" rx="0.5" fill="#7bc143"/>
+      <!-- Blue accent bar -->
+      <rect x="122" y="1" width="4" height="7" rx="0.5" fill="#1a5fb4"/>
+      <!-- "Education" -->
+      <text x="119" y="33" font-family="Inter, sans-serif" font-weight="900" font-size="32" fill="#FFFFFF" letter-spacing="-1">Education</text>
+    </svg>
+  </div>
+
+  <!-- Badge -->
+  <div class="login-badge">
+    <i class="fas fa-shield-halved"></i>
+    Cổng đối tác chính thức
+  </div>
+
+  <!-- Hero -->
+  <div class="login-hero">
+    <h1>Hệ thống Quản lý Đối tác AMS</h1>
+    <p>Nền tảng dành cho Đại sứ, Affiliate và Đối tác của Galaxy Education</p>
+  </div>
+
+  <!-- Feature Pills -->
+  <div class="login-features">
+    <div class="login-feat">
+      <i class="fas fa-chart-line"></i>
+      Quản lý chiến dịch
+    </div>
+    <div class="login-feat-dot"></div>
+    <div class="login-feat">
+      <i class="fas fa-users"></i>
+      Theo dõi lead & đơn hàng
+    </div>
+    <div class="login-feat-dot"></div>
+    <div class="login-feat">
+      <i class="fas fa-check-double"></i>
+      Đối soát hoa hồng minh bạch
+    </div>
+  </div>
+
+  <!-- Login Card -->
+  <div class="login-card">
+    <div class="login-card-title">Đăng nhập</div>
+    <p class="login-card-sub">Sử dụng tài khoản Google hoặc email đã được cấp quyền để truy cập hệ thống.</p>
+
+    <!-- Google Login Button -->
+    <button class="login-btn" id="googleLoginBtn" onclick="handleGoogleLogin()">
+      <span class="g-icon">
+        <svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      </span>
+      Đăng nhập với Google
+    </button>
+
+    <div class="login-divider">hoặc</div>
+
+    <!-- Email Login Button -->
+    <button class="login-btn login-btn-email" onclick="handleEmailLogin()">
+      <i class="fas fa-envelope"></i>
+      Đăng nhập bằng Email
+    </button>
+
+    <!-- Register Link -->
+    <button class="login-register" onclick="handleRegister()">
+      <i class="fas fa-user-plus"></i>
+      Đăng ký trở thành đối tác ADC
+      <i class="fas fa-chevron-right" style="font-size:11px;margin-left:auto"></i>
+    </button>
+
+    <!-- Note -->
+    <div class="login-card-note">
+      Chưa có tài khoản? <a href="#">Gửi yêu cầu</a> để được phê duyệt truy cập.
+    </div>
+  </div>
+
+</main>
+
+<!-- WHITE WAVE SHAPE -->
+<div class="login-wave">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0,60 C180,120 360,0 540,60 C720,120 900,20 1080,60 C1200,85 1320,40 1440,60 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.06)"/>
+    <path d="M0,80 C240,120 480,40 720,80 C960,120 1200,50 1440,80 L1440,120 L0,120 Z" fill="rgba(255,255,255,0.1)"/>
+    <path d="M0,95 C360,120 720,80 1080,100 C1260,110 1380,90 1440,95 L1440,120 L0,120 Z" fill="#ffffff"/>
+  </svg>
+</div>
+
+<!-- FOOTER -->
+<footer class="login-footer">
+  <div class="login-footer-item">
+    <i class="fas fa-phone"></i>
+    Hotline hỗ trợ: <strong>0977 515 855</strong>
+  </div>
+  <div class="login-footer-item">
+    <i class="fas fa-envelope"></i>
+    Email: <strong>success.agency@hocmai.vn</strong>
+  </div>
+</footer>
+
+<!-- LOADING OVERLAY -->
+<div class="login-loading" id="loginLoading">
+  <div class="login-loading-spinner"></div>
+  <div class="login-loading-text">Đang xác thực tài khoản...</div>
+  <div class="login-loading-sub">Vui lòng đợi trong giây lát</div>
+</div>
+
+<script>
+  function handleGoogleLogin() {
+    const loading = document.getElementById('loginLoading');
+    loading.classList.add('show');
+
+    // Simulate Google OAuth flow → redirect to Dashboard
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 1500);
+  }
+
+  function handleEmailLogin() {
+    const loading = document.getElementById('loginLoading');
+    loading.classList.add('show');
+
+    setTimeout(() => {
+      window.location.href = 'index.html';
+    }, 1500);
+  }
+
+  function handleRegister() {
+    alert('Chức năng đăng ký đối tác sẽ sớm được mở. Vui lòng liên hệ AS Team để được hỗ trợ.');
+  }
+</script>
+
+</body>
+</html>

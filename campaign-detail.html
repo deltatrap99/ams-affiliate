@@ -21,10 +21,66 @@
   <div class="header-right">
     <span class="com-label">Cơ chế hoa hồng:</span>
     <button class="tog on" style="background:var(--navy-light)">Sales-based COM</button>
-    <button class="bell"><i class="fas fa-bell"></i><span class="dot">3</span></button>
-    <div class="avatar">NA</div>
+    <div class="notif-wrapper">
+      <button class="bell" id="bellTrigger"><i class="fas fa-bell"></i><span class="dot">3</span></button>
+      <div class="notif-dropdown" id="notifDropdown">
+        <div class="nd-header"><div class="nd-title">Thông báo <span class="nd-count">3</span></div><button class="nd-mark-read" id="markAllRead">Đánh dấu đã đọc</button></div>
+        <div class="nd-tabs"><button class="nd-tab on" data-filter="all">Tất cả</button><button class="nd-tab" data-filter="unread">Chưa đọc</button><button class="nd-tab" data-filter="lead">Lead</button><button class="nd-tab" data-filter="campaign">Chiến dịch</button></div>
+        <div class="nd-list">
+          <div class="nd-item unread" data-type="lead"><div class="nd-icon ni-lead"><i class="fas fa-user-plus"></i></div><div class="nd-content"><div class="nd-text"><strong>Lead mới</strong> — Nguyễn Hoàng Minh vừa đăng ký qua link V-ACT Hè 2026.</div><div class="nd-time"><i class="fas fa-clock"></i> 10 phút trước</div></div></div>
+          <div class="nd-item unread" data-type="campaign"><div class="nd-icon ni-warning"><i class="fas fa-exclamation-triangle"></i></div><div class="nd-content"><div class="nd-text"><strong>Sắp hết hạn</strong> — Easy IELTS Test Drive còn <strong>2 ngày</strong>.</div><div class="nd-time"><i class="fas fa-clock"></i> 30 phút trước</div></div></div>
+          <div class="nd-item unread" data-type="lead"><div class="nd-icon ni-payment"><i class="fas fa-check-circle"></i></div><div class="nd-content"><div class="nd-text"><strong>Lead hợp lệ</strong> — Lê Đức Anh đã được xác nhận. +420,000đ.</div><div class="nd-time"><i class="fas fa-clock"></i> 1 giờ trước</div></div></div>
+          <div class="nd-item" data-type="campaign"><div class="nd-icon ni-campaign"><i class="fas fa-bullhorn"></i></div><div class="nd-content"><div class="nd-text"><strong>Chiến dịch mới</strong> — TopCV – CV Pro 2026 vừa mở.</div><div class="nd-time"><i class="fas fa-clock"></i> 3 giờ trước</div></div></div>
+          <div class="nd-item" data-type="lead"><div class="nd-icon ni-rank"><i class="fas fa-trophy"></i></div><div class="nd-content"><div class="nd-text"><strong>Xếp hạng</strong> — Bạn đang đứng <strong>#2</strong> trong V-ACT Hè 2026!</div><div class="nd-time"><i class="fas fa-clock"></i> 5 giờ trước</div></div></div>
+          <div class="nd-item" data-type="campaign"><div class="nd-icon ni-system"><i class="fas fa-info-circle"></i></div><div class="nd-content"><div class="nd-text"><strong>Đối soát</strong> — Kỳ đối soát tháng 5 hoàn tất.</div><div class="nd-time"><i class="fas fa-clock"></i> Hôm qua</div></div></div>
+          <div class="nd-item" data-type="lead"><div class="nd-icon ni-lead"><i class="fas fa-user-xmark"></i></div><div class="nd-content"><div class="nd-text"><strong>Lead bị loại</strong> — Hoàng Tuấn Anh bị loại do trùng data.</div><div class="nd-time"><i class="fas fa-clock"></i> Hôm qua</div></div></div>
+        </div>
+        <div class="nd-footer"><a href="#">Xem tất cả thông báo <i class="fas fa-arrow-right" style="font-size:10px"></i></a></div>
+      </div>
+    </div>
+    <div class="profile-wrapper">
+      <div class="avatar" id="avatarTrigger">NA</div>
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="pd-header">
+          <div class="pd-user">
+            <div class="pd-avatar">NA</div>
+            <div class="pd-info">
+              <div class="pd-name">Nguyễn Minh Anh</div>
+              <div class="pd-tier">🥈 Affiliate Silver</div>
+              <div class="pd-meta">Mã: AFF123 · <span class="pd-status">Đang hoạt động</span></div>
+            </div>
+          </div>
+          <div class="pd-copy-btns">
+            <button class="pd-copy" onclick="copyText('AFF123', this)"><i class="fas fa-copy"></i> Sao chép mã Affiliate</button>
+            <button class="pd-copy" onclick="copyText('https://ams.link/AFF123', this)"><i class="fas fa-link"></i> Sao chép link giới thiệu</button>
+          </div>
+        </div>
+        <div class="pd-group">
+          <div class="pd-group-label">Tài khoản & quyền lợi</div>
+          <div class="pd-item"><i class="fas fa-user"></i> Hồ sơ của tôi</div>
+          <div class="pd-item"><i class="fas fa-crown"></i> Cấp bậc & quyền lợi</div>
+          <div class="pd-item"><i class="fas fa-credit-card"></i> Thông tin thanh toán</div>
+          <div class="pd-item"><i class="fas fa-file-contract"></i> Thuế & hồ sơ hợp đồng</div>
+        </div>
+        <div class="pd-divider"></div>
+        <div class="pd-group">
+          <div class="pd-group-label">Cài đặt</div>
+          <div class="pd-item"><i class="fas fa-bell"></i> Cài đặt thông báo</div>
+          <div class="pd-item"><i class="fas fa-shield-halved"></i> Bảo mật tài khoản</div>
+        </div>
+        <div class="pd-divider"></div>
+        <div class="pd-group">
+          <div class="pd-group-label">Hỗ trợ</div>
+          <div class="pd-item"><i class="fas fa-headset"></i> Liên hệ AS Team</div>
+          <div class="pd-item"><i class="fas fa-life-ring"></i> Trung tâm hỗ trợ</div>
+        </div>
+        <div class="pd-divider"></div>
+        <div class="pd-logout"><i class="fas fa-right-from-bracket"></i> Đăng xuất</div>
+      </div>
+    </div>
   </div>
 </header>
+<div class="dd-overlay" id="ddOverlay"></div>
 
 <!-- SIDEBAR -->
 <aside class="sidebar">
