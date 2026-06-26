@@ -1,6 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap');
 :root{--navy:#0f172a;--navy-dark:#020617;--navy-light:#1e293b;--orange:#ea580c;--orange-dk:#c2410c;--green:#10b981;--green-dk:#047857;--blue:#2563eb;--teal:#0d9488;--red:#ef4444;--purple:#7c3aed;--yellow:#f59e0b;--txt:#0f172a;--txt1:#1e293b;--txt2:#475569;--txt3:#94a3b8;--bg:#f1f5f9;--card:#ffffff;--border:#e2e8f0;--border-lt:#f1f5f9;--sh-sm:0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);--sh-md:0 4px 6px -1px rgba(0,0,0,.07), 0 2px 4px -2px rgba(0,0,0,.05);--sh-lg:0 10px 15px -3px rgba(0,0,0,.08), 0 4px 6px -4px rgba(0,0,0,.05);--sh-xl:0 20px 40px -8px rgba(0,0,0,.1), 0 8px 16px -6px rgba(0,0,0,.06);--r-sm:10px;--r-md:14px;--r-lg:20px;--r-xl:28px;--r-full:100px;--sidebar:260px;--header:64px;--tr:.25s cubic-bezier(.4,0,.2,1)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap');
 body{font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-0.01em;background:var(--bg);color:var(--txt);line-height:1.5;min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 a{text-decoration:none;color:inherit}ul{list-style:none}button{border:none;cursor:pointer;font-family:inherit}
 
