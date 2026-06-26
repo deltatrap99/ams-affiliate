@@ -93,12 +93,11 @@
     <div><div class="s-label">Lead &amp; đơn hàng</div>
       <div class="s-item" onclick="location.href='leads.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-file-invoice"></i></span>Lead &amp; đơn hàng</div></div>
     <div><div class="s-label">Hoa hồng &amp; đối soát</div>
-      <div class="s-item"><span class="ic"><i class="fas fa-coins"></i></span>Hoa hồng &amp; đối soát</div>
-      <div class="s-item"><span class="ic"><i class="fas fa-receipt"></i></span>Lịch sử thanh toán</div></div>
+      <div class="s-item" onclick="location.href='commission.html'"><span class="ic"><i class="fas fa-coins"></i></span>Hoa hồng &amp; thưởng</div></div>
     <div><div class="s-label">Tài nguyên</div>
       <div class="s-item" onclick="location.href='resources.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-images"></i></span>Tài nguyên nội dung</div></div>
     <div><div class="s-label">Cộng đồng</div>
-      <div class="s-item"><span class="ic"><i class="fas fa-ranking-star"></i></span>Bảng xếp hạng</div></div>
+      <div class="s-item" onclick="location.href='leaderboard.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-ranking-star"></i></span>Bảng xếp hạng</div></div>
     <div><div class="s-label">Hỗ trợ</div>
       <div class="s-item"><span class="ic"><i class="fas fa-life-ring"></i></span>Trung tâm hỗ trợ</div>
       <div class="s-item"><span class="ic"><i class="fas fa-headset"></i></span>Liên hệ AS Team</div></div>
@@ -167,13 +166,15 @@
 
   <!-- Detail Tabs -->
   <div class="dtabs">
-    <button class="dtab on">Tổng quan</button>
-    <button class="dtab">Yêu cầu chiến dịch</button>
+    <button class="dtab on" data-tab="tab-overview">Tổng quan</button>
+    <button class="dtab" data-tab="tab-reqs">Yêu cầu chiến dịch</button>
     <button class="dtab">Hoa hồng & thưởng</button>
     <button class="dtab">Content & tài nguyên</button>
     <button class="dtab">Thống kê chi tiết</button>
     <button class="dtab">Lịch sử hoạt động</button>
   </div>
+
+  <div id="tab-overview" class="tab-content active">
 
   <!-- Three Column Content -->
   <div class="detail-grid">
@@ -246,6 +247,94 @@
       <span>Bạn đang đi đúng tiến độ. Tiếp tục duy trì tần suất đăng và nộp kết quả đúng hạn để tối ưu hoa hồng nhé!</span>
     </div>
   </div>
+  </div> <!-- end tab-overview -->
+
+  <div id="tab-reqs" class="tab-content" style="display:none">
+    <div class="req-grid">
+      <!-- Left: Tasks -->
+      <div class="detail-box">
+        <div class="detail-box-title" style="display:flex;align-items:center;gap:8px">
+          <i class="fas fa-list-check" style="color:var(--blue)"></i> Hạng mục cần thực hiện
+        </div>
+        <table class="req-table">
+          <thead>
+            <tr>
+              <th>Hạng mục</th>
+              <th>Số lượng</th>
+              <th>Deadline</th>
+              <th>Yêu cầu ngắn</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="req-item">
+                  <div class="req-icon blue"><i class="fas fa-file-lines"></i></div>
+                  Bài đăng / Post
+                </div>
+              </td>
+              <td class="req-center">1</td>
+              <td class="req-center">15/06/2026</td>
+              <td>Giới thiệu lộ trình S V-ACT, có link tracking</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="req-item">
+                  <div class="req-icon purple"><i class="fas fa-play"></i></div>
+                  Reels / Video ngắn
+                </div>
+              </td>
+              <td class="req-center">1</td>
+              <td class="req-center">18/06/2026</td>
+              <td>Chia sẻ ngắn về lợi ích chương trình, CTA đăng ký test</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="req-item">
+                  <div class="req-icon green"><i class="fas fa-link"></i></div>
+                  Story có link
+                </div>
+              </td>
+              <td class="req-center">3</td>
+              <td class="req-center">20/06/2026</td>
+              <td>Kéo traffic về link tracking hoặc mã ưu đãi</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="req-item">
+                  <div class="req-icon orange"><i class="fas fa-chart-simple"></i></div>
+                  Báo cáo thống kê
+                </div>
+              </td>
+              <td class="req-center">1</td>
+              <td class="req-center">T+2</td>
+              <td>Gửi screenshot reach / click sau chiến dịch</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right: Guidelines -->
+      <div class="detail-box" style="display:flex; flex-direction:column;">
+        <div class="detail-box-title" style="display:flex;align-items:center;gap:8px">
+          <i class="fas fa-bullhorn" style="color:var(--blue)"></i> Lưu ý & quy chuẩn truyền thông
+        </div>
+        <ul class="req-list">
+          <li>Truyền thông đúng đối tượng: học sinh lớp 12 / 2K9 và phụ huynh quan tâm xét tuyển đại học</li>
+          <li>Sử dụng đúng link tracking hoặc mã Affiliate trong mọi nội dung</li>
+          <li>Không cam kết quá mức về kết quả học tập</li>
+          <li>Không dùng thông tin sai về học phí hoặc ưu đãi</li>
+          <li>Nội dung rõ ràng, dễ hiểu, ưu tiên trải nghiệm thật</li>
+          <li>Có thể gắn hashtag: #TopUni2027 #VACT #GalaxyEducation</li>
+        </ul>
+        <div style="flex:1"></div>
+        <div class="req-actions">
+          <button class="req-btn-outline"><i class="fas fa-download"></i> Tải Campaign Brief</button>
+          <button class="req-btn-fill"><i class="fas fa-upload"></i> Nộp kết quả</button>
+        </div>
+      </div>
+    </div>
+  </div> <!-- end tab-reqs -->
 </main>
 
 <script src="app.js"></script>

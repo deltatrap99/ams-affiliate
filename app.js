@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   initAnimations();
   initTabs();
+  initDTabs();
   initToggles();
   initCountUp();
   initProgressBars();
@@ -30,6 +31,32 @@ function initTabs() {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
+    });
+  });
+}
+
+function initDTabs() {
+  const dtabs = document.querySelectorAll('.dtab');
+  if (dtabs.length === 0) return;
+  dtabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const targetId = tab.getAttribute('data-tab');
+      if (!targetId) return;
+
+      dtabs.forEach(t => t.classList.remove('on'));
+      tab.classList.add('on');
+
+      document.querySelectorAll('.tab-content').forEach(c => {
+        c.classList.remove('active');
+        c.style.display = 'none';
+      });
+
+      const targetContent = document.getElementById(targetId);
+      if (targetContent) {
+        targetContent.style.display = 'block';
+        // Need to wait a tick before adding active class for animation
+        setTimeout(() => targetContent.classList.add('active'), 10);
+      }
     });
   });
 }

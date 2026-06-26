@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS — Bảng xếp hạng</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="leaderboard.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <a href="index.html" class="logo"><div class="logo-icon">AMS</div><span class="logo-text">Galaxy Education</span></a>
+    <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
+  </div>
+  <div class="header-right">
+    <span class="com-label">Cơ chế hoa hồng:</span>
+    <button class="tog">Theo lead</button>
+    <button class="tog on">Theo doanh số</button>
+    <div class="notif-wrapper">
+      <button class="bell" id="bellTrigger"><i class="fas fa-bell"></i><span class="dot">3</span></button>
+      <!-- Dropdown... skipped for brevity but actually better to include full to not break layout -->
+    </div>
+    <div class="profile-wrapper">
+      <div class="avatar" id="avatarTrigger">NA</div>
+    </div>
+  </div>
+</header>
+<div class="dd-overlay" id="ddOverlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-nav">
+    <div><div class="s-label">Tổng quan</div>
+      <div class="s-item" onclick="location.href='index.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-home"></i></span>Tổng quan</div></div>
+    <div><div class="s-label">Chiến dịch</div>
+      <div class="s-item" onclick="location.href='campaigns.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-bullhorn"></i></span>Chiến dịch</div>
+      <div class="s-item" onclick="location.href='leads.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-file-invoice"></i></span>Lead &amp; đơn hàng</div></div>
+    <div><div class="s-label">Hoa hồng &amp; đối soát</div>
+      <div class="s-item" onclick="location.href='commission.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-coins"></i></span>Hoa hồng &amp; thưởng</div></div>
+    <div><div class="s-label">Tài nguyên</div>
+      <div class="s-item" onclick="location.href='resources.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-images"></i></span>Tài nguyên nội dung</div></div>
+    <div><div class="s-label">Cộng đồng</div>
+      <div class="s-item on" onclick="location.href='leaderboard.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-ranking-star"></i></span>Bảng xếp hạng</div></div>
+    <div><div class="s-label">Hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-life-ring"></i></span>Trung tâm hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-headset"></i></span>Liên hệ AS Team</div></div>
+  </div>
+  <div class="s-promo">
+    <h4>🚀 Bứt tốc thu nhập!</h4>
+    <p>Hoàn thành mục tiêu cấp bậc để mở khóa quyền lợi cao hơn.</p>
+    <a href="#" class="s-promo-btn">Xem cấp bậc của tôi <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div style="margin-bottom:20px">
+    <h1 class="page-title" style="font-size:22px">Bảng xếp hạng</h1>
+    <p class="page-sub">Theo dõi các đối tác dẫn đầu theo hiệu suất chiến dịch.</p>
+  </div>
+
+  <div class="lb-summary-grid">
+    <div class="lb-summary-card">
+      <div class="lb-icon-l purple"><i class="fas fa-trophy"></i></div>
+      <div>
+        <div class="lb-sum-label">Đối tác dẫn đầu</div>
+        <div class="lb-sum-val">Hoàng Thanh Dung</div>
+        <div class="lb-sum-sub">286.000.000đ <span class="lb-sum-unit">doanh số</span></div>
+      </div>
+    </div>
+    
+    <div class="lb-summary-card">
+      <div class="lb-icon-l blue"><i class="fas fa-user-group"></i></div>
+      <div>
+        <div class="lb-sum-label">Tổng lead toàn bảng</div>
+        <div class="lb-sum-val">500 <span class="lb-sum-unit">lead</span></div>
+      </div>
+    </div>
+
+    <div class="lb-summary-card">
+      <div class="lb-icon-l green"><i class="fas fa-sack-dollar"></i></div>
+      <div>
+        <div class="lb-sum-label">Tổng doanh số toàn bảng</div>
+        <div class="lb-sum-val">1.131.000.000đ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lb-tables-grid">
+    <!-- Bảng Lead -->
+    <div class="lb-table-wrap">
+      <div class="lb-table-title"><i class="fas fa-chart-simple blue"></i> Xếp hạng theo tổng số lead</div>
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th style="width:50px; text-align:center;">Hạng</th>
+            <th>Đối tác</th>
+            <th class="lb-col-right">Tổng số lead</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="lb-medal gold">1</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a1">BT</div> Bố Quốc Tuấn</div></td>
+            <td class="lb-col-right lb-val-blue">128 lead</td>
+          </tr>
+          <tr>
+            <td><div class="lb-medal silver">2</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a2">HD</div> Hoàng Thanh Dung</div></td>
+            <td class="lb-col-right lb-val-blue">114 lead</td>
+          </tr>
+          <tr>
+            <td><div class="lb-medal bronze">3</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a3">ND</div> Nguyễn Thành Đô</div></td>
+            <td class="lb-col-right lb-val-blue">96 lead</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">4</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a4">LK</div> Lâm Trung Kiên</div></td>
+            <td class="lb-col-right lb-val-blue">88 lead</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">5</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a5">PA</div> Phạm Minh Anh</div></td>
+            <td class="lb-col-right lb-val-blue">74 lead</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">6</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a6">TK</div> Trần Khánh Linh</div></td>
+            <td class="lb-col-right lb-val-blue">69 lead</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">7</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a1">NP</div> Nguyễn Phương Anh</div></td>
+            <td class="lb-col-right lb-val-blue">63 lead</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">8</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a2">VL</div> Vũ Đức Long</div></td>
+            <td class="lb-col-right lb-val-blue">58 lead</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">9</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a7">LH</div> Lê Thu Hằng</div></td>
+            <td class="lb-col-right lb-val-blue">54 lead</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">10</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a5">DH</div> Đỗ Gia Huy</div></td>
+            <td class="lb-col-right lb-val-blue">47 lead</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Bảng Doanh số -->
+    <div class="lb-table-wrap">
+      <div class="lb-table-title"><i class="fas fa-chart-simple green"></i> Xếp hạng theo tổng doanh số</div>
+      <table class="lb-table">
+        <thead>
+          <tr>
+            <th style="width:50px; text-align:center;">Hạng</th>
+            <th>Đối tác</th>
+            <th class="lb-col-right">Tổng doanh số</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><div class="lb-medal gold">1</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a2">HD</div> Hoàng Thanh Dung</div></td>
+            <td class="lb-col-right lb-val-blue">286.000.000đ</td>
+          </tr>
+          <tr>
+            <td><div class="lb-medal silver">2</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a1">BT</div> Bố Quốc Tuấn</div></td>
+            <td class="lb-col-right lb-val-blue">254.000.000đ</td>
+          </tr>
+          <tr>
+            <td><div class="lb-medal bronze">3</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a4">LK</div> Lâm Trung Kiên</div></td>
+            <td class="lb-col-right lb-val-blue">218.000.000đ</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">4</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a3">ND</div> Nguyễn Thành Đô</div></td>
+            <td class="lb-col-right lb-val-blue">205.000.000đ</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">5</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a5">PA</div> Phạm Minh Anh</div></td>
+            <td class="lb-col-right lb-val-blue">168.000.000đ</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">6</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a6">TK</div> Trần Khánh Linh</div></td>
+            <td class="lb-col-right lb-val-blue">149.000.000đ</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">7</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a1">NP</div> Nguyễn Phương Anh</div></td>
+            <td class="lb-col-right lb-val-blue">136.000.000đ</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">8</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a2">VL</div> Vũ Đức Long</div></td>
+            <td class="lb-col-right lb-val-blue">122.000.000đ</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">9</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a7">LH</div> Lê Thu Hằng</div></td>
+            <td class="lb-col-right lb-val-blue">109.000.000đ</td>
+          </tr>
+          <tr>
+            <td><div class="lb-rank">10</div></td>
+            <td><div class="lb-partner"><div class="lb-ava a5">DH</div> Đỗ Gia Huy</div></td>
+            <td class="lb-col-right lb-val-blue">97.000.000đ</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>

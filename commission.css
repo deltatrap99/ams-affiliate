@@ -1,0 +1,225 @@
+/* =========================================
+   COMMISSION PAGE STYLES
+========================================= */
+
+/* Internal Tabs */
+.com-tabs {
+  display: flex;
+  gap: 30px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.com-tab {
+  padding: 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--txt3);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  transition: var(--tr);
+}
+.com-tab:hover {
+  color: var(--txt1);
+}
+.com-tab.on {
+  color: var(--blue);
+}
+.com-tab.on::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--blue);
+  border-radius: 2px 2px 0 0;
+}
+
+/* Commission Grid */
+.com-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+
+.com-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.com-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--txt1);
+}
+.com-card-desc {
+  font-size: 12px;
+  color: var(--txt3);
+  margin-bottom: 20px;
+}
+
+/* Card 1: Basic Commission */
+.com-box-blue {
+  background: #f0f4ff; /* light blue */
+  border-radius: var(--r-md);
+  padding: 40px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+.com-val-big {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+.com-val-sub {
+  font-size: 13px;
+  color: var(--txt2);
+  font-weight: 500;
+}
+
+/* Card 2: Tier Table */
+.com-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.com-table th, .com-table td {
+  padding: 10px 0;
+  text-align: left;
+  font-size: 13px;
+  border-bottom: 1px solid var(--border-lt);
+}
+.com-table th {
+  color: var(--txt3);
+  font-weight: 500;
+  font-size: 12px;
+}
+.com-table td {
+  color: var(--txt1);
+  font-weight: 500;
+}
+.com-table tr:last-child td {
+  border-bottom: none;
+}
+.tier-col { display: flex; align-items: center; gap: 8px; }
+.tier-ic { font-size: 14px; }
+
+/* Card 3: Campaign Bonus */
+.com-box-green {
+  background: #f0fdf4; /* light green */
+  border-radius: var(--r-md);
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.com-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+.com-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--txt2);
+  margin-bottom: 10px;
+}
+.com-list li i {
+  color: var(--green);
+  font-size: 12px;
+}
+.com-box-green-note {
+  font-size: 12px;
+  color: var(--txt3);
+  margin-top: auto;
+}
+
+/* Info Alert */
+.com-alert {
+  background: #f0f4ff;
+  border: 1px solid #dbeafe;
+  border-radius: var(--r-lg);
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.com-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--blue);
+  margin-bottom: 12px;
+}
+.com-alert-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.com-alert-list li {
+  position: relative;
+  padding-left: 14px;
+  font-size: 12px;
+  color: var(--txt2);
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.com-alert-list li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--txt3);
+}
+
+/* Wallet Box */
+.com-wallet {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.wallet-label {
+  font-size: 13px;
+  color: var(--txt3);
+  margin-bottom: 4px;
+}
+.wallet-val {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+@media(max-width: 992px) {
+  .com-grid {
+    grid-template-columns: 1fr;
+  }
+  .com-wallet {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
+/* View Switching */
+body.mode-lead .view-revenue { display: none !important; }
+body.mode-lead .view-lead { display: block !important; }
+
+body:not(.mode-lead) .view-revenue { display: block !important; }
+body:not(.mode-lead) .view-lead { display: none !important; }

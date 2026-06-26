@@ -94,3 +94,33 @@
 .camp.starred .camp-name{color:var(--navy)}
 
 @media(max-width:1200px){.dkpi-row{grid-template-columns:repeat(3,1fr)}.detail-grid{grid-template-columns:1fr}}
+
+/* =========================================
+   TABS & YÊU CẦU CHIẾN DỊCH
+========================================= */
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.4s ease forwards; }
+
+.req-grid { display: grid; grid-template-columns: 1.8fr 1.2fr; gap: 20px; }
+@media(max-width: 992px) { .req-grid { grid-template-columns: 1fr; } }
+
+.req-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+.req-table th, .req-table td { padding: 14px 10px; text-align: left; border-bottom: 1px solid var(--border-lt); font-size: 13px; color: var(--txt2); }
+.req-table th { font-weight: 600; color: var(--txt3); font-size: 11px; text-transform: uppercase; }
+.req-center { text-align: center !important; }
+.req-item { display: flex; align-items: center; gap: 10px; font-weight: 500; color: var(--txt1); }
+.req-icon { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.req-icon.blue { background: rgba(59,130,246,.1); color: var(--blue); }
+.req-icon.purple { background: rgba(168,85,247,.1); color: var(--purple); }
+.req-icon.green { background: rgba(34,197,94,.1); color: var(--green); }
+.req-icon.orange { background: rgba(249,115,22,.1); color: var(--orange); }
+
+.req-list { list-style: none; padding: 0; margin: 10px 0 20px 0; }
+.req-list li { padding-left: 20px; position: relative; margin-bottom: 12px; font-size: 13px; color: var(--txt2); line-height: 1.6; }
+.req-list li::before { content: '•'; position: absolute; left: 4px; top: 0px; color: var(--txt1); font-weight: bold; font-size: 16px; }
+
+.req-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; border-top: 1px solid var(--border-lt); padding-top: 20px;}
+.req-btn-outline { padding: 12px; border: 1px solid var(--border); background: #fff; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; color: var(--txt1); transition: var(--tr); }
+.req-btn-outline:hover { background: #f8fafc; border-color: #cbd5e1; }
+.req-btn-fill { padding: 12px; border: none; background: #0b132b; color: #fff; border-radius: 8px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; transition: var(--tr); }
+.req-btn-fill:hover { background: #1a294a; }
