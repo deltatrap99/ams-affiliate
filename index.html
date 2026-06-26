@@ -16,6 +16,16 @@
     }
   </script>
   <link rel="stylesheet" href="mobile.css">
+
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.error('SW init failed:', err));
+      });
+    }
+  </script>
 </head>
 <body>
 

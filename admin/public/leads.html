@@ -29,6 +29,16 @@
     .lead-detail-item .label { font-size: 10px; font-weight: 700; color: var(--txt3); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
     .lead-detail-item .value { font-size: 13px; font-weight: 600; color: var(--txt); }
   </style>
+
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.error('SW init failed:', err));
+      });
+    }
+  </script>
 </head>
 <body>
 

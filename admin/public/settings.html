@@ -23,6 +23,16 @@
     .perm-checkbox:hover { background: #f8fafc; border-color: var(--blue); }
     .perm-checkbox input:checked + span { font-weight: 600; color: var(--blue); }
   </style>
+
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => console.error('SW init failed:', err));
+      });
+    }
+  </script>
 </head>
 <body>
 
