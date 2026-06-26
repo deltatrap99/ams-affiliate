@@ -164,19 +164,12 @@
     <div class="ckpi"><div class="ckpi-ic"><i class="fas fa-gift"></i></div><div><div class="ckpi-label">Campaign có bonus</div><div class="ckpi-val">8 <span class="ckpi-change up">+3</span></div><div class="ckpi-sub">Cơ hội tăng thu nhập</div></div></div>
   </div>
 
-  <!-- Featured -->
-  <div class="featured">
-    <div class="featured-badge">💡 Gợi ý cho bạn</div>
-    <div class="featured-icon">📘</div>
-    <div class="featured-content">
-      <div class="featured-top">
-        <div class="featured-name">V-ACT Hè 2026 – Luyện thi cấp tốc</div>
-        <span class="featured-priority">Nên ưu tiên</span>
-            <div class="citem-btns"><button class="btn-o">Xem brief</button><button class="btn-f">Sao chép link</button></div>
-          </div>
-        </div>
-
-
+  <div class="content-grid" style="display:grid; grid-template-columns: 1fr 300px; gap:24px;">
+    <!-- CAMPAIGN LIST -->
+    <div id="campaign-list" style="display:flex; flex-direction:column; gap:16px;">
+      <div style="text-align:center; padding:40px; color:var(--txt3);">
+        <i class="fas fa-spinner fa-spin" style="font-size:32px; margin-bottom:12px;"></i>
+        <div>Đang tải chiến dịch...</div>
       </div>
     </div>
 
@@ -213,9 +206,76 @@
       </div>
     </div>
   </div>
+  </div>
 </main>
 
 <script src="app.js"></script>
+<script>
+async function loadCampaignsList() {
+  const list = document.getElementById('campaign-list');
+  if (!list) return;
+
+  try {
+    const res = await fetch('http://localhost:3000/api/campaigns');
+    if (!res.ok) throw new Error('API error');
+    const campaigns = await res.json();
+    const active = campaigns.filter(c => c.status === 'active');
+
+    if (active.length === 0) {
+      list.innerHTML = '<div style="text-align:center; padding:40px; color:var(--txt3);"><i class="fas fa-bullhorn" style="font-size:32px; margin-bottom:12px; opacity:.3;"></i><div>Chưa có chiến dịch nào đang hoạt động.</div></div>';
+      return;
+    }
+
+    const detailPages = {
+      'topuni-svact': 'topuni-detail.html',
+      'easyspeak-adults': 'easyspeak-detail.html',
+      'funix-workshop': 'funix-detail.html'
+    };
+
+    list.innerHTML = active.map((camp, idx) => {
+      const detailPage = detailPages[camp.id] || 'campaign-detail.html?id=' + camp.id;
+      const endDate = camp.date_end || camp.end_date;
+      const daysLeft = endDate ? Math.max(0, Math.ceil((new Date(endDate) - new Date()) / 86400000)) : '—';
+      const comRate = camp.commission_rate || '10';
+      const leads = camp.kpis ? camp.kpis.leads : 0;
+      const revenue = camp.kpis ? camp.kpis.revenue : 0;
+      const revDisplay = revenue >= 1000000 ? (revenue/1000000).toFixed(0) + 'tr' : (revenue >= 1000 ? (revenue/1000).toFixed(0) + 'K' : revenue);
+      
+      return `
+        <div class="featured" style="margin-bottom:0; box-shadow:var(--sh-sm);">
+          ${idx === 0 ? '<div class="featured-badge">💡 Gợi ý cho bạn</div>' : ''}
+          <div class="featured-icon">${idx === 0 ? '📘' : '⭐'}</div>
+          <div class="featured-content">
+            <div class="featured-top">
+              <a href="${detailPage}" class="featured-name" style="text-decoration:none;">${camp.name}</a>
+              ${idx === 0 ? '<span class="featured-priority">Nên ưu tiên</span>' : ''}
+            </div>
+            <div class="db-camp-tags" style="margin-top:8px;">
+              <span class="tag tag-blue">COM ${comRate}% DS</span>
+              <span class="tag tag-green">${camp.target_audience || camp.region || 'Toàn quốc'}</span>
+            </div>
+            <div class="featured-desc" style="margin-top:12px; font-size:13px; color:var(--txt2); line-height:1.6;">${camp.description ? camp.description.replace(/<[^>]+>/g, '').substring(0, 250) + '...' : ''}</div>
+            <div class="db-camp-stats" style="margin-top:16px;">
+              <div><div class="db-cs-val"><i class="fas fa-users"></i> ${leads}</div><div class="db-cs-lbl">Lead</div></div>
+              <div><div class="db-cs-val green rev-only"><i class="fas fa-sack-dollar"></i> ${revDisplay}</div><div class="db-cs-lbl rev-only">Doanh thu</div></div>
+              <div><div class="db-cs-val orange"><i class="fas fa-clock"></i> ${daysLeft} ngày</div><div class="db-cs-lbl">Deadline còn</div></div>
+            </div>
+            <div class="citem-btns" style="margin-top:16px; display:flex; gap:12px;">
+              <button class="btn-o" onclick="navigator.clipboard.writeText('https://ams.daisugiaoduc.vn/link/' + '${camp.id}'); showToast('Đã sao chép link Affiliate!')"><i class="fas fa-link"></i> Sao chép link</button>
+              <button class="btn-f" onclick="window.location.href='${detailPage}'">Xem chi tiết</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (err) {
+    console.error(err);
+    list.innerHTML = '<div style="color:red;text-align:center;padding:20px;">Lỗi tải dữ liệu</div>';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', loadCampaignsList);
+</script>
 
 <!-- Profile Modal -->
 <div id="profileModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
