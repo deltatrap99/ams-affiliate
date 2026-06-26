@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS Admin — Quản lý Chiến dịch</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="admin-sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">AMS</div>
+    <div class="sidebar-logo-text">
+      AMS Admin
+      <small>Affiliate Management</small>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-label">Tổng quan</div>
+    <a href="index.html" class="sidebar-item">
+      <i class="fas fa-gauge-high"></i> Dashboard
+    </a>
+
+    <div class="sidebar-label">Quản lý</div>
+    <a href="campaigns.html" class="sidebar-item active">
+      <i class="fas fa-bullhorn"></i> Chiến dịch
+    </a>
+    <a href="leads.html" class="sidebar-item">
+      <i class="fas fa-users"></i> Lead & Đơn hàng
+    </a>
+    <a href="content.html" class="sidebar-item">
+      <i class="fas fa-images"></i> Content & Tài nguyên
+    </a>
+    <a href="affiliates.html" class="sidebar-item">
+      <i class="fas fa-handshake"></i> Affiliate
+    </a>
+
+    <div class="sidebar-label">Hệ thống</div>
+    <a href="settings.html" class="sidebar-item">
+      <i class="fas fa-gear"></i> Cài đặt
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-info">AMS Admin v1.0 · © 2026</div>
+  </div>
+</aside>
+
+<!-- HEADER -->
+<header class="admin-header">
+  <div class="header-left">
+    <div class="header-breadcrumb">
+      <i class="fas fa-home" style="font-size:11px; margin-right:4px; opacity:.5"></i>
+      Admin / <span>Chiến dịch</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-admin-name">
+      Admin Hệ thống
+      <span class="header-admin-role">ADMIN</span>
+    </div>
+    <div class="admin-avatar">AD</div>
+    <button class="btn-logout" onclick="handleLogout()">
+      <i class="fas fa-right-from-bracket"></i> Đăng xuất
+    </button>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="admin-main">
+  <!-- Page Header -->
+  <div class="page-header ani ani-1">
+    <div>
+      <h1 class="page-title">Quản lý Chiến dịch</h1>
+      <p class="page-sub">Tạo, chỉnh sửa và quản lý tất cả chiến dịch affiliate</p>
+    </div>
+    <button class="btn btn-primary" onclick="openCampaignForm()">
+      <i class="fas fa-plus"></i> Thêm chiến dịch mới
+    </button>
+  </div>
+
+  <!-- Campaign Table -->
+  <div class="card ani ani-2">
+    <div class="card-header">
+      <div class="card-title"><i class="fas fa-bullhorn" style="color:var(--blue)"></i> Danh sách chiến dịch</div>
+      <div class="filter-count" id="campaign-count">Đang tải...</div>
+    </div>
+    <div class="card-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Tên chiến dịch</th>
+              <th>Trạng thái</th>
+              <th>Loại tracking</th>
+              <th>Lead</th>
+              <th>Doanh thu</th>
+              <th style="text-align:center">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="campaigns-tbody">
+            <tr><td colspan="6" class="loading-overlay"><span class="spinner"></span> Đang tải dữ liệu...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="admin.js"></script>
+<script>
+// === Campaign Page Logic ===
+let campaigns = [];
+let leads = [];
+let editingCampaignId = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadCampaigns();
+});
+
+async function loadCampaigns() {
+  try {
+    const [campRes, leadRes] = await Promise.allSettled([
+      apiGet('/campaigns'),
+      apiGet('/leads')
+    ]);
+
+    campaigns = campRes.status === 'fulfilled' ? campRes.value : [];
+    leads = leadRes.status === 'fulfilled' ? leadRes.value : [];
+
+    renderCampaigns();
+  } catch (err) {
+    showToast('Không thể tải danh sách chiến dịch', 'error');
+  }
+}
+
+function renderCampaigns() {
+  const tbody = document.getElementById('campaigns-tbody');
+  document.getElementById('campaign-count').textContent = `${campaigns.length} chiến dịch`;
+
+  if (campaigns.length === 0) {
+    tbody.innerHTML = `
+      <tr><td colspan="6" class="empty-state">
+        <i class="fas fa-bullhorn"></i>
+        <p>Chưa có chiến dịch nào. Hãy tạo chiến dịch đầu tiên!</p>
+      </td></tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = campaigns.map(camp => {
+    const campLeads = leads.filter(l => l.campaign_id === camp.id);
+    const leadCount = campLeads.length;
+    const revenue = campLeads.filter(l => l.status === 'valid').reduce((s, l) => s + (l.order_value || 0), 0);
+
+    const statusClass = {
+      'active': 'badge-active',
+      'paused': 'badge-paused',
+      'ended': 'badge-ended'
+    }[camp.status] || 'badge-pending';
+
+    const statusText = {
+      'active': 'Đang chạy',
+      'paused': 'Tạm dừng',
+      'ended': 'Kết thúc'
+    }[camp.status] || camp.status;
+
+    const trackingText = {
+      'gift_code': '🎁 Gift Code',
+      'partner_code': '🔗 Partner Code'
+    }[camp.tracking_type] || camp.tracking_type || '—';
+
+    return `
+      <tr>
+        <td>
+          <div class="bold">${camp.name}</div>
+          <div class="sub">${camp.product || ''} ${camp.region ? '· ' + camp.region : ''}</div>
+        </td>
+        <td><span class="badge-status ${statusClass}">${statusText}</span></td>
+        <td style="font-size:12px">${trackingText}</td>
+        <td class="bold">${leadCount}</td>
+        <td style="font-weight:600;color:var(--green-dk)">${revenue > 0 ? formatCompact(revenue) : '—'}</td>
+        <td style="text-align:center">
+          <button class="btn btn-xs btn-outline" onclick="openCampaignForm('${camp.id}')" title="Sửa">
+            <i class="fas fa-pen"></i> Sửa
+          </button>
+          <button class="btn btn-xs btn-danger" onclick="deleteCampaign('${camp.id}')" title="Xóa" style="margin-left:4px">
+            <i class="fas fa-trash-can"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// === Campaign Form Modal ===
+function openCampaignForm(id) {
+  editingCampaignId = id || null;
+  const camp = id ? campaigns.find(c => c.id === id) : {};
+  const isEdit = !!id;
+  const title = isEdit ? 'Chỉnh sửa chiến dịch' : 'Thêm chiến dịch mới';
+
+  const trackingType = camp.tracking_type || 'gift_code';
+  const showGift = trackingType === 'gift_code' ? '' : 'display:none';
+  const showPartner = trackingType === 'partner_code' ? '' : 'display:none';
+
+  const bodyHTML = `
+    <form id="campaign-form" onsubmit="saveCampaign(event)">
+      <div class="form-group">
+        <label class="form-label">Tên chiến dịch <span class="required">*</span></label>
+        <input class="form-input" name="name" value="${camp.name || ''}" placeholder="Nhập tên chiến dịch" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Mô tả chiến dịch</label>
+        <!-- Rich Text Toolbar -->
+        <div style="border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <div id="rte-toolbar" style="display:flex; flex-wrap:wrap; gap:2px; padding:8px; background:#f8fafc; border-bottom:1px solid var(--border); align-items:center;">
+            <select onchange="rteExec('formatBlock',this.value);this.selectedIndex=0" style="padding:4px 8px; border:1px solid var(--border); border-radius:4px; font-size:11px; background:#fff; cursor:pointer;">
+              <option value="">Kiểu chữ</option>
+              <option value="h2">Tiêu đề lớn</option>
+              <option value="h3">Tiêu đề vừa</option>
+              <option value="h4">Tiêu đề nhỏ</option>
+              <option value="p">Đoạn văn</option>
+            </select>
+            <select onchange="rteExec('fontSize',this.value);this.selectedIndex=0" style="padding:4px 8px; border:1px solid var(--border); border-radius:4px; font-size:11px; background:#fff; cursor:pointer;">
+              <option value="">Cỡ chữ</option>
+              <option value="1">Rất nhỏ</option>
+              <option value="2">Nhỏ</option>
+              <option value="3">Bình thường</option>
+              <option value="4">Lớn</option>
+              <option value="5">Rất lớn</option>
+              <option value="6">Cực lớn</option>
+            </select>
+            <div style="width:1px;height:24px;background:var(--border);margin:0 4px;"></div>
+            <button type="button" onclick="rteExec('bold')" title="In đậm" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;font-weight:700;font-size:13px;">B</button>
+            <button type="button" onclick="rteExec('italic')" title="In nghiêng" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;font-style:italic;font-size:13px;">I</button>
+            <button type="button" onclick="rteExec('underline')" title="Gạch chân" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;text-decoration:underline;font-size:13px;">U</button>
+            <button type="button" onclick="rteExec('strikeThrough')" title="Gạch ngang" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;text-decoration:line-through;font-size:13px;">S</button>
+            <div style="width:1px;height:24px;background:var(--border);margin:0 4px;"></div>
+            <label title="Màu chữ" style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px;font-weight:600;color:var(--txt2);">
+              <span style="font-size:14px;">A</span>
+              <input type="color" value="#000000" onchange="rteExec('foreColor',this.value)" style="width:24px;height:24px;border:1px solid var(--border);border-radius:4px;padding:0;cursor:pointer;">
+            </label>
+            <label title="Màu nền" style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px;font-weight:600;color:var(--txt2);">
+              <i class="fas fa-fill-drip" style="font-size:12px;"></i>
+              <input type="color" value="#ffffff" onchange="rteExec('hiliteColor',this.value)" style="width:24px;height:24px;border:1px solid var(--border);border-radius:4px;padding:0;cursor:pointer;">
+            </label>
+            <div style="width:1px;height:24px;background:var(--border);margin:0 4px;"></div>
+            <button type="button" onclick="rteExec('justifyLeft')" title="Căn trái" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-align-left" style="font-size:11px;"></i></button>
+            <button type="button" onclick="rteExec('justifyCenter')" title="Căn giữa" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-align-center" style="font-size:11px;"></i></button>
+            <button type="button" onclick="rteExec('insertUnorderedList')" title="Danh sách" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-list-ul" style="font-size:11px;"></i></button>
+            <button type="button" onclick="rteExec('insertOrderedList')" title="Danh sách số" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-list-ol" style="font-size:11px;"></i></button>
+            <div style="width:1px;height:24px;background:var(--border);margin:0 4px;"></div>
+            <button type="button" onclick="rteInsertLink()" title="Chèn link" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-link" style="font-size:11px;"></i></button>
+            <button type="button" onclick="rteInsertIcon('fab fa-facebook','#1877F2')" title="Icon Facebook" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:#1877F2;"><i class="fab fa-facebook" style="font-size:13px;"></i></button>
+            <button type="button" onclick="rteInsertIcon('fab fa-youtube','#FF0000')" title="Icon YouTube" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:#FF0000;"><i class="fab fa-youtube" style="font-size:13px;"></i></button>
+            <button type="button" onclick="rteInsertIcon('fab fa-tiktok','#000')" title="Icon TikTok" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fab fa-tiktok" style="font-size:13px;"></i></button>
+            <button type="button" onclick="rteInsertIcon('fab fa-instagram','#E4405F')" title="Icon Instagram" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:#E4405F;"><i class="fab fa-instagram" style="font-size:13px;"></i></button>
+            <button type="button" onclick="rteInsertIcon('fas fa-globe','#2563eb')" title="Icon Website" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:#2563eb;"><i class="fas fa-globe" style="font-size:13px;"></i></button>
+            <button type="button" onclick="rteInsertEmoji()" title="Emoji" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;font-size:14px;">😊</button>
+          </div>
+          <div id="rte-editor" contenteditable="true" style="min-height:180px; padding:16px; font-size:14px; line-height:1.7; outline:none; color:var(--txt); font-family:inherit;">${camp.description || '<p>Nhập mô tả chiến dịch...</p>'}</div>
+        </div>
+        <input type="hidden" name="description" id="rte-hidden">
+      </div>
+
+      <!-- File Uploads Section -->
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:20px; margin-bottom:20px;">
+        <div style="font-weight:700; font-size:13px; color:var(--navy); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+          <i class="fas fa-image" style="color:var(--blue);"></i> Hình ảnh chiến dịch
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px;">
+          <!-- Logo Upload -->
+          <div>
+            <label class="form-label" style="font-size:12px;">Logo chiến dịch</label>
+            <div id="logo-upload-zone" onclick="document.getElementById('logo-file').click()" style="border:2px dashed var(--border); border-radius:8px; padding:20px 12px; text-align:center; cursor:pointer; transition:all .2s; min-height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='#f0f9ff'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+              ${camp.logo_url ? '<img src="'+camp.logo_url+'" style="max-height:60px; max-width:100%; border-radius:6px; margin-bottom:6px;">' : '<i class="fas fa-cloud-upload-alt" style="font-size:24px; color:var(--txt3); margin-bottom:6px;"></i>'}
+              <div style="font-size:11px; color:var(--txt3);">Click để upload logo</div>
+            </div>
+            <div style="font-size:10px; color:var(--txt3); margin-top:4px; display:flex; align-items:center; gap:4px;"><i class="fas fa-info-circle" style="font-size:9px; color:var(--blue);"></i> Khuyến nghị: <strong>200×60px</strong> · PNG/SVG · nền trong suốt</div>
+            <input type="file" id="logo-file" accept="image/*" style="display:none" onchange="previewUpload(this,'logo-upload-zone','logo_url_input')">
+            <input type="hidden" name="logo_url" id="logo_url_input" value="${camp.logo_url || ''}">
+            <input class="form-input" name="logo_url_text" value="${camp.logo_url || ''}" placeholder="Hoặc nhập URL logo" style="margin-top:8px; font-size:11px;" onchange="document.getElementById('logo_url_input').value=this.value">
+          </div>
+          <!-- Banner Upload -->
+          <div>
+            <label class="form-label" style="font-size:12px;">Banner chiến dịch</label>
+            <div id="banner-upload-zone" onclick="document.getElementById('banner-file').click()" style="border:2px dashed var(--border); border-radius:8px; padding:20px 12px; text-align:center; cursor:pointer; transition:all .2s; min-height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='#f0f9ff'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+              ${camp.banner_url ? '<img src="'+camp.banner_url+'" style="max-height:60px; max-width:100%; border-radius:6px; margin-bottom:6px;">' : '<i class="fas fa-panorama" style="font-size:24px; color:var(--txt3); margin-bottom:6px;"></i>'}
+              <div style="font-size:11px; color:var(--txt3);">Click để upload banner</div>
+            </div>
+            <div style="font-size:10px; color:var(--txt3); margin-top:4px; display:flex; align-items:center; gap:4px;"><i class="fas fa-info-circle" style="font-size:9px; color:var(--blue);"></i> Khuyến nghị: <strong>1200×400px</strong> · JPG/PNG · tỉ lệ 3:1</div>
+            <input type="file" id="banner-file" accept="image/*" style="display:none" onchange="previewUpload(this,'banner-upload-zone','banner_url_input')">
+            <input type="hidden" name="banner_url" id="banner_url_input" value="${camp.banner_url || ''}">
+            <input class="form-input" name="banner_url_text" value="${camp.banner_url || ''}" placeholder="Hoặc nhập URL banner" style="margin-top:8px; font-size:11px;" onchange="document.getElementById('banner_url_input').value=this.value">
+          </div>
+          <!-- Avatar Upload -->
+          <div>
+            <label class="form-label" style="font-size:12px;">Ảnh đại diện</label>
+            <div id="avatar-upload-zone" onclick="document.getElementById('avatar-file').click()" style="border:2px dashed var(--border); border-radius:8px; padding:20px 12px; text-align:center; cursor:pointer; transition:all .2s; min-height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='#f0f9ff'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+              ${camp.avatar_url ? '<img src="'+camp.avatar_url+'" style="max-height:60px; max-width:100%; border-radius:6px; margin-bottom:6px;">' : '<i class="fas fa-user-circle" style="font-size:24px; color:var(--txt3); margin-bottom:6px;"></i>'}
+              <div style="font-size:11px; color:var(--txt3);">Click để upload ảnh</div>
+            </div>
+            <div style="font-size:10px; color:var(--txt3); margin-top:4px; display:flex; align-items:center; gap:4px;"><i class="fas fa-info-circle" style="font-size:9px; color:var(--blue);"></i> Khuyến nghị: <strong>200×200px</strong> · JPG/PNG · tỉ lệ 1:1</div>
+            <input type="file" id="avatar-file" accept="image/*" style="display:none" onchange="previewUpload(this,'avatar-upload-zone','avatar_url_input')">
+            <input type="hidden" name="avatar_url" id="avatar_url_input" value="${camp.avatar_url || ''}">
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Trạng thái</label>
+          <select class="form-select" name="status">
+            <option value="active" ${camp.status === 'active' ? 'selected' : ''}>Đang chạy</option>
+            <option value="paused" ${camp.status === 'paused' ? 'selected' : ''}>Tạm dừng</option>
+            <option value="ended" ${camp.status === 'ended' ? 'selected' : ''}>Kết thúc</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hoa hồng %</label>
+          <input class="form-input" name="commission_rate" value="${camp.commission_rate || ''}" placeholder="VD: 10" type="number" step="0.1">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Thời gian bắt đầu</label>
+          <input class="form-input" name="start_date" type="date" value="${camp.start_date ? camp.start_date.split('T')[0] : ''}">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Thời gian kết thúc</label>
+          <input class="form-input" name="end_date" type="date" value="${camp.end_date ? camp.end_date.split('T')[0] : ''}">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Sản phẩm</label>
+          <input class="form-input" name="product" value="${camp.product || ''}" placeholder="Tên sản phẩm">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Đối tượng</label>
+          <input class="form-input" name="target_audience" value="${camp.target_audience || ''}" placeholder="VD: Sinh viên, Người đi làm">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Hình thức học</label>
+          <input class="form-input" name="learning_format" value="${camp.learning_format || ''}" placeholder="VD: Online, Offline">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Khu vực</label>
+          <input class="form-input" name="region" value="${camp.region || ''}" placeholder="VD: Toàn quốc, HCM, HN">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Loại tracking</label>
+        <select class="form-select" name="tracking_type" onchange="toggleTrackingFields(this.value)">
+          <option value="gift_code" ${trackingType === 'gift_code' ? 'selected' : ''}>Gift Code</option>
+          <option value="partner_code" ${trackingType === 'partner_code' ? 'selected' : ''}>Partner Code</option>
+        </select>
+      </div>
+
+      <div id="gift-code-fields" style="${showGift}">
+        <div class="form-group">
+          <label class="form-label">Mã quà tặng</label>
+          <input class="form-input" name="gift_code" value="${camp.gift_code || ''}" placeholder="Nhập mã gift code">
+        </div>
+      </div>
+
+      <div id="partner-code-fields" style="${showPartner}">
+        <div class="form-group">
+          <label class="form-label">Mã đối tác</label>
+          <input class="form-input" name="partner_code" value="${camp.partner_code || ''}" placeholder="VD: 11198">
+        </div>
+
+        <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:16px; margin-bottom:16px;">
+          <div style="font-weight:700; font-size:12px; color:#166534; margin-bottom:12px; display:flex; align-items:center; gap:6px;">
+            <i class="fas fa-link" style="font-size:11px;"></i> Cấu hình UTM Link truyền thông
+          </div>
+
+          <div class="form-group" style="margin-bottom:12px;">
+            <label class="form-label" style="font-size:12px;">Link trang đích <span class="required">*</span></label>
+            <input class="form-input" name="link_template" value="${camp.link_template || ''}" placeholder="VD: https://easyspeak.ican.vn">
+            <div class="form-hint">Link gốc sản phẩm / landing page (chưa có UTM)</div>
+          </div>
+
+          <div class="form-row" style="margin-bottom:12px;">
+            <div class="form-group">
+              <label class="form-label" style="font-size:12px;">utm_campaign</label>
+              <input class="form-input" name="utm_campaign" value="${camp.utm_campaign || 'ADC'}" style="background:#f8fafc; font-weight:600;">
+              <div class="form-hint">Mặc định: ADC (có thể đổi)</div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="font-size:12px;">utm_source</label>
+              <input class="form-input" name="utm_source_type" value="Tự fill theo Mã đối tác" disabled style="background:#f1f5f9; color:var(--txt3); font-style:italic;">
+              <div class="form-hint">Tự động = Mã đối tác (VD: 11198)</div>
+            </div>
+          </div>
+
+          <div class="form-row" style="margin-bottom:8px;">
+            <div class="form-group">
+              <label class="form-label" style="font-size:12px;">utm_medium <span style="font-weight:400; color:var(--txt3);">(nếu có)</span></label>
+              <input class="form-input" name="utm_medium" value="${camp.utm_medium || ''}" placeholder="VD: social, email, zalo...">
+            </div>
+            <div class="form-group">
+              <label class="form-label" style="font-size:12px;">utm_content <span style="font-weight:400; color:var(--txt3);">(nếu có)</span></label>
+              <input class="form-input" name="utm_content" value="${camp.utm_content || ''}" placeholder="VD: banner_01, post_fb...">
+            </div>
+          </div>
+
+          <div style="background:#dcfce7; border-radius:6px; padding:10px 12px; font-size:11px; color:#166534; line-height:1.6;">
+            <i class="fas fa-eye" style="margin-right:4px;"></i> <strong>Link mẫu:</strong>
+            <span style="word-break:break-all;">${camp.link_template || 'https://domain.com'}?utm_campaign=${camp.utm_campaign || 'ADC'}&utm_source=${camp.partner_code || '{mã đối tác}'}${camp.utm_medium ? '&utm_medium=' + camp.utm_medium : ''}${camp.utm_content ? '&utm_content=' + camp.utm_content : ''}</span>
+          </div>
+        </div>
+      </div>
+    </form>
+  `;
+
+  const footerHTML = `
+    <button class="btn btn-outline" onclick="hideModal()">Hủy bỏ</button>
+    <button class="btn btn-primary" onclick="document.getElementById('campaign-form').requestSubmit()">
+      <i class="fas fa-save"></i> ${isEdit ? 'Cập nhật' : 'Tạo chiến dịch'}
+    </button>
+  `;
+
+  showModal(title, bodyHTML, { footerHTML, maxWidth: '780px' });
+
+  // Focus RTE editor and clear placeholder on first click
+  setTimeout(() => {
+    const editor = document.getElementById('rte-editor');
+    if (editor) {
+      editor.addEventListener('focus', function() {
+        if (this.innerHTML.includes('Nhập mô tả chiến dịch...')) {
+          this.innerHTML = '<p><br></p>';
+        }
+      });
+    }
+  }, 100);
+}
+
+// === Rich Text Editor Functions ===
+function rteExec(command, value) {
+  document.execCommand(command, false, value || null);
+  document.getElementById('rte-editor').focus();
+}
+
+function rteInsertLink() {
+  const url = prompt('Nhập URL link:', 'https://');
+  if (url) {
+    const text = window.getSelection().toString() || url;
+    document.execCommand('insertHTML', false, '<a href="' + url + '" target="_blank" style="color:#2563eb; text-decoration:underline;">' + text + '</a>');
+  }
+  document.getElementById('rte-editor').focus();
+}
+
+function rteInsertIcon(iconClass, color) {
+  document.execCommand('insertHTML', false, ' <i class="' + iconClass + '" style="color:' + color + '; font-size:1em;"></i> ');
+  document.getElementById('rte-editor').focus();
+}
+
+function rteInsertEmoji() {
+  const emojis = ['📚','🎯','🗣','💡','🔥','✅','⭐','🚀','💼','📊','🏆','💰','📱','🎓','❤️','👉','📌','🔑','💪','🎉'];
+  let picker = document.getElementById('emoji-picker');
+  if (picker) { picker.remove(); return; }
+  
+  picker = document.createElement('div');
+  picker.id = 'emoji-picker';
+  picker.style.cssText = 'position:absolute; z-index:99999; background:#fff; border:1px solid var(--border); border-radius:8px; padding:8px; box-shadow:0 8px 24px rgba(0,0,0,.15); display:flex; flex-wrap:wrap; gap:4px; width:220px;';
+  emojis.forEach(e => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = e;
+    btn.style.cssText = 'width:32px;height:32px;border:none;background:transparent;font-size:18px;cursor:pointer;border-radius:4px;transition:background .15s;';
+    btn.onmouseover = () => btn.style.background = '#f1f5f9';
+    btn.onmouseout = () => btn.style.background = 'transparent';
+    btn.onclick = () => { document.execCommand('insertHTML', false, ' ' + e + ' '); picker.remove(); document.getElementById('rte-editor').focus(); };
+    picker.appendChild(btn);
+  });
+  
+  const toolbar = document.getElementById('rte-toolbar');
+  toolbar.style.position = 'relative';
+  toolbar.appendChild(picker);
+  picker.style.top = '40px';
+  picker.style.right = '0';
+  
+  setTimeout(() => document.addEventListener('click', function closePicker(ev) {
+    if (!picker.contains(ev.target)) { picker.remove(); document.removeEventListener('click', closePicker); }
+  }), 50);
+}
+
+// === File Upload Preview ===
+function previewUpload(input, zoneId, hiddenId) {
+  const zone = document.getElementById(zoneId);
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      zone.innerHTML = '<img src="' + e.target.result + '" style="max-height:60px; max-width:100%; border-radius:6px; margin-bottom:6px;">' +
+        '<div style="font-size:11px; color:var(--green); font-weight:600;"><i class="fas fa-check-circle"></i> ' + file.name + '</div>';
+      // Store as data URL for now (in production would upload to server)
+      document.getElementById(hiddenId).value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    showToast('Đã chọn file: ' + file.name, 'success');
+  }
+}
+
+function toggleTrackingFields(type) {
+  const giftFields = document.getElementById('gift-code-fields');
+  const partnerFields = document.getElementById('partner-code-fields');
+  if (giftFields) giftFields.style.display = type === 'gift_code' ? '' : 'none';
+  if (partnerFields) partnerFields.style.display = type === 'partner_code' ? '' : 'none';
+}
+
+async function saveCampaign(e) {
+  e.preventDefault();
+
+  // Sync RTE content to hidden field
+  const editor = document.getElementById('rte-editor');
+  if (editor) {
+    document.getElementById('rte-hidden').value = editor.innerHTML;
+  }
+
+  const form = document.getElementById('campaign-form');
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+
+  // Remove temp fields
+  delete data.logo_url_text;
+  delete data.banner_url_text;
+  delete data.utm_source_type;
+
+  // Convert commission_rate to number
+  if (data.commission_rate) data.commission_rate = parseFloat(data.commission_rate);
+
+  try {
+    if (editingCampaignId) {
+      await apiPut(`/campaigns/${editingCampaignId}`, data);
+      showToast('Đã cập nhật chiến dịch thành công!', 'success');
+    } else {
+      await apiPost('/campaigns', data);
+      showToast('Đã tạo chiến dịch mới thành công!', 'success');
+    }
+    hideModal();
+    await loadCampaigns();
+  } catch (err) {
+    showToast('Có lỗi xảy ra khi lưu chiến dịch', 'error');
+  }
+}
+
+async function deleteCampaign(id) {
+  const camp = campaigns.find(c => c.id === id);
+  const confirmed = await confirmAction(
+    `Bạn có chắc muốn xóa chiến dịch <strong>"${camp ? camp.name : ''}"</strong>? Hành động này không thể hoàn tác.`,
+    { title: 'Xóa chiến dịch', confirmText: 'Xóa', type: 'danger' }
+  );
+
+  if (!confirmed) return;
+
+  try {
+    await apiDelete(`/campaigns/${id}`);
+    showToast('Đã xóa chiến dịch thành công', 'success');
+    await loadCampaigns();
+  } catch (err) {
+    showToast('Không thể xóa chiến dịch', 'error');
+  }
+}
+
+function handleLogout() {
+  sessionStorage.clear();
+  window.location.href = '/';
+}
+</script>
+</body>
+</html>

@@ -12,15 +12,16 @@
       window.location.href = 'login.html';
     }
   </script>
+  <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
 
 <!-- HEADER -->
 <header class="header">
   <div class="header-left">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
     <a href="#" class="logo">
-      <div class="logo-icon">AMS</div>
-      <span class="logo-text">AMS – Galaxy Education</span>
+      <img src="ge-logo.png" alt="Galaxy Education" style="height:32px;">
     </a>
     <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
   </div>
@@ -100,25 +101,22 @@
       </div>
     </div>
     <div class="profile-wrapper">
-      <div class="avatar" id="avatarTrigger">NA</div>
+      <div class="avatar" id="avatarTrigger">HD</div>
       <div class="profile-dropdown" id="profileDropdown">
         <div class="pd-header">
           <div class="pd-user">
-            <div class="pd-avatar">NA</div>
+            <div class="pd-avatar">HD</div>
             <div class="pd-info">
-              <div class="pd-name">Nguyễn Minh Anh</div>
+              <div class="pd-name">Hoàng Thanh Dung</div>
               <div class="pd-tier">🥈 Affiliate Silver</div>
-              <div class="pd-meta">Mã: AFF123 · <span class="pd-status">Đang hoạt động</span></div>
+              <div class="pd-meta">Mã đối tác: 11198 · <span class="pd-status">Đang hoạt động</span></div>
             </div>
           </div>
-          <div class="pd-copy-btns">
-            <button class="pd-copy" onclick="copyText('AFF123', this)"><i class="fas fa-copy"></i> Sao chép mã Affiliate</button>
-            <button class="pd-copy" onclick="copyText('https://ams.link/AFF123', this)"><i class="fas fa-link"></i> Sao chép link giới thiệu</button>
-          </div>
+
         </div>
         <div class="pd-group">
           <div class="pd-group-label">Tài khoản & quyền lợi</div>
-          <div class="pd-item"><i class="fas fa-user"></i> Hồ sơ của tôi</div>
+          <div class="pd-item" onclick="openProfileModal()" style="cursor:pointer"><i class="fas fa-user"></i> Hồ sơ của tôi</div>
           <div class="pd-item"><i class="fas fa-crown"></i> Cấp bậc & quyền lợi</div>
           <div class="pd-item"><i class="fas fa-credit-card"></i> Thông tin thanh toán</div>
           <div class="pd-item"><i class="fas fa-file-contract"></i> Thuế & hồ sơ hợp đồng</div>
@@ -136,7 +134,7 @@
           <div class="pd-item"><i class="fas fa-life-ring"></i> Trung tâm hỗ trợ</div>
         </div>
         <div class="pd-divider"></div>
-        <div class="pd-logout"><i class="fas fa-right-from-bracket"></i> Đăng xuất</div>
+        <div class="pd-logout" onclick="window.location.href='login.html'" style="cursor:pointer"><i class="fas fa-right-from-bracket"></i> Đăng xuất</div>
       </div>
     </div>
   </div>
@@ -167,6 +165,7 @@
     <a href="#" class="s-promo-btn">Xem cấp bậc của tôi <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
   </div>
 </aside>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
 <!-- MAIN -->
 <main class="main">
@@ -198,104 +197,12 @@
     </div>
   </div>
 
-  <!-- SECTION: CAMPAIGNS -->
-  <div class="db-section-title">Chương trình trọng điểm đang diễn ra <a href="#" style="font-size:11.5px;color:#2563eb;font-weight:600;text-decoration:none">Xem tất cả chiến dịch →</a></div>
-  <div class="db-camp-grid">
-    <!-- Camp 1 -->
-    <div class="db-camp-card gold">
-      <div class="db-camp-head">
-        <div class="db-camp-num">1</div>
-        <div class="db-camp-name">TopUni 2027 — Lộ trình S V-ACT</div>
-      </div>
-      <div class="db-camp-tags">
-        <span class="tag tag-yellow">⭐ Trọng điểm</span>
-        <span class="tag tag-blue">COM 10% DS</span>
-        <span class="tag tag-green">Bonus đến +30%</span>
-        <span class="tag tag-purple">Content kit</span>
-      </div>
-      <div class="db-camp-desc">Luyện thi V-ACT lộ trình S cho học sinh lớp 12 / 2K9 — hệ thống hóa kiến thức, luyện đề theo giai đoạn, tối ưu điểm số xét tuyển đại học.</div>
-      <div class="db-camp-stats">
-        <div>
-          <div class="db-cs-val"><i class="fas fa-users"></i> 26</div>
-          <div class="db-cs-lbl">Lead</div>
-        </div>
-        <div>
-          <div class="db-cs-val green rev-only"><i class="fas fa-sack-dollar"></i> 42tr</div>
-          <div class="db-cs-lbl rev-only">Doanh thu</div>
-        </div>
-        <div>
-          <div class="db-cs-val orange"><i class="fas fa-clock"></i> 5 ngày</div>
-          <div class="db-cs-lbl">Deadline còn</div>
-        </div>
-      </div>
-      <div class="db-camp-btns">
-        <button class="btn-o"><i class="fas fa-link"></i> Sao chép link</button>
-        <button class="btn-f dark">Xem brief</button>
-      </div>
-    </div>
-
-    <!-- Camp 2 -->
-    <div class="db-camp-card">
-      <div class="db-camp-head">
-        <div class="db-camp-num">2</div>
-        <div class="db-camp-name">Easy SPEAK for Adults</div>
-      </div>
-      <div class="db-camp-tags">
-        <span class="tag tag-green">Người đi làm</span>
-        <span class="tag tag-blue">COM 10% DS</span>
-        <span class="tag tag-orange">Ưu đãi</span>
-        <span class="tag tag-purple">Content kit</span>
-      </div>
-      <div class="db-camp-desc">Tiếng Anh giao tiếp cho người đi làm, phù hợp người từ 18+ muốn cải thiện phản xạ và ứng dụng thực tế.</div>
-      <div class="db-camp-stats">
-        <div>
-          <div class="db-cs-val"><i class="fas fa-users"></i> 18</div>
-          <div class="db-cs-lbl">Lead</div>
-        </div>
-        <div>
-          <div class="db-cs-val green rev-only"><i class="fas fa-sack-dollar"></i> 18tr</div>
-          <div class="db-cs-lbl rev-only">Doanh thu</div>
-        </div>
-        <div>
-          <div class="db-cs-val orange"><i class="fas fa-clock"></i> 4 ngày</div>
-          <div class="db-cs-lbl">Deadline còn</div>
-        </div>
-      </div>
-      <div class="db-camp-btns">
-        <button class="btn-o"><i class="fas fa-link"></i> Sao chép link</button>
-        <button class="btn-f dark">Xem brief</button>
-      </div>
-    </div>
-
-    <!-- Camp 3 -->
-    <div class="db-camp-card">
-      <div class="db-camp-head">
-        <div class="db-camp-num">3</div>
-        <div class="db-camp-name">Hội thảo FUNiX – AI Cơ bản</div>
-      </div>
-      <div class="db-camp-tags">
-        <span class="tag tag-teal">Hội thảo online</span>
-        <span class="tag tag-blue">COM 13.5% DS</span>
-      </div>
-      <div class="db-camp-desc">Giới thiệu hội thảo AI miễn phí, mở ra cánh cửa vào thế giới công nghệ.</div>
-      <div class="db-camp-stats">
-        <div>
-          <div class="db-cs-val"><i class="fas fa-users"></i> 8</div>
-          <div class="db-cs-lbl">Lead</div>
-        </div>
-        <div>
-          <div class="db-cs-val green rev-only"><i class="fas fa-sack-dollar"></i> 15tr</div>
-          <div class="db-cs-lbl rev-only">Doanh thu</div>
-        </div>
-        <div>
-          <div class="db-cs-val orange"><i class="fas fa-clock"></i> 7 ngày</div>
-          <div class="db-cs-lbl">Deadline còn</div>
-        </div>
-      </div>
-      <div class="db-camp-btns">
-        <button class="btn-o"><i class="fas fa-link"></i> Sao chép link</button>
-        <button class="btn-f dark">Xem brief</button>
-      </div>
+  <!-- SECTION: CAMPAIGNS (DYNAMIC) -->
+  <div class="db-section-title">Chương trình trọng điểm đang diễn ra <a href="campaigns.html" style="font-size:11.5px;color:#2563eb;font-weight:600;text-decoration:none">Xem tất cả chiến dịch →</a></div>
+  <div class="db-camp-grid" id="campaign-grid">
+    <div style="grid-column:1/-1; text-align:center; padding:30px; color:var(--txt3);">
+      <i class="fas fa-spinner fa-spin" style="font-size:18px; margin-bottom:8px;"></i>
+      <div>Đang tải chiến dịch...</div>
     </div>
   </div>
 
@@ -409,5 +316,168 @@
 </main>
 
 <script src="app.js"></script>
+
+<script>
+// === Toggle Sidebar (Mobile) ===
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  var ol = document.getElementById('sidebarOverlay');
+  if (ol) ol.classList.toggle('show');
+}
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 768) {
+    document.querySelector('.sidebar').classList.remove('open');
+    var ol = document.getElementById('sidebarOverlay');
+    if (ol) ol.classList.remove('show');
+  }
+});
+
+// === Load Campaigns from API ===
+async function loadCampaignsFromAPI() {
+  const grid = document.getElementById('campaign-grid');
+  if (!grid) return;
+
+  try {
+    const res = await fetch('http://localhost:3000/api/campaigns');
+    if (!res.ok) throw new Error('API error');
+    const campaigns = await res.json();
+    const active = campaigns.filter(c => c.status === 'active');
+
+    if (active.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--txt3);"><i class="fas fa-bullhorn" style="font-size:32px; margin-bottom:12px; opacity:.3;"></i><div>Chưa có chiến dịch nào đang hoạt động.</div></div>';
+      return;
+    }
+
+    const detailPages = {
+      'topuni-svact': 'topuni-detail.html',
+      'easyspeak-adults': 'easyspeak-detail.html',
+      'funix-workshop': 'funix-detail.html'
+    };
+
+    grid.innerHTML = active.map((camp, idx) => {
+      const detailPage = detailPages[camp.id] || 'campaign-detail.html?id=' + camp.id;
+      const endDate = camp.date_end || camp.end_date;
+      const daysLeft = endDate ? Math.max(0, Math.ceil((new Date(endDate) - new Date()) / 86400000)) : '—';
+      const comRate = camp.commission_rate || '10';
+      const leads = camp.kpis ? camp.kpis.leads : 0;
+      const revenue = camp.kpis ? camp.kpis.revenue : 0;
+      const revDisplay = revenue >= 1000000 ? (revenue/1000000).toFixed(0) + 'tr' : (revenue >= 1000 ? (revenue/1000).toFixed(0) + 'K' : revenue);
+
+      return '<div class="db-camp-card' + (idx === 0 ? ' gold' : '') + '">' +
+        '<div class="db-camp-head">' +
+          '<div class="db-camp-num">' + (idx+1) + '</div>' +
+          '<a href="' + detailPage + '" class="db-camp-name" style="text-decoration:none;">' + camp.name + '</a>' +
+        '</div>' +
+        '<div class="db-camp-tags">' +
+          (idx === 0 ? '<span class="tag tag-yellow">⭐ Trọng điểm</span>' : '') +
+          '<span class="tag tag-blue">COM ' + comRate + '% DS</span>' +
+          '<span class="tag tag-green">' + (camp.target_audience || camp.region || 'Toàn quốc') + '</span>' +
+        '</div>' +
+        '<div class="db-camp-desc">' + (camp.description ? camp.description.replace(/<[^>]+>/g, '').substring(0, 120) : '') + '</div>' +
+        '<div class="db-camp-stats">' +
+          '<div><div class="db-cs-val"><i class="fas fa-users"></i> ' + leads + '</div><div class="db-cs-lbl">Lead</div></div>' +
+          '<div><div class="db-cs-val green rev-only"><i class="fas fa-sack-dollar"></i> ' + revDisplay + '</div><div class="db-cs-lbl rev-only">Doanh thu</div></div>' +
+          '<div><div class="db-cs-val orange"><i class="fas fa-clock"></i> ' + daysLeft + ' ngày</div><div class="db-cs-lbl">Deadline còn</div></div>' +
+        '</div>' +
+        '<div class="db-camp-btns">' +
+          '<button class="btn-o" onclick="copyLink(\'' + camp.id + '\')"><i class="fas fa-link"></i> Sao chép link</button>' +
+          '<button class="btn-f dark" onclick="window.location.href=\'' + detailPage + '\'">Xem brief</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+
+  } catch(err) {
+    console.error('Failed to load campaigns:', err);
+    // Fallback — keep the loading message
+  }
+}
+
+function copyLink(campId) {
+  navigator.clipboard.writeText(window.location.origin + '/campaign-detail.html?id=' + campId);
+  alert('Đã sao chép link!');
+}
+
+document.addEventListener('DOMContentLoaded', loadCampaignsFromAPI);
+</script>
+
+<!-- Profile Modal -->
+<div id="profileModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#fff; border-radius:16px; padding:32px; width:480px; max-width:90vw; box-shadow:0 20px 60px rgba(0,0,0,0.15); position:relative;">
+    <button onclick="closeProfileModal()" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:20px; cursor:pointer; color:#64748b;">&times;</button>
+    <h2 style="margin:0 0 24px 0; font-size:20px; font-weight:700; color:#0f172a;">Hồ sơ của tôi</h2>
+    
+    <!-- Avatar -->
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+      <div style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg, #6366f1, #8b5cf6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; flex-shrink:0;">HD</div>
+      <div>
+        <div style="font-weight:700; color:#0f172a; margin-bottom:4px;">Hoàng Thanh Dung</div>
+        <div style="font-size:12px; color:#64748b;">Mã đối tác: 11198</div>
+        <button onclick="document.getElementById('avatarUpload').click()" style="margin-top:8px; font-size:12px; padding:4px 12px; border:1px solid #e2e8f0; border-radius:6px; background:#fff; cursor:pointer; color:#2563eb; font-weight:600;">
+          <i class="fas fa-camera" style="margin-right:4px;"></i> Đổi ảnh đại diện
+        </button>
+        <input type="file" id="avatarUpload" accept="image/*" style="display:none" onchange="handleAvatarChange(this)">
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Họ và tên</label>
+        <input type="text" id="profileName" value="Hoàng Thanh Dung" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Số điện thoại</label>
+        <input type="tel" id="profilePhone" value="0912 345 678" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Email</label>
+        <input type="email" id="profileEmail" value="thanhdung@gmail.com" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Link Facebook cá nhân</label>
+        <input type="url" id="profileFacebook" value="" placeholder="https://facebook.com/username" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px;">
+      <button onclick="closeProfileModal()" style="padding:10px 20px; border:1px solid #e2e8f0; border-radius:8px; background:#fff; cursor:pointer; font-weight:600; color:#475569; font-family:inherit;">Hủy</button>
+      <button onclick="saveProfile()" style="padding:10px 20px; border:none; border-radius:8px; background:#2563eb; color:#fff; cursor:pointer; font-weight:600; font-family:inherit;">Lưu thay đổi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openProfileModal() {
+  const modal = document.getElementById('profileModal');
+  modal.style.display = 'flex';
+  // Close dropdown
+  const dd = document.getElementById('profileDropdown');
+  if (dd) dd.classList.remove('show');
+  const overlay = document.getElementById('ddOverlay');
+  if (overlay) overlay.classList.remove('show');
+}
+function closeProfileModal() {
+  document.getElementById('profileModal').style.display = 'none';
+}
+function handleAvatarChange(input) {
+  if (input.files && input.files[0]) {
+    alert('Ảnh đại diện đã được chọn: ' + input.files[0].name + '. Tính năng upload sẽ được kích hoạt khi kết nối server.');
+  }
+}
+function saveProfile() {
+  const name = document.getElementById('profileName').value;
+  const phone = document.getElementById('profilePhone').value;
+  const email = document.getElementById('profileEmail').value;
+  const fb = document.getElementById('profileFacebook').value;
+  alert('Đã lưu thông tin!\nHọ tên: ' + name + '\nSĐT: ' + phone + '\nEmail: ' + email + '\nFacebook: ' + (fb || 'Chưa cập nhật'));
+  closeProfileModal();
+}
+// Close modal on background click
+document.getElementById('profileModal').addEventListener('click', function(e) {
+  if (e.target === this) closeProfileModal();
+});
+</script>
+
 </body>
 </html>

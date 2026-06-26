@@ -1,0 +1,50 @@
+[
+  {
+    "id": "ct-001",
+    "campaign_id": "topuni-svact",
+    "title": "Hành trình chinh phục 850 điểm V-ACT trong 30 ngày",
+    "category": "article",
+    "target": "student",
+    "content_html": "<p><strong>🔥 Bạn đang lo lắng về kỳ thi V-ACT?</strong></p><p>Chia sẻ thật từ học sinh đã tăng <strong style=\"color:#2563eb;\">200+ điểm</strong> chỉ trong 30 ngày luyện thi cùng TopUni S-VACT!</p><ul><li>✅ Hệ thống hóa kiến thức trọng tâm</li><li>✅ Luyện đề theo giai đoạn</li><li>✅ Tối ưu điểm số xét tuyển đại học</li></ul><p>👉 Đăng ký ngay để nhận lộ trình học miễn phí!</p>",
+    "image_url": "",
+    "extra_image_url": "",
+    "video_url": "",
+    "created_at": "2026-06-25T10:00:00"
+  },
+  {
+    "id": "ct-002",
+    "campaign_id": "topuni-svact",
+    "title": "Mẹo làm bài V-ACT phần Toán - Từ 6 lên 8 điểm",
+    "category": "social_post",
+    "target": "student",
+    "content_html": "<p>📊 <strong>3 mẹo vàng</strong> giúp bạn tăng ngay <em>2 điểm Toán</em> trong kỳ thi V-ACT:</p><ol><li>Ưu tiên câu dễ → trung bình trước</li><li>Quản lý thời gian: 1.5 phút/câu trắc nghiệm</li><li>Eliminate - Loại trừ đáp án sai trước</li></ol><p><i class=\"fab fa-facebook\" style=\"color:#1877F2;\"></i> Chia sẻ cho bạn bè cùng ôn thi nhé!</p>",
+    "image_url": "",
+    "extra_image_url": "",
+    "video_url": "",
+    "created_at": "2026-06-24T14:30:00"
+  },
+  {
+    "id": "ct-003",
+    "campaign_id": "easyspeak-adults",
+    "title": "5 cách tự tin nói tiếng Anh trong cuộc họp",
+    "category": "article",
+    "target": "worker",
+    "content_html": "<p>🗣 <strong>Bạn hay run khi phải nói tiếng Anh trong meeting?</strong></p><p>Easy SPEAK chia sẻ 5 tips giúp bạn tự tin hơn:</p><ul><li>💡 Chuẩn bị key phrases trước cuộc họp</li><li>💡 Luyện shadowing 15 phút/ngày</li><li>💡 Sử dụng filler words tự nhiên</li><li>💡 Focus vào message, không focus vào grammar</li><li>💡 Practice với AI chatbot trước</li></ul>",
+    "image_url": "",
+    "extra_image_url": "",
+    "video_url": "",
+    "created_at": "2026-06-23T09:00:00"
+  },
+  {
+    "id": "ct-004",
+    "campaign_id": "funix-workshop",
+    "title": "Workshop AI: 10 công cụ AI miễn phí tăng năng suất 3x",
+    "category": "social_post",
+    "target": "all",
+    "content_html": "<p>🚀 <strong>Đừng bỏ lỡ Workshop MIỄN PHÍ từ FUNiX!</strong></p><p>10 công cụ AI đang thay đổi cách làm việc:</p><ul><li>🤖 ChatGPT / Claude — Viết content, email, report</li><li>🎨 Canva AI — Design không cần skill</li><li>📊 Gamma AI — Tạo slide presentation tự động</li><li>📝 Notion AI — Quản lý công việc thông minh</li></ul><p style=\"color:#ea580c; font-weight:700;\">📅 Đăng ký ngay — Chỗ ngồi có hạn!</p>",
+    "image_url": "",
+    "extra_image_url": "",
+    "video_url": "https://youtube.com/watch?v=example",
+    "created_at": "2026-06-22T16:00:00"
+  }
+]

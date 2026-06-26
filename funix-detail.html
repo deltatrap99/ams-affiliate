@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS — [FUNiX] Workshop Ứng dụng AI nâng cao hiệu suất công việc</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="campaigns.css">
+  <link rel="stylesheet" href="detail.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="mobile.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <a href="index.html" class="logo"><img src="ge-logo.png" alt="Galaxy Education" style="height:32px;"></a>
+    <a href="campaigns.html" style="color:rgba(255,255,255,.5);font-size:14px;margin-left:8px"><i class="fas fa-chevron-left"></i></a>
+    <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
+  </div>
+  <div class="header-right">
+    <span class="com-label">Cơ chế hoa hồng:</span>
+    <button class="tog on" style="background:var(--navy-light)">Sales-based COM</button>
+    <div class="notif-wrapper">
+      <button class="bell" id="bellTrigger"><i class="fas fa-bell"></i><span class="dot">3</span></button>
+      <div class="notif-dropdown" id="notifDropdown">
+        <div class="nd-header"><div class="nd-title">Thông báo <span class="nd-count">3</span></div><button class="nd-mark-read" id="markAllRead">Đánh dấu đã đọc</button></div>
+        <div class="nd-tabs"><button class="nd-tab on" data-filter="all">Tất cả</button><button class="nd-tab" data-filter="unread">Chưa đọc</button><button class="nd-tab" data-filter="lead">Lead</button><button class="nd-tab" data-filter="campaign">Chiến dịch</button></div>
+        <div class="nd-list">
+          <div class="nd-item unread" data-type="lead"><div class="nd-icon ni-lead"><i class="fas fa-user-plus"></i></div><div class="nd-content"><div class="nd-text"><strong>Lead mới</strong> — Nguyễn Hoàng Minh vừa đăng ký qua link V-ACT Hè 2026.</div><div class="nd-time"><i class="fas fa-clock"></i> 10 phút trước</div></div></div>
+          <div class="nd-item unread" data-type="campaign"><div class="nd-icon ni-warning"><i class="fas fa-exclamation-triangle"></i></div><div class="nd-content"><div class="nd-text"><strong>Sắp hết hạn</strong> — Easy IELTS Test Drive còn <strong>2 ngày</strong>.</div><div class="nd-time"><i class="fas fa-clock"></i> 30 phút trước</div></div></div>
+          <div class="nd-item unread" data-type="lead"><div class="nd-icon ni-payment"><i class="fas fa-check-circle"></i></div><div class="nd-content"><div class="nd-text"><strong>Lead hợp lệ</strong> — Lê Đức Anh đã được xác nhận. +420,000đ.</div><div class="nd-time"><i class="fas fa-clock"></i> 1 giờ trước</div></div></div>
+          <div class="nd-item" data-type="campaign"><div class="nd-icon ni-campaign"><i class="fas fa-bullhorn"></i></div><div class="nd-content"><div class="nd-text"><strong>Chiến dịch mới</strong> — TopCV – CV Pro 2026 vừa mở.</div><div class="nd-time"><i class="fas fa-clock"></i> 3 giờ trước</div></div></div>
+          <div class="nd-item" data-type="lead"><div class="nd-icon ni-rank"><i class="fas fa-trophy"></i></div><div class="nd-content"><div class="nd-text"><strong>Xếp hạng</strong> — Bạn đang đứng <strong>#2</strong> trong V-ACT Hè 2026!</div><div class="nd-time"><i class="fas fa-clock"></i> 5 giờ trước</div></div></div>
+          <div class="nd-item" data-type="campaign"><div class="nd-icon ni-system"><i class="fas fa-info-circle"></i></div><div class="nd-content"><div class="nd-text"><strong>Đối soát</strong> — Kỳ đối soát tháng 5 hoàn tất.</div><div class="nd-time"><i class="fas fa-clock"></i> Hôm qua</div></div></div>
+          <div class="nd-item" data-type="lead"><div class="nd-icon ni-lead"><i class="fas fa-user-xmark"></i></div><div class="nd-content"><div class="nd-text"><strong>Lead bị loại</strong> — Hoàng Tuấn Anh bị loại do trùng data.</div><div class="nd-time"><i class="fas fa-clock"></i> Hôm qua</div></div></div>
+        </div>
+        <div class="nd-footer"><a href="#">Xem tất cả thông báo <i class="fas fa-arrow-right" style="font-size:10px"></i></a></div>
+      </div>
+    </div>
+    <div class="profile-wrapper">
+      <div class="avatar" id="avatarTrigger">HD</div>
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="pd-header">
+          <div class="pd-user">
+            <div class="pd-avatar">HD</div>
+            <div class="pd-info">
+              <div class="pd-name">Hoàng Thanh Dung</div>
+              <div class="pd-tier">🥈 Affiliate Silver</div>
+              <div class="pd-meta">Mã đối tác: 11198 · <span class="pd-status">Đang hoạt động</span></div>
+            </div>
+          </div>
+
+        </div>
+        <div class="pd-group">
+          <div class="pd-group-label">Tài khoản & quyền lợi</div>
+          <div class="pd-item" onclick="openProfileModal()" style="cursor:pointer"><i class="fas fa-user"></i> Hồ sơ của tôi</div>
+          <div class="pd-item"><i class="fas fa-crown"></i> Cấp bậc & quyền lợi</div>
+          <div class="pd-item"><i class="fas fa-credit-card"></i> Thông tin thanh toán</div>
+          <div class="pd-item"><i class="fas fa-file-contract"></i> Thuế & hồ sơ hợp đồng</div>
+        </div>
+        <div class="pd-divider"></div>
+        <div class="pd-group">
+          <div class="pd-group-label">Cài đặt</div>
+          <div class="pd-item"><i class="fas fa-bell"></i> Cài đặt thông báo</div>
+          <div class="pd-item"><i class="fas fa-shield-halved"></i> Bảo mật tài khoản</div>
+        </div>
+        <div class="pd-divider"></div>
+        <div class="pd-group">
+          <div class="pd-group-label">Hỗ trợ</div>
+          <div class="pd-item"><i class="fas fa-headset"></i> Liên hệ AS Team</div>
+          <div class="pd-item"><i class="fas fa-life-ring"></i> Trung tâm hỗ trợ</div>
+        </div>
+        <div class="pd-divider"></div>
+        <div class="pd-logout" onclick="window.location.href='login.html'" style="cursor:pointer"><i class="fas fa-right-from-bracket"></i> Đăng xuất</div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="dd-overlay" id="ddOverlay"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-nav">
+    <div><div class="s-label">Tổng quan</div>
+      <div class="s-item" onclick="location.href='index.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-home"></i></span>Tổng quan</div></div>
+    <div><div class="s-label">Chiến dịch</div>
+      <div class="s-item on" onclick="location.href='campaigns.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-bullhorn"></i></span>Chiến dịch</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-compass"></i></span>Khám phá chiến dịch</div></div>
+    <div><div class="s-label">Lead &amp; đơn hàng</div>
+      <div class="s-item" onclick="location.href='leads.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-file-invoice"></i></span>Lead &amp; đơn hàng</div></div>
+    <div><div class="s-label">Hoa hồng &amp; đối soát</div>
+      <div class="s-item" onclick="location.href='commission.html'"><span class="ic"><i class="fas fa-coins"></i></span>Hoa hồng &amp; thưởng</div></div>
+    <div><div class="s-label">Tài nguyên</div>
+      <div class="s-item" onclick="location.href='resources.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-images"></i></span>Tài nguyên nội dung</div></div>
+    <div><div class="s-label">Cộng đồng</div>
+      <div class="s-item" onclick="location.href='leaderboard.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-ranking-star"></i></span>Bảng xếp hạng</div></div>
+    <div><div class="s-label">Hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-life-ring"></i></span>Trung tâm hỗ trợ</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-headset"></i></span>Liên hệ AS Team</div></div>
+  </div>
+  <div class="s-promo bronze">
+    <h4>🥉 Bạn đang ở hạng Bronze</h4>
+    <p>Còn 6 lead hợp lệ để lên hạng Silver</p>
+    <a href="#" class="s-promo-btn">Xem Quy tắc <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+  </div>
+</aside>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="breadcrumb" style="margin-bottom:16px">Chiến dịch > <span>Chi tiết chiến dịch</span></div>
+
+
+  <!-- Campaign Hero (New Design) -->
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:12px">
+    <div class="cd-actions" style="display:flex; gap:8px; margin-left:auto;">
+      <button class="btn-o" style="padding:10px 18px; border-color:#e2e8f0; color:#475569; border-radius:8px;"><i class="fas fa-link" style="font-size:11px"></i> Sao chép link sản phẩm</button>
+      <button class="btn-f" style="padding:10px 18px; background:var(--blue); border-radius:8px;"><i class="fas fa-upload" style="font-size:11px"></i> Nộp kết quả chiến dịch</button>
+    </div>
+  </div>
+
+  <div class="cd-hero-new" style="background: linear-gradient(90deg, #09378f 0%, #035cc1 100%); border-radius: 16px; padding: 24px 32px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; margin-bottom: 24px;">
+    <div style="display: flex; gap: 24px; align-items: center; z-index: 1;">
+      <!-- Logo Box -->
+      <div style="background: #fff; width: 120px; height: 120px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.15); flex-shrink: 0;">
+         <img src="https://funix.edu.vn/wp-content/uploads/2021/10/logo-funix.png" alt="FUNiX" style="width:80%; margin-bottom:4px;">
+         <div style="color: #0b3992; font-weight: 900; font-size: 16px; letter-spacing: -0.5px; line-height: 1.2;">Workshop</div>
+      </div>
+      
+      <!-- Info -->
+      <div style="color: #fff; max-width: 600px;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+          <h2 style="font-size: 20px; font-weight: 700; margin: 0; letter-spacing: -0.01em;">[FUNiX] Workshop Ứng dụng AI nâng cao hiệu suất công việc</h2>
+          <span style="background: rgba(16, 185, 129, 0.2); color: #34d399; font-size: 11px; font-weight: 600; padding: 4px 8px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.4);">Đang diễn ra</span>
+        </div>
+        <p style="font-size: 13px; opacity: 0.9; margin-bottom: 20px; line-height: 1.5;">Chuỗi workshop thực chiến giúp người đi làm ứng dụng AI để tối ưu công việc, tăng năng suất và bứt phá hiệu quả cá nhân.</p>
+        
+        <div style="display: flex; gap: 32px; font-size: 12px;">
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <div style="opacity: 0.6; font-size: 16px;"><i class="fas fa-calendar-alt"></i></div>
+            <div><div style="opacity: 0.6; margin-bottom: 2px;">Thời gian chiến dịch</div><div style="font-weight: 600;">20/06 – 31/10/2026</div></div>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <div style="opacity: 0.6; font-size: 16px;"><i class="fas fa-box"></i></div>
+            <div><div style="opacity: 0.6; margin-bottom: 2px;">Sản phẩm</div><div style="font-weight: 600;">FUNiX – Workshop</div></div>
+          </div>
+          <div style="display: flex; gap: 8px; align-items: flex-start;">
+            <div style="opacity: 0.6; font-size: 16px;"><i class="fas fa-users"></i></div>
+            <div><div style="opacity: 0.6; margin-bottom: 2px;">Đối tượng</div><div style="font-weight: 600;">Người đi làm, sinh viên, người quan tâm AI</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+  </div>
+
+  <!-- Detail KPIs -->
+  <div class="dkpi-row" style="margin-bottom: 24px; display:grid; grid-template-columns: repeat(4, 1fr); gap:16px;">
+    <div class="dkpi" style="padding:20px 24px;">
+      <div class="dkpi-label" style="text-transform:uppercase; font-size:11px; letter-spacing:0.5px;">Lead hợp lệ</div>
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:8px;">
+        <div class="dkpi-val" style="font-size:24px; font-weight:800;">36 <i class="fas fa-users" style="color:#60a5fa; font-size:14px;"></i></div>
+      </div>
+      <div class="dkpi-sub" style="margin-top:12px; color:#10b981; font-weight:500;">↑ 12 <span style="color:#64748b;font-weight:400;">so với tháng trước</span></div>
+    </div>
+    <div class="dkpi" style="padding:20px 24px;">
+      <div class="dkpi-label" style="text-transform:uppercase; font-size:11px; letter-spacing:0.5px;">Đơn hàng / CR</div>
+      <div style="display:flex; align-items:baseline; justify-content:space-between; margin-top:8px;">
+        <div class="dkpi-val" style="font-size:24px; font-weight:800;">9 <span style="font-size:14px;font-weight:500;color:var(--txt3)">đơn</span></div>
+        <div style="font-size:12px; font-weight:600; color:#64748b;">CR 25%</div>
+      </div>
+      <div class="dkpi-sub" style="margin-top:12px; color:#10b981; font-weight:500;">↑ 3 đơn <span style="color:#64748b;font-weight:400;">so với tháng trước</span></div>
+    </div>
+    <div class="dkpi" style="padding:20px 24px;">
+      <div class="dkpi-label" style="text-transform:uppercase; font-size:11px; letter-spacing:0.5px;">Doanh thu dự kiến <i class="fas fa-circle-info" style="font-size:9px;color:var(--txt3)"></i></div>
+      <div class="dkpi-val" style="font-size:24px; font-weight:800; margin-top:8px;">28.080.000đ</div>
+      <div class="dkpi-sub" style="margin-top:12px; color:#10b981; font-weight:500;">↑ 8.4tr <span style="color:#64748b;font-weight:400;">so với tháng trước</span></div>
+    </div>
+    <div class="dkpi" style="padding:20px 24px;">
+      <div class="dkpi-label" style="text-transform:uppercase; font-size:11px; letter-spacing:0.5px;">Hoa hồng dự kiến <i class="fas fa-circle-info" style="font-size:9px;color:var(--txt3)"></i></div>
+      <div class="dkpi-val" style="font-size:24px; font-weight:800; margin-top:8px;">2.808.000đ</div>
+      <div class="dkpi-sub" style="margin-top:12px;">Đã duyệt: <span style="color:#10b981;font-weight:600;">1.320.000đ</span> <i class="fas fa-check-circle" style="color:#10b981"></i></div>
+    </div>
+
+  </div>
+  <!-- Detail Tabs -->
+  <div class="dtabs">
+    <button class="dtab on" data-tab="tab-overview">Tổng quan</button>
+    <button class="dtab" data-tab="tab-reqs">Yêu cầu chiến dịch</button>
+    <button class="dtab">Hoa hồng & thưởng</button>
+    <button class="dtab" data-tab="tab-resources">Content & tài nguyên</button>
+    <button class="dtab">Thống kê chi tiết</button>
+    <button class="dtab">Lịch sử hoạt động</button>
+  </div>
+
+  <div id="tab-overview" class="tab-content active">
+
+  <!-- Three Column Content -->
+  <div class="detail-grid">
+    <!-- Description -->
+    <div class="detail-box" style="grid-row: span 2;">
+      <div class="detail-box-title" style="margin-bottom:16px;">Mô tả chiến dịch</div>
+      
+      <p class="desc-text" style="font-weight:700; color:var(--navy); margin-bottom:8px;">[FUNiX] Workshop Ứng dụng AI nâng cao hiệu suất công việc</p>
+      
+      <p class="desc-text" style="margin-bottom:20px;">Chuỗi workshop thực chiến dành cho người đi làm và sinh viên, giúp nắm bắt xu hướng AI và ứng dụng vào công việc để tiết kiệm thời gian, nâng cao hiệu suất và tạo ra lợi thế cạnh tranh.</p>
+      
+      <div style="font-weight:700; color:var(--navy); margin-bottom:12px; font-size:14px;">Nội dung nổi bật:</div>
+      
+      <ul style="margin:0 0 24px 0; padding-left:20px; font-size:13px; color:var(--txt2); line-height:1.8;">
+        <li><i class="fas fa-check" style="color:#10b981; margin-right:6px;"></i> Cập nhật xu hướng & công cụ AI mới nhất</li>
+        <li><i class="fas fa-check" style="color:#10b981; margin-right:6px;"></i> Ứng dụng AI trong nhiều lĩnh vực công việc thực tế</li>
+        <li><i class="fas fa-check" style="color:#10b981; margin-right:6px;"></i> Hướng dẫn chi tiết bằng case study & demo</li>
+        <li><i class="fas fa-check" style="color:#10b981; margin-right:6px;"></i> Giao lưu Q&A cùng mentor FUNiX</li>
+        <li><i class="fas fa-check" style="color:#10b981; margin-right:6px;"></i> Tài liệu & ưu đãi đặc biệt cho người tham dự</li>
+      </ul>
+      
+      <div class="desc-item" style="align-items:flex-start;"><i class="fas fa-laptop" style="margin-top:2px;"></i><div><strong>Hình thức:</strong> Online qua Zoom</div></div>
+      <div class="desc-item" style="align-items:flex-start;"><i class="fas fa-users" style="margin-top:2px;"></i><div><strong>Đối tượng:</strong> Người đi làm, sinh viên, người quan tâm AI</div></div>
+      <div class="desc-item" style="align-items:flex-start;"><i class="fas fa-tag" style="margin-top:2px;"></i><div><strong>Giá:</strong> Miễn phí tham dự</div></div>
+    </div>
+    <!-- Tracking -->
+    <div class="detail-box">
+      <div class="detail-box-title">Link truyền thông chương trình</div>
+      
+      <div class="track-section">
+        <div class="track-label">Mã đối tác</div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+          <span class="track-code" id="partnerCode">11198</span>
+          <button class="track-copy" onclick="copyText('11198', this)">Sao chép</button>
+        </div>
+      </div>
+
+      <div class="track-section">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:8px;">
+           <div class="track-label" style="margin-bottom:0;">Link truyền thông</div>
+           <button class="btn-f" style="font-size:12px; padding:6px 12px; background:var(--blue);" onclick="generateFunixLink()">Tạo link truyền thông</button>
+        </div>
+        <div class="track-box">
+          <span class="track-url" id="generatedFunixLink">Nhấn nút tạo link để lấy link...</span>
+          <button class="track-copy" onclick="copyFunixLink(this)">Sao chép</button>
+        </div>
+      </div>
+
+      <div class="track-section" style="margin-top:12px;">
+        
+
+      <script>
+      function generateFunixLink() {
+         const code = document.getElementById('partnerCode').innerText;
+         const link = 'https://daisugiaoduc.vn/workshopai?utm_campaign=ADC&utm_source=' + code;
+         document.getElementById('generatedFunixLink').innerText = link;
+         document.getElementById('generatedFunixLink').style.color = 'var(--blue)';
+         document.getElementById('generatedFunixLink').style.fontWeight = '600';
+      }
+      function copyFunixLink(btn) {
+         const link = document.getElementById('generatedFunixLink').innerText;
+         if (link.includes('https')) {
+            copyText(link, btn);
+         } else {
+            alert('Vui lòng tạo link trước khi sao chép!');
+         }
+      }
+      </script>
+    </div>
+
+    <!-- Commission + Rank -->
+    <div class="detail-box">
+      <div class="detail-box-title">Cơ chế thù lao</div>
+      <div class="com-row"><span class="com-label2">Hoa hồng doanh thu</span><span class="com-val2">10% / đơn hàng</span></div>
+      <div class="com-row"><span class="com-label2">Thưởng doanh thu</span><span class="com-val2">Đạt 10 đơn: +500,000đ<span>Đạt 20 đơn: +1,200,000đ</span></span></div>
+      <div class="com-row"><span class="com-label2">Thưởng xếp hạng</span><span class="com-val2">Top 3: +500,000đ<span>Top 5: +300,000đ</span></span></div>
+      <div class="rank-card">
+        <div class="rank-badge">Thứ hạng chiến dịch (tuần này)</div>
+        <div class="rank-val">#7 <span class="rank-total">/ 96 Affiliate</span></div>
+        <div class="rank-detail">9 đơn → 1,980,000đ</div>
+      </div>
+    </div>
+  </div>
+
+  </div> <!-- end tab-overview -->
+
+  <div id="tab-reqs" class="tab-content" style="display:none">
+    <div class="req-grid">
+      <!-- Left: Tasks -->
+      <div class="detail-box">
+        <div class="detail-box-title" style="display:flex;align-items:center;gap:8px">
+          <i class="fas fa-list-check" style="color:var(--blue)"></i> Hạng mục cần thực hiện
+        </div>
+        <table class="req-table">
+          <thead>
+            <tr>
+              <th>Hạng mục</th>
+              <th>Số lượng</th>
+              <th>Deadline</th>
+              <th>Yêu cầu ngắn</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="req-item">
+                  <div class="req-icon blue"><i class="fas fa-file-lines"></i></div>
+                  Bài đăng / Post
+                </div>
+              </td>
+              <td class="req-center">1</td>
+              <td class="req-center">15/06/2026</td>
+              <td>Giới thiệu lộ trình S V-ACT, có link tracking</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="req-item">
+                  <div class="req-icon purple"><i class="fas fa-play"></i></div>
+                  Reels / Video ngắn
+                </div>
+              </td>
+              <td class="req-center">1</td>
+              <td class="req-center">18/06/2026</td>
+              <td>Chia sẻ ngắn về lợi ích chương trình, CTA đăng ký test</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="req-item">
+                  <div class="req-icon green"><i class="fas fa-link"></i></div>
+                  Story có link
+                </div>
+              </td>
+              <td class="req-center">3</td>
+              <td class="req-center">20/06/2026</td>
+              <td>Kéo traffic về link tracking hoặc mã ưu đãi</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="req-item">
+                  <div class="req-icon orange"><i class="fas fa-chart-simple"></i></div>
+                  Báo cáo thống kê
+                </div>
+              </td>
+              <td class="req-center">1</td>
+              <td class="req-center">T+2</td>
+              <td>Gửi screenshot reach / click sau chiến dịch</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Right: Guidelines -->
+      <div class="detail-box" style="display:flex; flex-direction:column;">
+        <div class="detail-box-title" style="display:flex;align-items:center;gap:8px">
+          <i class="fas fa-bullhorn" style="color:var(--blue)"></i> Lưu ý & quy chuẩn truyền thông
+        </div>
+        <ul class="req-list">
+          <li>Truyền thông đúng đối tượng: học sinh lớp 12 / 2K9 và phụ huynh quan tâm xét tuyển đại học</li>
+          <li>Sử dụng đúng link tracking hoặc mã Affiliate trong mọi nội dung</li>
+          <li>Không cam kết quá mức về kết quả học tập</li>
+          <li>Không dùng thông tin sai về học phí hoặc ưu đãi</li>
+          <li>Nội dung rõ ràng, dễ hiểu, ưu tiên trải nghiệm thật</li>
+          <li>Có thể gắn hashtag: #TopUni2027 #VACT #GalaxyEducation</li>
+        </ul>
+        <div style="flex:1"></div>
+        <div class="req-actions">
+          <button class="req-btn-outline"><i class="fas fa-download"></i> Tải Campaign Brief</button>
+          <button class="req-btn-fill"><i class="fas fa-upload"></i> Nộp kết quả</button>
+        </div>
+      </div>
+    </div>
+  </div> <!-- end tab-reqs -->
+
+  <div id="tab-resources" class="tab-content" style="display:none">
+    <div class="res-header" style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:24px; background:#fff; padding:24px; border-radius:12px; border:1px solid #e2e8f0; margin-top:24px;">
+      <div>
+        <h2 style="font-size:24px; font-weight:800; margin:0 0 8px 0; color:var(--navy);">Tài nguyên nội dung</h2>
+        <p style="margin:0; font-size:14px; color:var(--txt2);">Bộ tài nguyên hỗ trợ giúp bạn truyền thông hiệu quả chương trình <span style="color:var(--blue); font-weight:600;">TopUni S-VACT</span>.</p>
+      </div>
+      <div style="display:flex; gap:24px; align-items:center; border:1px solid #e2e8f0; padding:16px; border-radius:12px;">
+        <div style="display:flex; gap:16px; align-items:center;">
+          <div style="background:#e0f2fe; width:48px; height:48px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:24px; color:#0ea5e9;">
+            📘
+          </div>
+          <div>
+            <div style="font-weight:700; color:var(--navy); margin-bottom:4px; font-size:14px;">[FUNiX] Workshop Ứng dụng AI</div>
+            <div style="display:flex; gap:12px; font-size:12px; color:var(--txt2); align-items:center;">
+              <span style="background:#dcfce7; color:#16a34a; padding:2px 8px; border-radius:4px; font-weight:600; font-size:11px;">Đang diễn ra</span>
+              <span><i class="fas fa-calendar-alt"></i> 20/06 – 31/07/2026</span>
+              <span><i class="fas fa-globe"></i> Toàn quốc</span>
+            </div>
+          </div>
+        </div>
+        <div style="width:1px; height:40px; background:#e2e8f0;"></div>
+        <div style="font-size:12px;">
+          <div style="color:var(--txt2); margin-bottom:2px;">Link đăng ký chung</div>
+          <div style="font-weight:600; color:var(--blue); margin-bottom:8px; display:flex; gap:6px; align-items:center;">
+            https://topuni.hocmai.vn/vact <i class="fas fa-copy" style="cursor:pointer;" onclick="copyText('https://topuni.hocmai.vn/vact', this)"></i>
+          </div>
+          <div style="color:var(--txt2); margin-bottom:2px;">Mã đối tác</div>
+          <div style="font-weight:600; color:var(--blue); display:flex; gap:6px; align-items:center;">
+            11198 <i class="fas fa-copy" style="cursor:pointer;" onclick="copyText('11198', this)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="res-tabs" style="display:flex; gap:24px; border-bottom:1px solid #e2e8f0; margin-bottom:24px; overflow-x:auto;">
+      <div style="padding:12px 0; font-weight:700; color:var(--blue); border-bottom:2px solid var(--blue); cursor:pointer;">Tất cả tài nguyên</div>
+      <div style="padding:12px 0; font-weight:600; color:var(--txt2); cursor:pointer;">Học sinh đã thi chia sẻ</div>
+      <div style="padding:12px 0; font-weight:600; color:var(--txt2); cursor:pointer;">Thầy cô giáo</div>
+      <div style="padding:12px 0; font-weight:600; color:var(--txt2); cursor:pointer;">Phụ huynh chia sẻ</div>
+      <div style="padding:12px 0; font-weight:600; color:var(--txt2); cursor:pointer;">Content Social</div>
+      <div style="padding:12px 0; font-weight:600; color:var(--txt2); cursor:pointer;">Hình ảnh & Banner</div>
+      <div style="padding:12px 0; font-weight:600; color:var(--txt2); cursor:pointer;">Video & Reel</div>
+      <div style="padding:12px 0; font-weight:600; color:var(--txt2); cursor:pointer;">Tài liệu</div>
+    </div>
+
+    <div class="res-filters" style="display:flex; justify-content:space-between; margin-bottom:24px;">
+      <div style="display:flex; gap:16px;">
+        <div style="position:relative; width:240px;">
+          <i class="fas fa-search" style="position:absolute; left:12px; top:11px; color:var(--txt3);"></i>
+          <input type="text" placeholder="Tìm kiếm nội dung..." style="width:100%; padding:9px 12px 9px 36px; border:1px solid #e2e8f0; border-radius:8px; outline:none; font-family:inherit; font-size:13px;">
+        </div>
+        <select style="padding:9px 12px; border:1px solid #e2e8f0; border-radius:8px; outline:none; font-family:inherit; color:var(--txt1); font-size:13px; min-width:140px;">
+          <option>Tất cả vai trò</option>
+        </select>
+        <select style="padding:9px 12px; border:1px solid #e2e8f0; border-radius:8px; outline:none; font-family:inherit; color:var(--txt1); font-size:13px; min-width:140px;">
+          <option>Tất cả định dạng</option>
+        </select>
+        <select style="padding:9px 12px; border:1px solid #e2e8f0; border-radius:8px; outline:none; font-family:inherit; color:var(--txt1); font-size:13px; min-width:140px;">
+          <option>Mới nhất</option>
+        </select>
+      </div>
+      <button style="background:transparent; border:1px solid var(--blue); color:var(--blue); padding:9px 16px; border-radius:8px; font-weight:600; display:flex; gap:8px; align-items:center; cursor:pointer; font-size:13px;">
+        <i class="fas fa-play-circle"></i> Hướng dẫn sử dụng
+      </button>
+    </div>
+
+    <div class="res-grid" style="display:grid; grid-template-columns:repeat(5, 1fr); gap:16px; margin-bottom:24px;">
+      
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#3b82f6;">01</span>
+        <span style="background:#eff6ff; color:#3b82f6; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Học sinh đã thi chia sẻ</span>
+      </div>
+      <div style="background:#eff6ff; color:#3b82f6; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-users"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">Hành trình chinh phục 850 điểm V-ACT trong 30 ngày</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Chia sẻ thật từ học sinh đã tăng 200+ điểm nhờ lộ trình TopUni S-VACT.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#3b82f6; align-items:center; margin-top:4px;">
+      <i class="fas fa-pen-nib"></i> Bài viết
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: Hành trình chinh phục 850 điểm V-ACT trong 30 ngày', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#3b82f6;">02</span>
+        <span style="background:#eff6ff; color:#3b82f6; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Học sinh đã thi chia sẻ</span>
+      </div>
+      <div style="background:#eff6ff; color:#3b82f6; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-play"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">Bạn nghĩ V-ACT khó? Nghe bạn này chia sẻ!</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Video ngắn chia sẻ trải nghiệm ôn thi và mẹo làm bài hiệu quả.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#3b82f6; align-items:center; margin-top:4px;">
+      <i class="fas fa-video"></i> Video ngắn
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: Bạn nghĩ V-ACT khó? Nghe bạn này chia sẻ!', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#10b981;">03</span>
+        <span style="background:#dcfce7; color:#10b981; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Thầy cô giáo</span>
+      </div>
+      <div style="background:#dcfce7; color:#10b981; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-graduation-cap"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">Vì sao học sinh cần chuẩn bị sớm cho kỳ thi V-ACT?</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Góc nhìn từ giáo viên về tầm quan trọng của việc luyện thi sớm.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#10b981; align-items:center; margin-top:4px;">
+      <i class="fas fa-pen-nib"></i> Bài viết
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: Vì sao học sinh cần chuẩn bị sớm cho kỳ thi V-ACT?', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#10b981;">04</span>
+        <span style="background:#dcfce7; color:#10b981; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Thầy cô giáo</span>
+      </div>
+      <div style="background:#dcfce7; color:#10b981; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-play"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">Phân tích cấu trúc đề V-ACT và chiến lược ôn tập</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Thầy cô hướng dẫn cách phân bổ thời gian và trọng tâm ôn luyện.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#10b981; align-items:center; margin-top:4px;">
+      <i class="fas fa-video"></i> Video dài
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: Phân tích cấu trúc đề V-ACT và chiến lược ôn tập', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#8b5cf6;">05</span>
+        <span style="background:#ede9fe; color:#8b5cf6; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Phụ huynh chia sẻ</span>
+      </div>
+      <div style="background:#ede9fe; color:#8b5cf6; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-user-friends"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">Phụ huynh nói gì sau khi con tham gia TopUni S-VACT?</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Chia sẻ của phụ huynh về sự tiến bộ và môi trường học tập.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#8b5cf6; align-items:center; margin-top:4px;">
+      <i class="fas fa-pen-nib"></i> Bài viết
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: Phụ huynh nói gì sau khi con tham gia TopUni S-VACT?', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#8b5cf6;">06</span>
+        <span style="background:#ede9fe; color:#8b5cf6; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Phụ huynh chia sẻ</span>
+      </div>
+      <div style="background:#ede9fe; color:#8b5cf6; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-play"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">Đầu tư đúng – Con tự tin hơn với kỳ thi V-ACT</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Phụ huynh chia sẻ lý do lựa chọn TopUni S-VACT cho con.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#8b5cf6; align-items:center; margin-top:4px;">
+      <i class="fas fa-video"></i> Video ngắn
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: Đầu tư đúng – Con tự tin hơn với kỳ thi V-ACT', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#f59e0b;">07</span>
+        <span style="background:#fef3c7; color:#f59e0b; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Content Social</span>
+      </div>
+      <div style="background:#fef3c7; color:#f59e0b; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-image"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">5 lý do nên chọn TopUni S-VACT</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Infographic 5 lý do nổi bật của chương trình.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#f59e0b; align-items:center; margin-top:4px;">
+      <i class="fas fa-image"></i> Hình ảnh
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: 5 lý do nên chọn TopUni S-VACT', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#f59e0b;">08</span>
+        <span style="background:#fef3c7; color:#f59e0b; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Content Social</span>
+      </div>
+      <div style="background:#fef3c7; color:#f59e0b; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-quote-left"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">Checklist ôn thi V-ACT cho 30 ngày nước rút</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Checklist ngắn gọn giúp học sinh lên kế hoạch ôn thi hiệu quả.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#f59e0b; align-items:center; margin-top:4px;">
+      <i class="fas fa-image"></i> Hình ảnh
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: Checklist ôn thi V-ACT cho 30 ngày nước rút', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#f59e0b;">09</span>
+        <span style="background:#fef3c7; color:#f59e0b; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Content Social</span>
+      </div>
+      <div style="background:#fef3c7; color:#f59e0b; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-play"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">Góc study cùng TopUni S-VACT – Mỗi ngày tiến bộ hơn</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Video motivational ngắn truyền cảm hứng ôn thi.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#f59e0b; align-items:center; margin-top:4px;">
+      <i class="fas fa-video"></i> Video ngắn
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: Góc study cùng TopUni S-VACT – Mỗi ngày tiến bộ hơn', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+  <div class="res-card" style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; display:flex; flex-direction:column; gap:12px; transition:box-shadow 0.2s;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0,0,0,0.05)'" onmouseout="this.style.boxShadow='none'">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:12px; font-weight:800; color:#f59e0b;">10</span>
+        <span style="background:#fef3c7; color:#f59e0b; padding:4px 10px; border-radius:16px; font-size:10px; font-weight:700;">Content Social</span>
+      </div>
+      <div style="background:#fef3c7; color:#f59e0b; width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:12px;"><i class="fas fa-image"></i></div>
+    </div>
+    <div style="font-weight:700; font-size:14px; color:var(--navy); line-height:1.4;">Bạn đã sẵn sàng chinh phục V-ACT chưa?</div>
+    <p style="font-size:12px; color:var(--txt2); margin:0; line-height:1.5; flex:1;">Ảnh kèm caption kêu gọi hành động đăng ký ngay.</p>
+    <div style="display:flex; gap:6px; font-size:11px; font-weight:700; color:#f59e0b; align-items:center; margin-top:4px;">
+      <i class="fas fa-image"></i> Hình ảnh
+    </div>
+    <div style="display:flex; gap:8px; margin-top:12px; border-top:1px solid #f1f5f9; padding-top:12px;">
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; cursor:pointer;">Xem nội dung</button>
+      <button style="flex:1; background:transparent; border:none; color:var(--blue); font-weight:600; font-size:12px; display:flex; gap:4px; justify-content:center; align-items:center; cursor:pointer;" onclick="copyText('Đã sao chép nội dung: Bạn đã sẵn sàng chinh phục V-ACT chưa?', this)"><i class="fas fa-copy"></i> Sao chép</button>
+    </div>
+  </div>
+  
+    </div>
+
+    <div style="background:#eff6ff; border:1px solid #bfdbfe; color:#1e3a8a; padding:12px 16px; border-radius:8px; font-size:13px; display:flex; gap:8px; align-items:center; margin-bottom:40px;">
+      <i class="fas fa-info-circle" style="color:#3b82f6;"></i>
+      <span>Hãy sử dụng Affiliate Code trên AMS hoặc Mã đối tác <strong>11198</strong> khi chia sẻ để được ghi nhận hoàn chính xác. Mọi nội dung sử dụng cần tuân thủ <a href="#" style="color:#3b82f6; text-decoration:underline;">Chính sách Hợp tác & Quy định thương hiệu GE</a>.</span>
+    </div>
+  </div>
+
+</main>
+
+<script src="app.js"></script>
+
+<!-- Profile Modal -->
+<div id="profileModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#fff; border-radius:16px; padding:32px; width:480px; max-width:90vw; box-shadow:0 20px 60px rgba(0,0,0,0.15); position:relative;">
+    <button onclick="closeProfileModal()" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:20px; cursor:pointer; color:#64748b;">&times;</button>
+    <h2 style="margin:0 0 24px 0; font-size:20px; font-weight:700; color:#0f172a;">Hồ sơ của tôi</h2>
+    
+    <!-- Avatar -->
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+      <div style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg, #6366f1, #8b5cf6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; flex-shrink:0;">HD</div>
+      <div>
+        <div style="font-weight:700; color:#0f172a; margin-bottom:4px;">Hoàng Thanh Dung</div>
+        <div style="font-size:12px; color:#64748b;">Mã đối tác: 11198</div>
+        <button onclick="document.getElementById('avatarUpload').click()" style="margin-top:8px; font-size:12px; padding:4px 12px; border:1px solid #e2e8f0; border-radius:6px; background:#fff; cursor:pointer; color:#2563eb; font-weight:600;">
+          <i class="fas fa-camera" style="margin-right:4px;"></i> Đổi ảnh đại diện
+        </button>
+        <input type="file" id="avatarUpload" accept="image/*" style="display:none" onchange="handleAvatarChange(this)">
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Họ và tên</label>
+        <input type="text" id="profileName" value="Hoàng Thanh Dung" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Số điện thoại</label>
+        <input type="tel" id="profilePhone" value="0912 345 678" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Email</label>
+        <input type="email" id="profileEmail" value="thanhdung@gmail.com" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Link Facebook cá nhân</label>
+        <input type="url" id="profileFacebook" value="" placeholder="https://facebook.com/username" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px;">
+      <button onclick="closeProfileModal()" style="padding:10px 20px; border:1px solid #e2e8f0; border-radius:8px; background:#fff; cursor:pointer; font-weight:600; color:#475569; font-family:inherit;">Hủy</button>
+      <button onclick="saveProfile()" style="padding:10px 20px; border:none; border-radius:8px; background:#2563eb; color:#fff; cursor:pointer; font-weight:600; font-family:inherit;">Lưu thay đổi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openProfileModal() {
+  const modal = document.getElementById('profileModal');
+  modal.style.display = 'flex';
+  // Close dropdown
+  const dd = document.getElementById('profileDropdown');
+  if (dd) dd.classList.remove('show');
+  const overlay = document.getElementById('ddOverlay');
+  if (overlay) overlay.classList.remove('show');
+}
+function closeProfileModal() {
+  document.getElementById('profileModal').style.display = 'none';
+}
+function handleAvatarChange(input) {
+  if (input.files && input.files[0]) {
+    alert('Ảnh đại diện đã được chọn: ' + input.files[0].name + '. Tính năng upload sẽ được kích hoạt khi kết nối server.');
+  }
+}
+function saveProfile() {
+  const name = document.getElementById('profileName').value;
+  const phone = document.getElementById('profilePhone').value;
+  const email = document.getElementById('profileEmail').value;
+  const fb = document.getElementById('profileFacebook').value;
+  alert('Đã lưu thông tin!\nHọ tên: ' + name + '\nSĐT: ' + phone + '\nEmail: ' + email + '\nFacebook: ' + (fb || 'Chưa cập nhật'));
+  closeProfileModal();
+}
+// Close modal on background click
+document.getElementById('profileModal').addEventListener('click', function(e) {
+  if (e.target === this) closeProfileModal();
+});
+</script>
+
+
+<script>
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
+}
+// Close sidebar on window resize to desktop
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 768) {
+    document.querySelector('.sidebar').classList.remove('open');
+    var overlay = document.getElementById('sidebarOverlay');
+    if (overlay) overlay.classList.remove('show');
+  }
+});
+</script>
+</body>
+</html>

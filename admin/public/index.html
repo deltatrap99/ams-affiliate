@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS Admin — Dashboard</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="admin-sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">AMS</div>
+    <div class="sidebar-logo-text">
+      AMS Admin
+      <small>Affiliate Management</small>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-label">Tổng quan</div>
+    <a href="index.html" class="sidebar-item active">
+      <i class="fas fa-gauge-high"></i> Dashboard
+    </a>
+
+    <div class="sidebar-label">Quản lý</div>
+    <a href="campaigns.html" class="sidebar-item">
+      <i class="fas fa-bullhorn"></i> Chiến dịch
+    </a>
+    <a href="leads.html" class="sidebar-item">
+      <i class="fas fa-users"></i> Lead & Đơn hàng
+    </a>
+    <a href="content.html" class="sidebar-item">
+      <i class="fas fa-images"></i> Content & Tài nguyên
+    </a>
+    <a href="affiliates.html" class="sidebar-item">
+      <i class="fas fa-handshake"></i> Affiliate
+    </a>
+
+    <div class="sidebar-label">Hệ thống</div>
+    <a href="settings.html" class="sidebar-item">
+      <i class="fas fa-gear"></i> Cài đặt
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-info">AMS Admin v1.0 · © 2026</div>
+  </div>
+</aside>
+
+<!-- HEADER -->
+<header class="admin-header">
+  <div class="header-left">
+    <div class="header-breadcrumb">
+      <i class="fas fa-home" style="font-size:11px; margin-right:4px; opacity:.5"></i>
+      Admin / <span>Dashboard</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-admin-name">
+      Admin Hệ thống
+      <span class="header-admin-role">ADMIN</span>
+    </div>
+    <div class="admin-avatar">AD</div>
+    <button class="btn-logout" onclick="handleLogout()">
+      <i class="fas fa-right-from-bracket"></i> Đăng xuất
+    </button>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="admin-main">
+  <!-- Page Header -->
+  <div class="page-header ani ani-1">
+    <div>
+      <h1 class="page-title">Dashboard</h1>
+      <p class="page-sub">Tổng quan hệ thống Affiliate Management</p>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-primary" onclick="location.href='campaigns.html'">
+        <i class="fas fa-plus"></i> Thêm chiến dịch
+      </button>
+      <button class="btn btn-outline" onclick="location.href='leads.html'">
+        <i class="fas fa-check-double"></i> Duyệt Lead
+      </button>
+    </div>
+  </div>
+
+  <!-- KPI Cards -->
+  <div class="kpi-grid ani ani-2">
+    <div class="kpi-card blue">
+      <div class="kpi-card-head">
+        <div class="kpi-label">Tổng chiến dịch</div>
+        <div class="kpi-icon"><i class="fas fa-bullhorn"></i></div>
+      </div>
+      <div class="kpi-value" id="kpi-campaigns">—</div>
+      <div class="kpi-change">Đang hoạt động: <span class="up" id="kpi-active-campaigns">—</span></div>
+    </div>
+
+    <div class="kpi-card green">
+      <div class="kpi-card-head">
+        <div class="kpi-label">Tổng Lead</div>
+        <div class="kpi-icon"><i class="fas fa-users"></i></div>
+      </div>
+      <div class="kpi-value" id="kpi-leads">—</div>
+      <div class="kpi-change">Hôm nay: <span class="up" id="kpi-leads-today">—</span></div>
+    </div>
+
+    <div class="kpi-card orange">
+      <div class="kpi-card-head">
+        <div class="kpi-label">Tổng doanh thu</div>
+        <div class="kpi-icon"><i class="fas fa-coins"></i></div>
+      </div>
+      <div class="kpi-value" id="kpi-revenue">—</div>
+      <div class="kpi-change">Từ lead hợp lệ</div>
+    </div>
+
+    <div class="kpi-card purple">
+      <div class="kpi-card-head">
+        <div class="kpi-label">Tổng Affiliate</div>
+        <div class="kpi-icon"><i class="fas fa-handshake"></i></div>
+      </div>
+      <div class="kpi-value" id="kpi-affiliates">—</div>
+      <div class="kpi-change">Đang hoạt động</div>
+    </div>
+  </div>
+
+  <!-- Two Column: Recent Leads + Quick Stats -->
+  <div class="two-col ani ani-3">
+    <!-- Recent Leads Table -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i class="fas fa-clock-rotate-left" style="color:var(--blue)"></i> Lead gần đây</div>
+        <a href="leads.html" class="btn btn-sm btn-outline">Xem tất cả <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+      </div>
+      <div class="card-body" style="padding:0">
+        <div class="table-wrap">
+          <table class="data-table" id="recent-leads-table">
+            <thead>
+              <tr>
+                <th>Lead</th>
+                <th>Chiến dịch</th>
+                <th>Trạng thái</th>
+                <th>Giá trị</th>
+                <th>Ngày</th>
+              </tr>
+            </thead>
+            <tbody id="recent-leads-body">
+              <tr><td colspan="5" class="loading-overlay"><span class="spinner"></span> Đang tải...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title"><i class="fas fa-chart-pie" style="color:var(--purple)"></i> Thống kê nhanh</div>
+      </div>
+      <div class="card-body">
+        <div id="quick-stats" style="display:flex;flex-direction:column;gap:14px">
+          <div class="quick-stat-item">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span style="font-size:12px;font-weight:600;color:var(--txt2)">Lead hợp lệ</span>
+              <span style="font-size:14px;font-weight:800;color:var(--green-dk)" id="stat-valid">—</span>
+            </div>
+            <div style="height:6px;background:var(--border-lt);border-radius:4px;overflow:hidden">
+              <div id="bar-valid" style="height:100%;background:linear-gradient(90deg,var(--green),#34d399);border-radius:4px;width:0%;transition:width 1s ease"></div>
+            </div>
+          </div>
+          <div class="quick-stat-item">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span style="font-size:12px;font-weight:600;color:var(--txt2)">Lead chờ duyệt</span>
+              <span style="font-size:14px;font-weight:800;color:var(--yellow-dk)" id="stat-pending">—</span>
+            </div>
+            <div style="height:6px;background:var(--border-lt);border-radius:4px;overflow:hidden">
+              <div id="bar-pending" style="height:100%;background:linear-gradient(90deg,var(--yellow),#fbbf24);border-radius:4px;width:0%;transition:width 1s ease"></div>
+            </div>
+          </div>
+          <div class="quick-stat-item">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+              <span style="font-size:12px;font-weight:600;color:var(--txt2)">Lead bị loại</span>
+              <span style="font-size:14px;font-weight:800;color:var(--red-dk)" id="stat-rejected">—</span>
+            </div>
+            <div style="height:6px;background:var(--border-lt);border-radius:4px;overflow:hidden">
+              <div id="bar-rejected" style="height:100%;background:linear-gradient(90deg,var(--red),#f87171);border-radius:4px;width:0%;transition:width 1s ease"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;padding-top:18px;border-top:1px dashed var(--border)">
+          <div style="font-size:11px;font-weight:700;color:var(--txt3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px">Hành động nhanh</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <a href="campaigns.html" class="btn btn-sm btn-outline" style="justify-content:flex-start">
+              <i class="fas fa-plus" style="color:var(--blue)"></i> Thêm chiến dịch mới
+            </a>
+            <a href="leads.html" class="btn btn-sm btn-outline" style="justify-content:flex-start">
+              <i class="fas fa-check-double" style="color:var(--green)"></i> Duyệt Lead chờ xử lý
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<script src="admin.js"></script>
+<script>
+// === Dashboard Data Loading ===
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadDashboard();
+});
+
+async function loadDashboard() {
+  try {
+    const [campaigns, leads, affiliatesRes] = await Promise.allSettled([
+      apiGet('/campaigns'),
+      apiGet('/leads'),
+      apiGet('/affiliates')
+    ]);
+
+    const campaignList = campaigns.status === 'fulfilled' ? campaigns.value : [];
+    const leadList = leads.status === 'fulfilled' ? leads.value : [];
+    const affiliateList = affiliatesRes.status === 'fulfilled' ? affiliatesRes.value : [];
+
+    // Map campaign IDs to names
+    const campaignMap = {};
+    campaignList.forEach(c => campaignMap[c.id] = c.name);
+
+    // KPI: Campaigns
+    document.getElementById('kpi-campaigns').textContent = campaignList.length;
+    const activeCampaigns = campaignList.filter(c => c.status === 'active').length;
+    document.getElementById('kpi-active-campaigns').textContent = activeCampaigns;
+
+    // KPI: Leads
+    document.getElementById('kpi-leads').textContent = leadList.length;
+    const today = new Date().toISOString().split('T')[0];
+    const leadsToday = leadList.filter(l => l.created_at && l.created_at.startsWith(today)).length;
+    document.getElementById('kpi-leads-today').textContent = `+${leadsToday}`;
+
+    // KPI: Revenue
+    const totalRevenue = leadList
+      .filter(l => l.status === 'valid')
+      .reduce((sum, l) => sum + (l.order_value || 0), 0);
+    document.getElementById('kpi-revenue').innerHTML = formatCompact(totalRevenue) + ' <span class="unit">₫</span>';
+
+    // KPI: Affiliates
+    document.getElementById('kpi-affiliates').textContent = affiliateList.length || '—';
+
+    // Quick stats
+    const validLeads = leadList.filter(l => l.status === 'valid').length;
+    const pendingLeads = leadList.filter(l => l.status === 'new').length;
+    const rejectedLeads = leadList.filter(l => l.status === 'rejected').length;
+    const totalLeads = leadList.length || 1;
+
+    document.getElementById('stat-valid').textContent = validLeads;
+    document.getElementById('stat-pending').textContent = pendingLeads;
+    document.getElementById('stat-rejected').textContent = rejectedLeads;
+
+    setTimeout(() => {
+      document.getElementById('bar-valid').style.width = (validLeads / totalLeads * 100) + '%';
+      document.getElementById('bar-pending').style.width = (pendingLeads / totalLeads * 100) + '%';
+      document.getElementById('bar-rejected').style.width = (rejectedLeads / totalLeads * 100) + '%';
+    }, 300);
+
+    // Recent Leads Table (last 5)
+    const recentLeads = leadList.slice(-5).reverse();
+    const tbody = document.getElementById('recent-leads-body');
+
+    if (recentLeads.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="5" class="empty-state"><i class="fas fa-inbox"></i><p>Chưa có lead nào</p></td></tr>';
+    } else {
+      tbody.innerHTML = recentLeads.map(lead => {
+        const statusClass = {
+          'new': 'badge-new',
+          'valid': 'badge-valid',
+          'rejected': 'badge-rejected'
+        }[lead.status] || 'badge-pending';
+
+        const statusText = {
+          'new': 'Mới',
+          'valid': 'Hợp lệ',
+          'rejected': 'Bị loại'
+        }[lead.status] || lead.status;
+
+        return `
+          <tr>
+            <td class="bold">
+              ${lead.name || '—'}
+              <div class="sub">${lead.phone || ''}</div>
+            </td>
+            <td>${campaignMap[lead.campaign_id] || 'N/A'}</td>
+            <td><span class="badge-status ${statusClass}">${statusText}</span></td>
+            <td>${lead.order_value ? formatCurrency(lead.order_value) : '—'}</td>
+            <td style="font-size:12px;color:var(--txt3)">${formatDate(lead.created_at)}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+  } catch (err) {
+    console.error('Dashboard load error:', err);
+    showToast('Không thể tải dữ liệu dashboard', 'error');
+  }
+}
+
+function handleLogout() {
+  sessionStorage.clear();
+  window.location.href = '/';
+}
+</script>
+</body>
+</html>

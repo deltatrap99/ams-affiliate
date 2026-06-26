@@ -7,13 +7,20 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="campaigns.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="mobile.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
 
 <!-- HEADER -->
 <header class="header">
   <div class="header-left">
-    <a href="index.html" class="logo"><div class="logo-icon">AMS</div><span class="logo-text">Agent Management System</span></a>
+    <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <a href="index.html" class="logo"><img src="ge-logo.png" alt="Galaxy Education" style="height:32px;"></a>
     <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
   </div>
   <div class="header-right">
@@ -46,25 +53,22 @@
       </div>
     </div>
     <div class="profile-wrapper">
-      <div class="avatar" id="avatarTrigger">NA</div>
+      <div class="avatar" id="avatarTrigger">HD</div>
       <div class="profile-dropdown" id="profileDropdown">
         <div class="pd-header">
           <div class="pd-user">
-            <div class="pd-avatar">NA</div>
+            <div class="pd-avatar">HD</div>
             <div class="pd-info">
-              <div class="pd-name">Nguyễn Minh Anh</div>
+              <div class="pd-name">Hoàng Thanh Dung</div>
               <div class="pd-tier">🥈 Affiliate Silver</div>
-              <div class="pd-meta">Mã: AFF123 · <span class="pd-status">Đang hoạt động</span></div>
+              <div class="pd-meta">Mã đối tác: 11198 · <span class="pd-status">Đang hoạt động</span></div>
             </div>
           </div>
-          <div class="pd-copy-btns">
-            <button class="pd-copy" onclick="copyText('AFF123', this)"><i class="fas fa-copy"></i> Sao chép mã Affiliate</button>
-            <button class="pd-copy" onclick="copyText('https://ams.link/AFF123', this)"><i class="fas fa-link"></i> Sao chép link giới thiệu</button>
-          </div>
+
         </div>
         <div class="pd-group">
           <div class="pd-group-label">Tài khoản & quyền lợi</div>
-          <div class="pd-item"><i class="fas fa-user"></i> Hồ sơ của tôi</div>
+          <div class="pd-item" onclick="openProfileModal()" style="cursor:pointer"><i class="fas fa-user"></i> Hồ sơ của tôi</div>
           <div class="pd-item"><i class="fas fa-crown"></i> Cấp bậc & quyền lợi</div>
           <div class="pd-item"><i class="fas fa-credit-card"></i> Thông tin thanh toán</div>
           <div class="pd-item"><i class="fas fa-file-contract"></i> Thuế & hồ sơ hợp đồng</div>
@@ -82,7 +86,7 @@
           <div class="pd-item"><i class="fas fa-life-ring"></i> Trung tâm hỗ trợ</div>
         </div>
         <div class="pd-divider"></div>
-        <div class="pd-logout"><i class="fas fa-right-from-bracket"></i> Đăng xuất</div>
+        <div class="pd-logout" onclick="window.location.href='login.html'" style="cursor:pointer"><i class="fas fa-right-from-bracket"></i> Đăng xuất</div>
       </div>
     </div>
   </div>
@@ -113,6 +117,7 @@
     <a href="#" class="s-promo-btn">Xem cấp bậc của tôi <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
   </div>
 </aside>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
 <!-- MAIN -->
 <main class="main">
@@ -157,66 +162,6 @@
       <div class="featured-top">
         <div class="featured-name">V-ACT Hè 2026 – Luyện thi cấp tốc</div>
         <span class="featured-priority">Nên ưu tiên</span>
-      </div>
-      <p class="featured-desc">Phù hợp với lớp học sinh THPT, CR ước tính cao, còn 7 ngày để bứt tốc bonus.</p>
-      <div class="featured-tags">
-        <span class="ftag">CR tốt</span><span class="ftag">Lead đỏ</span><span class="ftag">Bonus đến +30%</span><span class="ftag">Content kit</span><span class="ftag">Voucher siêu</span>
-      </div>
-    </div>
-    <div class="featured-stats">
-      <div class="fstat"><div class="fstat-label">Hoa hồng</div><div class="fstat-val">14%</div></div>
-      <div class="fstat"><div class="fstat-label">CR ước tính</div><div class="fstat-val">18.4%</div></div>
-      <div class="fstat"><div class="fstat-label">EPC ước tính</div><div class="fstat-val">₫12,600</div></div>
-      <div class="fstat"><div class="fstat-label">Còn lại</div><div class="fstat-val fire">7 ngày 🔥</div></div>
-    </div>
-  </div>
-
-  <div class="page-layout">
-    <div>
-      <!-- Campaign List -->
-      <div class="clist">
-        <!-- 1. FUNiX -->
-        <div class="citem">
-          <div class="citem-icon c-purple">🤖</div>
-          <div class="citem-body">
-            <div class="citem-header"><span class="citem-name">Hội thảo FUNiX – AI Cơ bản</span><span class="citem-status joining">Đang tham gia</span></div>
-            <div class="citem-meta"><span><i class="fas fa-calendar"></i> 01/05 – 31/05/2026</span><span><i class="fas fa-building"></i> FUNiX</span></div>
-            <p class="citem-desc">Giới thiệu AI miễn phí cho FUNiX tổ chức — mở ra cánh cửa vào thế giới công nghệ.</p>
-            <div class="citem-tags">
-              <span class="tag tag-green">CR tốt</span><span class="tag tag-blue">COM 13.5%</span><span class="tag tag-teal">Hội thảo online</span><span class="tag tag-purple">Content kit</span>
-            </div>
-            <div class="citem-stats">
-              <div class="cs"><div class="cs-label">Hoa hồng</div><div class="cs-val">₫60,000<span style="font-size:10px;color:var(--txt3)">/lead</span></div></div>
-              <div class="cs"><div class="cs-label">CR TB</div><div class="cs-val">16.2%</div></div>
-              <div class="cs"><div class="cs-label">Lead TB/ngày</div><div class="cs-val">125</div></div>
-              <div class="cs"><div class="cs-label">EPC ước tính</div><div class="cs-val sm">₫9,800</div></div>
-            </div>
-          </div>
-          <div class="citem-right">
-            <button class="citem-menu"><i class="fas fa-ellipsis-vertical"></i></button>
-            <div class="citem-btns"><button class="btn-o">Xem brief</button><button class="btn-f">Sao chép link</button></div>
-          </div>
-        </div>
-
-        <!-- 2. IELTS -->
-        <div class="citem">
-          <div class="citem-icon c-green">📝</div>
-          <div class="citem-body">
-            <div class="citem-header"><span class="citem-name">Easy IELTS Test Drive</span><span class="citem-status expiring">Sắp hết hạn</span></div>
-            <div class="citem-meta"><span><i class="fas fa-calendar"></i> 20/05 – 27/08/2026</span><span><i class="fas fa-building"></i> Easy IELTS</span></div>
-            <p class="citem-desc">Trải nghiệm thi thử IELTS 4 kỹ năng với đề chuẩn và chấm điểm chi tiết.</p>
-            <div class="citem-tags">
-              <span class="tag tag-green">CR tốt</span><span class="tag tag-yellow">Flash sale</span><span class="tag tag-orange">Voucher siêu</span>
-            </div>
-            <div class="citem-stats">
-              <div class="cs"><div class="cs-label">Hoa hồng</div><div class="cs-val sm">₫20,000<span style="font-size:10px;color:var(--txt3)">/lead</span></div></div>
-              <div class="cs"><div class="cs-label">CR TB</div><div class="cs-val">22.1%</div></div>
-              <div class="cs"><div class="cs-label">Lead TB/ngày</div><div class="cs-val">98</div></div>
-              <div class="cs"><div class="cs-label">Còn lại</div><div class="cs-val" style="color:var(--red)">3 ngày</div></div>
-            </div>
-          </div>
-          <div class="citem-right">
-            <button class="citem-menu"><i class="fas fa-ellipsis-vertical"></i></button>
             <div class="citem-btns"><button class="btn-o">Xem brief</button><button class="btn-f">Sao chép link</button></div>
           </div>
         </div>
@@ -261,5 +206,151 @@
 </main>
 
 <script src="app.js"></script>
+
+<!-- Profile Modal -->
+<div id="profileModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+  <div style="background:#fff; border-radius:16px; padding:32px; width:480px; max-width:90vw; box-shadow:0 20px 60px rgba(0,0,0,0.15); position:relative;">
+    <button onclick="closeProfileModal()" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:20px; cursor:pointer; color:#64748b;">&times;</button>
+    <h2 style="margin:0 0 24px 0; font-size:20px; font-weight:700; color:#0f172a;">Hồ sơ của tôi</h2>
+    
+    <!-- Avatar -->
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
+      <div style="width:72px; height:72px; border-radius:50%; background:linear-gradient(135deg, #6366f1, #8b5cf6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:700; flex-shrink:0;">HD</div>
+      <div>
+        <div style="font-weight:700; color:#0f172a; margin-bottom:4px;">Hoàng Thanh Dung</div>
+        <div style="font-size:12px; color:#64748b;">Mã đối tác: 11198</div>
+        <button onclick="document.getElementById('avatarUpload').click()" style="margin-top:8px; font-size:12px; padding:4px 12px; border:1px solid #e2e8f0; border-radius:6px; background:#fff; cursor:pointer; color:#2563eb; font-weight:600;">
+          <i class="fas fa-camera" style="margin-right:4px;"></i> Đổi ảnh đại diện
+        </button>
+        <input type="file" id="avatarUpload" accept="image/*" style="display:none" onchange="handleAvatarChange(this)">
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div style="display:flex; flex-direction:column; gap:16px;">
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Họ và tên</label>
+        <input type="text" id="profileName" value="Hoàng Thanh Dung" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Số điện thoại</label>
+        <input type="tel" id="profilePhone" value="0912 345 678" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Email</label>
+        <input type="email" id="profileEmail" value="thanhdung@gmail.com" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+      <div>
+        <label style="font-size:12px; font-weight:600; color:#475569; display:block; margin-bottom:6px;">Link Facebook cá nhân</label>
+        <input type="url" id="profileFacebook" value="" placeholder="https://facebook.com/username" style="width:100%; padding:10px 14px; border:1px solid #e2e8f0; border-radius:8px; font-size:14px; font-family:inherit; outline:none; box-sizing:border-box;" onfocus="this.style.borderColor='#2563eb'" onblur="this.style.borderColor='#e2e8f0'">
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:24px;">
+      <button onclick="closeProfileModal()" style="padding:10px 20px; border:1px solid #e2e8f0; border-radius:8px; background:#fff; cursor:pointer; font-weight:600; color:#475569; font-family:inherit;">Hủy</button>
+      <button onclick="saveProfile()" style="padding:10px 20px; border:none; border-radius:8px; background:#2563eb; color:#fff; cursor:pointer; font-weight:600; font-family:inherit;">Lưu thay đổi</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openProfileModal() {
+  const modal = document.getElementById('profileModal');
+  modal.style.display = 'flex';
+  // Close dropdown
+  const dd = document.getElementById('profileDropdown');
+  if (dd) dd.classList.remove('show');
+  const overlay = document.getElementById('ddOverlay');
+  if (overlay) overlay.classList.remove('show');
+}
+function closeProfileModal() {
+  document.getElementById('profileModal').style.display = 'none';
+}
+function handleAvatarChange(input) {
+  if (input.files && input.files[0]) {
+    alert('Ảnh đại diện đã được chọn: ' + input.files[0].name + '. Tính năng upload sẽ được kích hoạt khi kết nối server.');
+  }
+}
+function saveProfile() {
+  const name = document.getElementById('profileName').value;
+  const phone = document.getElementById('profilePhone').value;
+  const email = document.getElementById('profileEmail').value;
+  const fb = document.getElementById('profileFacebook').value;
+  alert('Đã lưu thông tin!\nHọ tên: ' + name + '\nSĐT: ' + phone + '\nEmail: ' + email + '\nFacebook: ' + (fb || 'Chưa cập nhật'));
+  closeProfileModal();
+}
+// Close modal on background click
+document.getElementById('profileModal').addEventListener('click', function(e) {
+  if (e.target === this) closeProfileModal();
+});
+</script>
+
+
+<script>
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('open');
+  document.getElementById('sidebarOverlay').classList.toggle('show');
+}
+// Close sidebar on window resize to desktop
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 768) {
+    document.querySelector('.sidebar').classList.remove('open');
+    var overlay = document.getElementById('sidebarOverlay');
+    if (overlay) overlay.classList.remove('show');
+  }
+});
+</script>
+<script>
+async function loadCampaignsList() {
+  const clist = document.querySelector('.clist');
+  if (!clist) return;
+  clist.innerHTML = '<div style="text-align:center; padding:50px; color:var(--txt3);"><i class="fas fa-spinner fa-spin" style="font-size:24px; margin-bottom:12px;"></i><div>Đang tải danh sách chiến dịch...</div></div>';
+
+  try {
+    const res = await fetch('http://localhost:3000/api/campaigns');
+    const campaigns = await res.json();
+    const active = campaigns.filter(c => c.status === 'active');
+    
+    clist.innerHTML = active.map(camp => {
+      const isHtml = camp.description && camp.description.includes('<');
+      const textDesc = isHtml ? camp.description.replace(/<[^>]+>/g, '') : camp.description;
+      const shortDesc = textDesc ? textDesc.substring(0, 100) + '...' : 'Không có mô tả.';
+
+      return `
+        <div class="citem">
+          <div class="citem-icon" style="background:#fff; border:1px solid #e2e8f0; overflow:hidden;">
+            ${camp.logo_url ? '<img src="'+camp.logo_url+'" style="width:100%;height:100%;object-fit:contain;">' : '🚀'}
+          </div>
+          <div class="citem-body">
+            <div class="citem-header"><span class="citem-name">${camp.name}</span><span class="citem-status joining" style="background:#e0e7ff;color:#4338ca">Đang diễn ra</span></div>
+            <div class="citem-meta"><span><i class="fas fa-calendar"></i> ${camp.date_start ? new Date(camp.date_start).toLocaleDateString('vi-VN') : '...'} – ${camp.date_end ? new Date(camp.date_end).toLocaleDateString('vi-VN') : '...'}</span><span><i class="fas fa-building"></i> ${camp.product_name || 'Sản phẩm'}</span></div>
+            <p class="citem-desc">${shortDesc}</p>
+            <div class="citem-tags">
+              <span class="tag tag-green">${camp.target_audience || 'Tất cả'}</span>
+              <span class="tag tag-blue">COM ${camp.commission_rate || '10%'}</span>
+              <span class="tag tag-purple">${camp.region || 'Toàn quốc'}</span>
+            </div>
+            <div class="citem-stats">
+              <div class="cs"><div class="cs-label">Hoa hồng</div><div class="cs-val sm">${camp.commission_rate || '10%'}</div></div>
+              <div class="cs"><div class="cs-label">Lĩnh vực</div><div class="cs-val" style="font-size:12px;font-weight:600">${camp.category === 'english' ? 'Tiếng Anh' : camp.category === 'university' ? 'Đại học' : 'Kỹ năng'}</div></div>
+            </div>
+          </div>
+          <div class="citem-right">
+            <button class="citem-menu"><i class="fas fa-ellipsis-vertical"></i></button>
+            <div class="citem-btns">
+              <button class="btn-o" onclick="window.location.href='campaign-detail.html?id=${camp.id}'">Xem brief</button>
+              <button class="btn-f" onclick="alert('Đã copy link tracking')">Sao chép link</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch(e) {
+    clist.innerHTML = '<div style="text-align:center; padding:50px; color:var(--red);">Lỗi tải chiến dịch: ' + e.message + '</div>';
+  }
+}
+document.addEventListener('DOMContentLoaded', loadCampaignsList);
+</script>
 </body>
 </html>

@@ -7,6 +7,10 @@
   <meta name="description" content="Đăng nhập vào AMS - Hệ thống quản lý đối tác, Affiliate và Đại sứ của Galaxy Education.">
   <link rel="stylesheet" href="login.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="login-page">
 
@@ -84,18 +88,11 @@
       Đăng nhập với Google
     </button>
 
-    <div class="login-divider">hoặc</div>
-
-    <!-- Email Login Button -->
-    <button class="login-btn login-btn-email" onclick="handleEmailLogin()">
-      <i class="fas fa-envelope"></i>
-      Đăng nhập bằng Email
-    </button>
 
     <!-- Register Link -->
     <button class="login-register" onclick="handleRegister()">
       <i class="fas fa-user-plus"></i>
-      Đăng ký trở thành đối tác ADC
+      Trở thành Đối tác của Galaxy Education, đăng ký tại đây nhé
       <i class="fas fa-chevron-right" style="font-size:11px;margin-left:auto"></i>
     </button>
 
@@ -147,18 +144,8 @@
     }, 1500);
   }
 
-  function handleEmailLogin() {
-    const loading = document.getElementById('loginLoading');
-    loading.classList.add('show');
-
-    setTimeout(() => {
-      sessionStorage.setItem('ams_logged_in', 'true');
-      window.location.href = 'index.html';
-    }, 1500);
-  }
-
   function handleRegister() {
-    alert('Chức năng đăng ký đối tác sẽ sớm được mở. Vui lòng liên hệ AS Team để được hỗ trợ.');
+    window.location.href = 'https://ams.hocmai.com/auth/register';
   }
 </script>
 

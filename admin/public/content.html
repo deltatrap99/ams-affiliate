@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS Admin — Content & Tài nguyên</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="admin-sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">AMS</div>
+    <div class="sidebar-logo-text">
+      AMS Admin
+      <small>Affiliate Management</small>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-label">Tổng quan</div>
+    <a href="index.html" class="sidebar-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    <div class="sidebar-label">Quản lý</div>
+    <a href="campaigns.html" class="sidebar-item"><i class="fas fa-bullhorn"></i> Chiến dịch</a>
+    <a href="leads.html" class="sidebar-item"><i class="fas fa-users"></i> Lead & Đơn hàng</a>
+    <a href="content.html" class="sidebar-item active"><i class="fas fa-images"></i> Content & Tài nguyên</a>
+    <a href="affiliates.html" class="sidebar-item"><i class="fas fa-handshake"></i> Affiliate</a>
+    <div class="sidebar-label">Hệ thống</div>
+    <a href="settings.html" class="sidebar-item"><i class="fas fa-gear"></i> Cài đặt</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-info">AMS Admin v1.0 · © 2026</div>
+  </div>
+</aside>
+
+<!-- HEADER -->
+<header class="admin-header">
+  <div class="header-left">
+    <div class="header-breadcrumb">
+      <i class="fas fa-home" style="font-size:11px; margin-right:4px; opacity:.5"></i>
+      Admin / <span>Content & Tài nguyên</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-admin-name">
+      Admin Hệ thống
+      <span class="header-admin-role">ADMIN</span>
+    </div>
+    <div class="admin-avatar">AD</div>
+    <button class="btn-logout" onclick="window.location.href='/'">
+      <i class="fas fa-right-from-bracket"></i> Đăng xuất
+    </button>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="admin-main">
+  <!-- Page Header -->
+  <div class="page-header ani ani-1">
+    <div>
+      <h1 class="page-title">Content & Tài nguyên</h1>
+      <p class="page-sub">Quản lý nội dung, hình ảnh và tài nguyên truyền thông cho các chiến dịch</p>
+    </div>
+    <button class="btn btn-primary" onclick="openContentForm()">
+      <i class="fas fa-plus"></i> Thêm Content mới
+    </button>
+  </div>
+
+  <!-- Campaign Filter -->
+  <div class="card ani ani-2" style="margin-bottom:20px;">
+    <div style="display:flex; align-items:center; gap:16px; padding:16px 20px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:8px; font-weight:700; font-size:13px; color:var(--navy);">
+        <i class="fas fa-filter" style="color:var(--blue);"></i> Lọc theo chiến dịch:
+      </div>
+      <select id="campaign-filter" class="form-select" style="max-width:360px; margin:0;" onchange="filterContent()">
+        <option value="all">Tất cả chiến dịch</option>
+      </select>
+      <div style="flex:1;"></div>
+      <div id="content-count" style="font-size:12px; color:var(--txt3); font-weight:600;">Đang tải...</div>
+    </div>
+  </div>
+
+  <!-- Content Grid -->
+  <div id="content-grid" class="ani ani-3" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(320px, 1fr)); gap:18px;">
+    <div class="card" style="padding:40px; text-align:center; grid-column:1/-1;">
+      <span class="spinner"></span> Đang tải dữ liệu...
+    </div>
+  </div>
+</main>
+
+<script src="admin.js"></script>
+<script>
+// === Data ===
+let campaigns = [];
+let contents = [];
+let editingContentId = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadData();
+});
+
+async function loadData() {
+  try {
+    const [campRes, contRes] = await Promise.allSettled([
+      apiGet('/campaigns'),
+      apiGet('/contents')
+    ]);
+    campaigns = campRes.status === 'fulfilled' ? campRes.value : [];
+    contents = contRes.status === 'fulfilled' ? contRes.value : [];
+
+    // Populate campaign filter
+    const filter = document.getElementById('campaign-filter');
+    filter.innerHTML = '<option value="all">Tất cả chiến dịch</option>' +
+      campaigns.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+
+    renderContent();
+  } catch(err) {
+    showToast('Không thể tải dữ liệu', 'error');
+  }
+}
+
+function filterContent() {
+  renderContent();
+}
+
+function renderContent() {
+  const grid = document.getElementById('content-grid');
+  const filterVal = document.getElementById('campaign-filter').value;
+  
+  let filtered = contents;
+  if (filterVal !== 'all') {
+    filtered = contents.filter(c => c.campaign_id === filterVal);
+  }
+
+  document.getElementById('content-count').textContent = `${filtered.length} nội dung`;
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `
+      <div class="card" style="padding:60px; text-align:center; grid-column:1/-1;">
+        <i class="fas fa-images" style="font-size:48px; color:var(--border); margin-bottom:16px;"></i>
+        <p style="font-size:14px; font-weight:600; color:var(--txt2); margin-bottom:8px;">Chưa có nội dung nào</p>
+        <p style="font-size:12px; color:var(--txt3);">Ấn "Thêm Content mới" để bắt đầu thêm nội dung cho chiến dịch.</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map(item => {
+    const camp = campaigns.find(c => c.id === item.campaign_id);
+    const campName = camp ? camp.name : 'Không xác định';
+
+    const categoryLabels = {
+      'article': '📝 Bài viết',
+      'social_post': '📱 Social Post',
+      'image': '🖼️ Hình ảnh',
+      'video': '🎬 Video',
+      'document': '📄 Tài liệu',
+      'other': '📦 Khác'
+    };
+    const catLabel = categoryLabels[item.category] || item.category;
+
+    return `
+      <div class="card" style="overflow:hidden; transition:all .3s ease;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        ${item.image_url ? `<div style="height:160px; background:url('${item.image_url}') center/cover no-repeat; border-radius:0;"></div>` : 
+        `<div style="height:100px; background:linear-gradient(135deg, #f0f9ff, #e0f2fe); display:flex; align-items:center; justify-content:center;">
+          <i class="fas fa-file-alt" style="font-size:32px; color:var(--blue); opacity:.3;"></i>
+        </div>`}
+        <div style="padding:16px;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;">
+            <span style="font-size:10px; font-weight:700; padding:3px 8px; border-radius:20px; background:#eff6ff; color:var(--blue);">${catLabel}</span>
+            <span style="font-size:10px; color:var(--txt3);">${formatDate(item.created_at)}</span>
+          </div>
+          <h3 style="font-size:14px; font-weight:700; color:var(--navy); margin-bottom:6px; line-height:1.4;">${item.title}</h3>
+          <p style="font-size:11px; color:var(--txt3); margin-bottom:10px; line-clamp:2; -webkit-line-clamp:2; display:-webkit-box; -webkit-box-orient:vertical; overflow:hidden;">${campName}</p>
+          ${item.content_html ? `<div style="font-size:12px; color:var(--txt2); margin-bottom:12px; max-height:60px; overflow:hidden; line-height:1.6;">${item.content_html.replace(/<[^>]+>/g, '').substring(0, 120)}...</div>` : ''}
+          <div style="display:flex; gap:6px;">
+            <button class="btn btn-xs btn-outline" onclick="openContentForm('${item.id}')"><i class="fas fa-pen"></i> Sửa</button>
+            <button class="btn btn-xs btn-danger" onclick="deleteContent('${item.id}')"><i class="fas fa-trash-can"></i></button>
+            <button class="btn btn-xs btn-outline" style="margin-left:auto;" onclick="previewContent('${item.id}')" title="Xem trước"><i class="fas fa-eye"></i></button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// === Content Form ===
+function openContentForm(id) {
+  editingContentId = id || null;
+  const item = id ? contents.find(c => c.id === id) : {};
+  const isEdit = !!id;
+  const title = isEdit ? 'Chỉnh sửa Content' : 'Thêm Content mới';
+
+  const bodyHTML = `
+    <form id="content-form" onsubmit="saveContent(event)">
+      <!-- Campaign Select -->
+      <div class="form-group">
+        <label class="form-label">Chiến dịch <span class="required">*</span></label>
+        <select class="form-select" name="campaign_id" required>
+          <option value="">— Chọn chiến dịch —</option>
+          ${campaigns.map(c => `<option value="${c.id}" ${item.campaign_id === c.id ? 'selected' : ''}>${c.name}</option>`).join('')}
+        </select>
+      </div>
+
+      <!-- Title -->
+      <div class="form-group">
+        <label class="form-label">Tiêu đề Content <span class="required">*</span></label>
+        <input class="form-input" name="title" value="${item.title || ''}" placeholder="Nhập tiêu đề nội dung" required style="font-size:15px; font-weight:600; padding:12px 16px;">
+      </div>
+
+      <!-- Category -->
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Phân loại</label>
+          <select class="form-select" name="category">
+            <option value="article" ${item.category === 'article' ? 'selected' : ''}>📝 Bài viết</option>
+            <option value="social_post" ${item.category === 'social_post' ? 'selected' : ''}>📱 Social Post</option>
+            <option value="image" ${item.category === 'image' ? 'selected' : ''}>🖼️ Hình ảnh</option>
+            <option value="video" ${item.category === 'video' ? 'selected' : ''}>🎬 Video</option>
+            <option value="document" ${item.category === 'document' ? 'selected' : ''}>📄 Tài liệu</option>
+            <option value="other" ${item.category === 'other' ? 'selected' : ''}>📦 Khác</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Đối tượng sử dụng</label>
+          <select class="form-select" name="target">
+            <option value="all" ${item.target === 'all' ? 'selected' : ''}>Tất cả</option>
+            <option value="student" ${item.target === 'student' ? 'selected' : ''}>Học sinh / Sinh viên</option>
+            <option value="parent" ${item.target === 'parent' ? 'selected' : ''}>Phụ huynh</option>
+            <option value="teacher" ${item.target === 'teacher' ? 'selected' : ''}>Thầy cô / Mentor</option>
+            <option value="worker" ${item.target === 'worker' ? 'selected' : ''}>Người đi làm</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Rich Text Content -->
+      <div class="form-group">
+        <label class="form-label">Nội dung Content</label>
+        <div style="border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+          <div id="ct-toolbar" style="display:flex; flex-wrap:wrap; gap:2px; padding:8px; background:#f8fafc; border-bottom:1px solid var(--border); align-items:center;">
+            <select onchange="ctExec('formatBlock',this.value);this.selectedIndex=0" style="padding:4px 8px; border:1px solid var(--border); border-radius:4px; font-size:11px; background:#fff; cursor:pointer;">
+              <option value="">Kiểu chữ</option>
+              <option value="h2">Tiêu đề lớn</option>
+              <option value="h3">Tiêu đề vừa</option>
+              <option value="h4">Tiêu đề nhỏ</option>
+              <option value="p">Đoạn văn</option>
+            </select>
+            <select onchange="ctExec('fontSize',this.value);this.selectedIndex=0" style="padding:4px 8px; border:1px solid var(--border); border-radius:4px; font-size:11px; background:#fff; cursor:pointer;">
+              <option value="">Cỡ chữ</option>
+              <option value="1">Rất nhỏ</option>
+              <option value="2">Nhỏ</option>
+              <option value="3">Bình thường</option>
+              <option value="4">Lớn</option>
+              <option value="5">Rất lớn</option>
+              <option value="6">Cực lớn</option>
+            </select>
+            <div style="width:1px;height:24px;background:var(--border);margin:0 4px;"></div>
+            <button type="button" onclick="ctExec('bold')" title="In đậm" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;font-weight:700;font-size:13px;">B</button>
+            <button type="button" onclick="ctExec('italic')" title="In nghiêng" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;font-style:italic;font-size:13px;">I</button>
+            <button type="button" onclick="ctExec('underline')" title="Gạch chân" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;text-decoration:underline;font-size:13px;">U</button>
+            <button type="button" onclick="ctExec('strikeThrough')" title="Gạch ngang" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;text-decoration:line-through;font-size:13px;">S</button>
+            <div style="width:1px;height:24px;background:var(--border);margin:0 4px;"></div>
+            <label title="Màu chữ" style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px;font-weight:600;color:var(--txt2);">
+              <span style="font-size:14px;">A</span>
+              <input type="color" value="#000000" onchange="ctExec('foreColor',this.value)" style="width:24px;height:24px;border:1px solid var(--border);border-radius:4px;padding:0;cursor:pointer;">
+            </label>
+            <label title="Màu nền" style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px;font-weight:600;color:var(--txt2);">
+              <i class="fas fa-fill-drip" style="font-size:12px;"></i>
+              <input type="color" value="#ffffff" onchange="ctExec('hiliteColor',this.value)" style="width:24px;height:24px;border:1px solid var(--border);border-radius:4px;padding:0;cursor:pointer;">
+            </label>
+            <div style="width:1px;height:24px;background:var(--border);margin:0 4px;"></div>
+            <button type="button" onclick="ctExec('justifyLeft')" title="Căn trái" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-align-left" style="font-size:11px;"></i></button>
+            <button type="button" onclick="ctExec('justifyCenter')" title="Căn giữa" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-align-center" style="font-size:11px;"></i></button>
+            <button type="button" onclick="ctExec('insertUnorderedList')" title="Danh sách" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-list-ul" style="font-size:11px;"></i></button>
+            <button type="button" onclick="ctExec('insertOrderedList')" title="Danh sách số" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-list-ol" style="font-size:11px;"></i></button>
+            <div style="width:1px;height:24px;background:var(--border);margin:0 4px;"></div>
+            <button type="button" onclick="ctInsertLink()" title="Chèn link" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fas fa-link" style="font-size:11px;"></i></button>
+            <button type="button" onclick="ctInsertIcon('fab fa-facebook','#1877F2')" title="Facebook" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:#1877F2;"><i class="fab fa-facebook" style="font-size:13px;"></i></button>
+            <button type="button" onclick="ctInsertIcon('fab fa-youtube','#FF0000')" title="YouTube" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:#FF0000;"><i class="fab fa-youtube" style="font-size:13px;"></i></button>
+            <button type="button" onclick="ctInsertIcon('fab fa-tiktok','#000')" title="TikTok" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;"><i class="fab fa-tiktok" style="font-size:13px;"></i></button>
+            <button type="button" onclick="ctInsertIcon('fab fa-instagram','#E4405F')" title="Instagram" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:#E4405F;"><i class="fab fa-instagram" style="font-size:13px;"></i></button>
+            <button type="button" onclick="ctInsertIcon('fas fa-globe','#2563eb')" title="Website" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;color:#2563eb;"><i class="fas fa-globe" style="font-size:13px;"></i></button>
+            <button type="button" onclick="ctInsertEmoji()" title="Emoji" style="width:30px;height:30px;border:1px solid var(--border);border-radius:4px;background:#fff;cursor:pointer;font-size:14px;">😊</button>
+          </div>
+          <div id="ct-editor" contenteditable="true" style="min-height:200px; padding:16px; font-size:14px; line-height:1.7; outline:none; color:var(--txt); font-family:inherit;">${item.content_html || '<p>Nhập nội dung content...</p>'}</div>
+        </div>
+        <input type="hidden" name="content_html" id="ct-hidden">
+      </div>
+
+      <!-- Image Uploads -->
+      <div style="background:#f8fafc; border:1px solid var(--border); border-radius:10px; padding:20px; margin-bottom:20px;">
+        <div style="font-weight:700; font-size:13px; color:var(--navy); margin-bottom:16px; display:flex; align-items:center; gap:8px;">
+          <i class="fas fa-image" style="color:var(--blue);"></i> Hình ảnh đính kèm
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+          <!-- Main Image -->
+          <div>
+            <label class="form-label" style="font-size:12px;">Ảnh chính (Thumbnail)</label>
+            <div id="ct-img-zone" onclick="document.getElementById('ct-img-file').click()" style="border:2px dashed var(--border); border-radius:8px; padding:24px 12px; text-align:center; cursor:pointer; transition:all .2s; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='#f0f9ff'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+              ${item.image_url ? '<img src="'+item.image_url+'" style="max-height:80px; max-width:100%; border-radius:6px; margin-bottom:6px;">' : '<i class="fas fa-cloud-upload-alt" style="font-size:28px; color:var(--txt3); margin-bottom:8px;"></i>'}
+              <div style="font-size:11px; color:var(--txt3);">Click để upload ảnh chính</div>
+            </div>
+            <div style="font-size:10px; color:var(--txt3); margin-top:4px; display:flex; align-items:center; gap:4px;">
+              <i class="fas fa-info-circle" style="font-size:9px; color:var(--blue);"></i>
+              Khuyến nghị: <strong>800×450px</strong> · JPG/PNG · tỉ lệ 16:9
+            </div>
+            <input type="file" id="ct-img-file" accept="image/*" style="display:none" onchange="ctPreviewUpload(this,'ct-img-zone','ct_image_url')">
+            <input type="hidden" name="image_url" id="ct_image_url" value="${item.image_url || ''}">
+          </div>
+          <!-- Extra Images -->
+          <div>
+            <label class="form-label" style="font-size:12px;">Ảnh bổ sung (tùy chọn)</label>
+            <div id="ct-extra-zone" onclick="document.getElementById('ct-extra-file').click()" style="border:2px dashed var(--border); border-radius:8px; padding:24px 12px; text-align:center; cursor:pointer; transition:all .2s; min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center;" onmouseover="this.style.borderColor='var(--blue)';this.style.background='#f0f9ff'" onmouseout="this.style.borderColor='var(--border)';this.style.background='transparent'">
+              ${item.extra_image_url ? '<img src="'+item.extra_image_url+'" style="max-height:80px; max-width:100%; border-radius:6px; margin-bottom:6px;">' : '<i class="fas fa-images" style="font-size:28px; color:var(--txt3); margin-bottom:8px;"></i>'}
+              <div style="font-size:11px; color:var(--txt3);">Click để upload ảnh bổ sung</div>
+            </div>
+            <div style="font-size:10px; color:var(--txt3); margin-top:4px; display:flex; align-items:center; gap:4px;">
+              <i class="fas fa-info-circle" style="font-size:9px; color:var(--blue);"></i>
+              Khuyến nghị: <strong>1080×1080px</strong> · JPG/PNG · tỉ lệ 1:1 (Social)
+            </div>
+            <input type="file" id="ct-extra-file" accept="image/*" style="display:none" onchange="ctPreviewUpload(this,'ct-extra-zone','ct_extra_image_url')">
+            <input type="hidden" name="extra_image_url" id="ct_extra_image_url" value="${item.extra_image_url || ''}">
+          </div>
+        </div>
+        <!-- Size Guide -->
+        <div style="margin-top:16px; background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:12px 14px;">
+          <div style="font-size:11px; font-weight:700; color:#1e40af; margin-bottom:6px;"><i class="fas fa-lightbulb"></i> Hướng dẫn kích thước ảnh</div>
+          <div style="font-size:11px; color:#1e3a8a; line-height:1.8;">
+            • <strong>Thumbnail (ảnh chính):</strong> 800×450px (16:9) — hiển thị trên card chiến dịch<br>
+            • <strong>Social Post:</strong> 1080×1080px (1:1) — phù hợp Facebook, Instagram<br>
+            • <strong>Story/Reel:</strong> 1080×1920px (9:16) — phù hợp Story, TikTok<br>
+            • <strong>Banner ngang:</strong> 1200×628px — phù hợp link share Facebook/Zalo<br>
+            • <strong>Định dạng:</strong> JPG/PNG, dung lượng tối đa 2MB
+          </div>
+        </div>
+      </div>
+
+      <!-- Video URL -->
+      <div class="form-group">
+        <label class="form-label">Link video (nếu có)</label>
+        <input class="form-input" name="video_url" value="${item.video_url || ''}" placeholder="https://youtube.com/watch?v=...">
+        <div class="form-hint">Hỗ trợ YouTube, TikTok, Facebook Video</div>
+      </div>
+    </form>
+  `;
+
+  const footerHTML = `
+    <button class="btn btn-outline" onclick="hideModal()">Hủy bỏ</button>
+    <button class="btn btn-primary" onclick="document.getElementById('content-form').requestSubmit()">
+      <i class="fas fa-save"></i> ${isEdit ? 'Cập nhật' : 'Tạo Content'}
+    </button>
+  `;
+
+  showModal(title, bodyHTML, { footerHTML, maxWidth: '780px' });
+
+  // Clear placeholder on focus
+  setTimeout(() => {
+    const editor = document.getElementById('ct-editor');
+    if (editor) {
+      editor.addEventListener('focus', function() {
+        if (this.innerHTML.includes('Nhập nội dung content...')) {
+          this.innerHTML = '<p><br></p>';
+        }
+      });
+    }
+  }, 100);
+}
+
+// === RTE Functions for Content ===
+function ctExec(cmd, val) {
+  document.execCommand(cmd, false, val || null);
+  document.getElementById('ct-editor').focus();
+}
+
+function ctInsertLink() {
+  const url = prompt('Nhập URL link:', 'https://');
+  if (url) {
+    const text = window.getSelection().toString() || url;
+    document.execCommand('insertHTML', false, '<a href="' + url + '" target="_blank" style="color:#2563eb; text-decoration:underline;">' + text + '</a>');
+  }
+  document.getElementById('ct-editor').focus();
+}
+
+function ctInsertIcon(iconClass, color) {
+  document.execCommand('insertHTML', false, ' <i class="' + iconClass + '" style="color:' + color + '; font-size:1em;"></i> ');
+  document.getElementById('ct-editor').focus();
+}
+
+function ctInsertEmoji() {
+  const emojis = ['📚','🎯','🗣','💡','🔥','✅','⭐','🚀','💼','📊','🏆','💰','📱','🎓','❤️','👉','📌','🔑','💪','🎉','👍','🤝','📣','🎁','💎'];
+  let picker = document.getElementById('ct-emoji-picker');
+  if (picker) { picker.remove(); return; }
+  
+  picker = document.createElement('div');
+  picker.id = 'ct-emoji-picker';
+  picker.style.cssText = 'position:absolute; z-index:99999; background:#fff; border:1px solid var(--border); border-radius:8px; padding:8px; box-shadow:0 8px 24px rgba(0,0,0,.15); display:flex; flex-wrap:wrap; gap:4px; width:240px;';
+  emojis.forEach(e => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.textContent = e;
+    btn.style.cssText = 'width:32px;height:32px;border:none;background:transparent;font-size:18px;cursor:pointer;border-radius:4px;transition:background .15s;';
+    btn.onmouseover = () => btn.style.background = '#f1f5f9';
+    btn.onmouseout = () => btn.style.background = 'transparent';
+    btn.onclick = () => { document.execCommand('insertHTML', false, ' ' + e + ' '); picker.remove(); document.getElementById('ct-editor').focus(); };
+    picker.appendChild(btn);
+  });
+  
+  const toolbar = document.getElementById('ct-toolbar');
+  toolbar.style.position = 'relative';
+  toolbar.appendChild(picker);
+  picker.style.top = '40px';
+  picker.style.right = '0';
+  
+  setTimeout(() => document.addEventListener('click', function cp(ev) {
+    if (!picker.contains(ev.target)) { picker.remove(); document.removeEventListener('click', cp); }
+  }), 50);
+}
+
+// === File Upload ===
+function ctPreviewUpload(input, zoneId, hiddenId) {
+  const zone = document.getElementById(zoneId);
+  if (input.files && input.files[0]) {
+    const file = input.files[0];
+    if (file.size > 2 * 1024 * 1024) {
+      showToast('Dung lượng file vượt quá 2MB!', 'error');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      zone.innerHTML = '<img src="' + e.target.result + '" style="max-height:80px; max-width:100%; border-radius:6px; margin-bottom:6px;">' +
+        '<div style="font-size:11px; color:var(--green); font-weight:600;"><i class="fas fa-check-circle"></i> ' + file.name + '</div>';
+      document.getElementById(hiddenId).value = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    showToast('Đã chọn: ' + file.name, 'success');
+  }
+}
+
+// === Save Content ===
+async function saveContent(e) {
+  e.preventDefault();
+  
+  // Sync RTE
+  const editor = document.getElementById('ct-editor');
+  if (editor) document.getElementById('ct-hidden').value = editor.innerHTML;
+
+  const form = document.getElementById('content-form');
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+
+  if (!data.campaign_id) {
+    showToast('Vui lòng chọn chiến dịch!', 'error');
+    return;
+  }
+
+  data.created_at = data.created_at || new Date().toISOString();
+
+  try {
+    if (editingContentId) {
+      await apiPut(`/contents/${editingContentId}`, data);
+      showToast('Đã cập nhật content thành công!', 'success');
+    } else {
+      await apiPost('/contents', data);
+      showToast('Đã tạo content mới thành công!', 'success');
+    }
+    hideModal();
+    await loadData();
+  } catch(err) {
+    showToast('Có lỗi xảy ra khi lưu content', 'error');
+  }
+}
+
+// === Delete Content ===
+async function deleteContent(id) {
+  const item = contents.find(c => c.id === id);
+  const confirmed = await confirmAction(
+    `Bạn có chắc muốn xóa content <strong>"${item ? item.title : ''}"</strong>?`,
+    { title: 'Xóa content', confirmText: 'Xóa', type: 'danger' }
+  );
+  if (!confirmed) return;
+
+  try {
+    await apiDelete(`/contents/${id}`);
+    showToast('Đã xóa content thành công', 'success');
+    await loadData();
+  } catch(err) {
+    showToast('Không thể xóa content', 'error');
+  }
+}
+
+// === Preview Content ===
+function previewContent(id) {
+  const item = contents.find(c => c.id === id);
+  if (!item) return;
+  const camp = campaigns.find(c => c.id === item.campaign_id);
+
+  const bodyHTML = `
+    <div style="max-width:600px; margin:0 auto;">
+      ${item.image_url ? `<img src="${item.image_url}" style="width:100%; border-radius:10px; margin-bottom:16px;">` : ''}
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+        <span style="font-size:10px; font-weight:700; padding:3px 10px; border-radius:20px; background:#eff6ff; color:var(--blue);">${item.category || 'article'}</span>
+        <span style="font-size:11px; color:var(--txt3);">${camp ? camp.name : ''}</span>
+      </div>
+      <h2 style="font-size:20px; font-weight:800; color:var(--navy); margin-bottom:12px; line-height:1.4;">${item.title}</h2>
+      <div style="font-size:14px; color:var(--txt); line-height:1.8;">${item.content_html || ''}</div>
+      ${item.extra_image_url ? `<img src="${item.extra_image_url}" style="width:100%; border-radius:10px; margin-top:16px;">` : ''}
+      ${item.video_url ? `<div style="margin-top:16px; padding:12px; background:#f8fafc; border-radius:8px;"><i class="fas fa-video" style="color:var(--blue); margin-right:6px;"></i><a href="${item.video_url}" target="_blank" style="color:var(--blue); font-weight:600;">${item.video_url}</a></div>` : ''}
+    </div>`;
+
+  showModal('Xem trước Content', bodyHTML, { maxWidth: '680px' });
+}
+</script>
+</body>
+</html>

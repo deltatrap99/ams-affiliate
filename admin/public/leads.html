@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS Admin — Lead & Đơn hàng</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .lead-kpi-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .lead-kpi {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--r-md);
+      padding: 18px 20px; text-align: center; transition: var(--tr);
+    }
+    .lead-kpi:hover { transform: translateY(-2px); box-shadow: var(--sh-md); }
+    .lead-kpi-label { font-size: 11px; font-weight: 600; color: var(--txt3); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; }
+    .lead-kpi-val { font-size: 28px; font-weight: 800; letter-spacing: -.02em; }
+    .lead-kpi.total .lead-kpi-val { color: var(--blue); }
+    .lead-kpi.valid .lead-kpi-val { color: var(--green-dk); }
+    .lead-kpi.rejected .lead-kpi-val { color: var(--red-dk); }
+    .lead-kpi.pending .lead-kpi-val { color: var(--yellow-dk); }
+
+    .action-btns { display: flex; gap: 4px; }
+    .lead-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .lead-detail-item { padding: 10px 14px; background: var(--bg); border-radius: var(--r-sm); }
+    .lead-detail-item .label { font-size: 10px; font-weight: 700; color: var(--txt3); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 4px; }
+    .lead-detail-item .value { font-size: 13px; font-weight: 600; color: var(--txt); }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="admin-sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">AMS</div>
+    <div class="sidebar-logo-text">
+      AMS Admin
+      <small>Affiliate Management</small>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-label">Tổng quan</div>
+    <a href="index.html" class="sidebar-item">
+      <i class="fas fa-gauge-high"></i> Dashboard
+    </a>
+
+    <div class="sidebar-label">Quản lý</div>
+    <a href="campaigns.html" class="sidebar-item">
+      <i class="fas fa-bullhorn"></i> Chiến dịch
+    </a>
+    <a href="leads.html" class="sidebar-item active">
+      <i class="fas fa-users"></i> Lead & Đơn hàng
+    </a>
+    <a href="content.html" class="sidebar-item">
+      <i class="fas fa-images"></i> Content & Tài nguyên
+    </a>
+    <a href="affiliates.html" class="sidebar-item">
+      <i class="fas fa-handshake"></i> Affiliate
+    </a>
+
+    <div class="sidebar-label">Hệ thống</div>
+    <a href="settings.html" class="sidebar-item">
+      <i class="fas fa-gear"></i> Cài đặt
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-info">AMS Admin v1.0 · © 2026</div>
+  </div>
+</aside>
+
+<!-- HEADER -->
+<header class="admin-header">
+  <div class="header-left">
+    <div class="header-breadcrumb">
+      <i class="fas fa-home" style="font-size:11px; margin-right:4px; opacity:.5"></i>
+      Admin / <span>Lead & Đơn hàng</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-admin-name">
+      Admin Hệ thống
+      <span class="header-admin-role">ADMIN</span>
+    </div>
+    <div class="admin-avatar">AD</div>
+    <button class="btn-logout" onclick="handleLogout()">
+      <i class="fas fa-right-from-bracket"></i> Đăng xuất
+    </button>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="admin-main">
+  <!-- Page Header -->
+  <div class="page-header ani ani-1">
+    <div>
+      <h1 class="page-title">Lead & Đơn hàng</h1>
+      <p class="page-sub">Quản lý, duyệt và theo dõi tất cả lead từ các chiến dịch</p>
+    </div>
+  </div>
+
+  <!-- KPI Summary -->
+  <div class="lead-kpi-row ani ani-2">
+    <div class="lead-kpi total">
+      <div class="lead-kpi-label">Tổng lead</div>
+      <div class="lead-kpi-val" id="kpi-total">—</div>
+    </div>
+    <div class="lead-kpi valid">
+      <div class="lead-kpi-label">Hợp lệ</div>
+      <div class="lead-kpi-val" id="kpi-valid">—</div>
+    </div>
+    <div class="lead-kpi rejected">
+      <div class="lead-kpi-label">Bị loại</div>
+      <div class="lead-kpi-val" id="kpi-rejected">—</div>
+    </div>
+    <div class="lead-kpi pending">
+      <div class="lead-kpi-label">Chờ duyệt</div>
+      <div class="lead-kpi-val" id="kpi-pending">—</div>
+    </div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar ani ani-3">
+    <div style="position:relative">
+      <i class="fas fa-search" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--txt3)"></i>
+      <input class="form-input" id="search-input" placeholder="Tìm theo tên, SĐT..." style="padding-left:34px;min-width:220px;font-size:12px" oninput="filterLeads()">
+    </div>
+    <input class="form-input" id="filter-partner" placeholder="Nhập Mã Đối tác" style="width:160px;font-size:12px" oninput="filterLeads()">
+    <select class="form-select" id="filter-campaign" onchange="filterLeads()">
+      <option value="">Tất cả chiến dịch</option>
+    </select>
+    <select class="form-select" id="filter-status" onchange="filterLeads()">
+      <option value="">Tất cả trạng thái</option>
+      <option value="new">Mới</option>
+      <option value="valid">Hợp lệ</option>
+      <option value="rejected">Bị loại</option>
+    </select>
+    <div class="filter-count" id="lead-count">Đang tải...</div>
+  </div>
+
+  <!-- Leads Table -->
+  <div class="card ani ani-4">
+    <div class="card-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Lead</th>
+              <th>Mã Đối tác</th>
+              <th>Chiến dịch</th>
+              <th>Trạng thái</th>
+              <th>Đơn hàng</th>
+              <th>Giá trị</th>
+              <th>Hoa hồng</th>
+              <th style="text-align:center">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="leads-tbody">
+            <tr><td colspan="8" class="loading-overlay"><span class="spinner"></span> Đang tải dữ liệu...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="admin.js"></script>
+<script>
+// === Leads Page Logic ===
+let allLeads = [];
+let filteredLeads = [];
+let campaignMap = {};
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadLeadsData();
+});
+
+async function loadLeadsData() {
+  try {
+    const [campRes, leadRes] = await Promise.allSettled([
+      apiGet('/campaigns'),
+      apiGet('/leads')
+    ]);
+
+    const campaigns = campRes.status === 'fulfilled' ? campRes.value : [];
+    allLeads = leadRes.status === 'fulfilled' ? leadRes.value : [];
+
+    // Build campaign map & populate filter
+    campaignMap = {};
+    const filterCampaign = document.getElementById('filter-campaign');
+    campaigns.forEach(c => {
+      campaignMap[c.id] = c;
+      const opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.name;
+      filterCampaign.appendChild(opt);
+    });
+
+    updateKPIs();
+    filterLeads();
+  } catch (err) {
+    showToast('Không thể tải dữ liệu lead', 'error');
+  }
+}
+
+function updateKPIs() {
+  document.getElementById('kpi-total').textContent = allLeads.length;
+  document.getElementById('kpi-valid').textContent = allLeads.filter(l => l.status === 'valid').length;
+  document.getElementById('kpi-rejected').textContent = allLeads.filter(l => l.status === 'rejected').length;
+  document.getElementById('kpi-pending').textContent = allLeads.filter(l => l.status === 'new').length;
+}
+
+function filterLeads() {
+  const search = (document.getElementById('search-input').value || '').toLowerCase();
+  const campaignFilter = document.getElementById('filter-campaign').value;
+  const statusFilter = document.getElementById('filter-status').value;
+  const partnerFilter = (document.getElementById('filter-partner').value || '').toLowerCase();
+
+  filteredLeads = allLeads.filter(lead => {
+    const matchSearch = !search ||
+      (lead.name && lead.name.toLowerCase().includes(search)) ||
+      (lead.phone && lead.phone.includes(search));
+    const matchCampaign = !campaignFilter || lead.campaign_id === campaignFilter;
+    const matchStatus = !statusFilter || lead.status === statusFilter;
+    const matchPartner = !partnerFilter || (lead.affiliate_code && lead.affiliate_code.toLowerCase().includes(partnerFilter));
+    return matchSearch && matchCampaign && matchStatus && matchPartner;
+  });
+
+  document.getElementById('lead-count').textContent = `${filteredLeads.length} / ${allLeads.length} lead`;
+  renderLeads();
+}
+
+function renderLeads() {
+  const tbody = document.getElementById('leads-tbody');
+
+  if (filteredLeads.length === 0) {
+    tbody.innerHTML = `
+      <tr><td colspan="8" class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <p>Không tìm thấy lead nào</p>
+      </td></tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = filteredLeads.map(lead => {
+    const camp = campaignMap[lead.campaign_id];
+    const campName = camp ? camp.name : 'N/A';
+    const commRate = camp ? (camp.commission_rate || 0) : 0;
+    const commission = lead.order_value ? lead.order_value * commRate / 100 : 0;
+
+    const statusClass = {
+      'new': 'badge-new',
+      'valid': 'badge-valid',
+      'rejected': 'badge-rejected'
+    }[lead.status] || 'badge-pending';
+
+    const statusText = {
+      'new': 'Mới',
+      'valid': 'Hợp lệ',
+      'rejected': 'Bị loại'
+    }[lead.status] || lead.status;
+
+    // Action buttons
+    let actions = `
+      <button class="btn btn-xs btn-outline" onclick="openEditStatus('${lead.id}')" title="Cập nhật trạng thái"><i class="fas fa-pen"></i></button>
+      <button class="btn btn-xs btn-outline" onclick="viewLeadDetail('${lead.id}')" title="Xem chi tiết" style="margin-left:3px">👁</button>
+    `;
+
+    return `
+      <tr>
+        <td>
+          <div class="bold">${lead.name || '—'}</div>
+          <div class="sub">${lead.phone || ''} ${lead.email ? '· ' + lead.email : ''}</div>
+        </td>
+        <td style="font-size:13px;font-family:monospace;font-weight:600;color:var(--navy)">${lead.affiliate_code || '—'}</td>
+        <td style="font-size:12px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${campName}">${campName}</td>
+        <td><span class="badge-status ${statusClass}">${statusText}</span></td>
+        <td style="font-size:12px">${lead.order_id || '—'}</td>
+        <td style="font-weight:600">${lead.order_value ? formatCurrency(lead.order_value) : '—'}</td>
+        <td style="font-weight:600;color:var(--green-dk)">${commission > 0 ? formatCurrency(commission) : '—'}</td>
+        <td style="text-align:center">
+          <div class="action-btns" style="justify-content:center">${actions}</div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function openEditStatus(id) {
+  const lead = allLeads.find(l => l.id === id);
+  if (!lead) return;
+
+  const bodyHTML = `
+    <form id="update-status-form" onsubmit="submitUpdateStatus(event, '${id}')">
+      <div class="form-group">
+        <label class="form-label">Trạng thái mới</label>
+        <select class="form-select" name="status" id="status-select" onchange="window.toggleStatusFields()">
+          <option value="new" ${lead.status==='new'?'selected':''}>Mới (Chờ duyệt)</option>
+          <option value="valid" ${lead.status==='valid'?'selected':''}>Hợp lệ</option>
+          <option value="rejected" ${lead.status==='rejected'?'selected':''}>Bị loại</option>
+        </select>
+      </div>
+
+      <div id="valid-fields" style="display: ${lead.status==='valid'?'block':'none'}; margin-top:16px;">
+        <div class="form-group">
+          <label class="form-label">Mã đơn hàng</label>
+          <input type="text" class="form-input" name="order_id" value="${lead.order_id||''}" placeholder="Nhập mã đơn hàng nếu có">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Giá trị đơn hàng (VND)</label>
+          <input type="number" class="form-input" name="order_value" value="${lead.order_value||''}" placeholder="VD: 500000">
+        </div>
+      </div>
+
+      <div id="reject-fields" style="display: ${lead.status==='rejected'?'block':'none'}; margin-top:16px;">
+        <div class="form-group">
+          <label class="form-label">Lý do bị loại</label>
+          <textarea class="form-textarea" name="reject_reason" placeholder="Nhập lý do loại...">${lead.reject_reason||''}</textarea>
+        </div>
+      </div>
+    </form>
+  `;
+
+  const footerHTML = `
+    <button class="btn btn-outline" onclick="hideModal()">Hủy bỏ</button>
+    <button class="btn btn-primary" onclick="document.getElementById('update-status-form').requestSubmit()"><i class="fas fa-save"></i> Xác nhận</button>
+  `;
+
+  showModal('Cập nhật trạng thái Lead', bodyHTML, { footerHTML, maxWidth: '480px' });
+  
+  window.toggleStatusFields = function() {
+    const val = document.getElementById('status-select').value;
+    document.getElementById('valid-fields').style.display = val === 'valid' ? 'block' : 'none';
+    document.getElementById('reject-fields').style.display = val === 'rejected' ? 'block' : 'none';
+  };
+}
+
+async function submitUpdateStatus(e, id) {
+  e.preventDefault();
+  const form = document.getElementById('update-status-form');
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+  
+  if (data.status !== 'valid') { data.order_id = ''; data.order_value = ''; }
+  if (data.status !== 'rejected') { data.reject_reason = ''; }
+  if (data.order_value) data.order_value = parseFloat(data.order_value);
+
+  try {
+    await apiPut('/leads/' + id, data);
+    showToast('Đã cập nhật trạng thái!', 'success');
+    hideModal();
+    // Update local immediately for fast feedback
+    const lead = allLeads.find(l => l.id === id);
+    if (lead) {
+      Object.assign(lead, data);
+    }
+    updateKPIs();
+    filterLeads();
+  } catch(err) {
+    showToast('Lỗi cập nhật', 'error');
+  }
+}
+
+function viewLeadDetail(id) {
+  const lead = allLeads.find(l => l.id === id);
+  if (!lead) return;
+
+  const camp = campaignMap[lead.campaign_id];
+  const campName = camp ? camp.name : 'N/A';
+  const commRate = camp ? (camp.commission_rate || 0) : 0;
+  const commission = lead.order_value ? lead.order_value * commRate / 100 : 0;
+
+  const statusClass = {
+    'new': 'badge-new',
+    'valid': 'badge-valid',
+    'rejected': 'badge-rejected'
+  }[lead.status] || 'badge-pending';
+
+  const statusText = {
+    'new': 'Mới',
+    'valid': 'Hợp lệ',
+    'rejected': 'Bị loại'
+  }[lead.status] || lead.status;
+
+  const bodyHTML = `
+    <div style="margin-bottom:20px;text-align:center;padding:16px;background:var(--bg);border-radius:var(--r-md)">
+      <div style="font-size:18px;font-weight:800;color:var(--navy);margin-bottom:4px">${lead.name || '—'}</div>
+      <div style="font-size:13px;color:var(--txt2)">${lead.phone || ''} ${lead.email ? '· ' + lead.email : ''}</div>
+      <div style="margin-top:10px"><span class="badge-status ${statusClass}">${statusText}</span></div>
+    </div>
+
+    <div class="lead-detail-grid">
+      <div class="lead-detail-item">
+        <div class="label">Chiến dịch</div>
+        <div class="value">${campName}</div>
+      </div>
+      <div class="lead-detail-item">
+        <div class="label">Nguồn / Mã affiliate</div>
+        <div class="value">${lead.source || lead.affiliate_code || '—'}</div>
+      </div>
+      <div class="lead-detail-item">
+        <div class="label">Mã đơn hàng</div>
+        <div class="value">${lead.order_id || '—'}</div>
+      </div>
+      <div class="lead-detail-item">
+        <div class="label">Giá trị đơn hàng</div>
+        <div class="value">${lead.order_value ? formatCurrency(lead.order_value) : '—'}</div>
+      </div>
+      <div class="lead-detail-item">
+        <div class="label">Hoa hồng dự kiến</div>
+        <div class="value" style="color:var(--green-dk)">${commission > 0 ? formatCurrency(commission) : '—'}</div>
+      </div>
+      <div class="lead-detail-item">
+        <div class="label">Ngày tạo</div>
+        <div class="value">${formatDateTime(lead.created_at)}</div>
+      </div>
+      ${lead.reject_reason ? `
+      <div class="lead-detail-item" style="grid-column:1/3;background:var(--red-soft)">
+        <div class="label" style="color:var(--red-dk)">Lý do loại</div>
+        <div class="value" style="color:var(--red-dk)">${lead.reject_reason}</div>
+      </div>
+      ` : ''}
+      ${lead.notes ? `
+      <div class="lead-detail-item" style="grid-column:1/3">
+        <div class="label">Ghi chú</div>
+        <div class="value">${lead.notes}</div>
+      </div>
+      ` : ''}
+    </div>
+  `;
+
+  showModal('Chi tiết Lead', bodyHTML, { maxWidth: '560px' });
+}
+
+function handleLogout() {
+  sessionStorage.clear();
+  window.location.href = '/';
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS Admin — Quản lý Đối tác</title>
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="admin-sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">AMS</div>
+    <div class="sidebar-logo-text">
+      AMS Admin
+      <small>Affiliate Management</small>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-label">Tổng quan</div>
+    <a href="index.html" class="sidebar-item"><i class="fas fa-gauge-high"></i> Dashboard</a>
+    <div class="sidebar-label">Quản lý</div>
+    <a href="campaigns.html" class="sidebar-item"><i class="fas fa-bullhorn"></i> Chiến dịch</a>
+    <a href="leads.html" class="sidebar-item"><i class="fas fa-users"></i> Lead & Đơn hàng</a>
+    <a href="content.html" class="sidebar-item"><i class="fas fa-images"></i> Content & Tài nguyên</a>
+    <a href="affiliates.html" class="sidebar-item active"><i class="fas fa-handshake"></i> Đối tác (Affiliate)</a>
+    <div class="sidebar-label">Hệ thống</div>
+    <a href="settings.html" class="sidebar-item"><i class="fas fa-gear"></i> Cài đặt</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-footer-info">AMS Admin v1.0 · © 2026</div>
+  </div>
+</aside>
+
+<!-- HEADER -->
+<header class="admin-header">
+  <div class="header-left">
+    <div class="header-breadcrumb">
+      <i class="fas fa-home" style="font-size:11px; margin-right:4px; opacity:.5"></i>
+      Admin / <span>Quản lý Đối tác</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="header-admin-name">
+      Admin Hệ thống
+      <span class="header-admin-role">ADMIN</span>
+    </div>
+    <div class="admin-avatar">AD</div>
+    <button class="btn-logout" onclick="window.location.href='/'">
+      <i class="fas fa-right-from-bracket"></i> Đăng xuất
+    </button>
+  </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="admin-main">
+  <!-- Page Header -->
+  <div class="page-header ani ani-1">
+    <div>
+      <h1 class="page-title">Quản lý Đối tác</h1>
+      <p class="page-sub">Danh sách toàn bộ đối tác (Affiliate) trên hệ thống</p>
+    </div>
+    <button class="btn btn-primary" onclick="openAffiliateForm()">
+      <i class="fas fa-plus"></i> Thêm đối tác mới
+    </button>
+  </div>
+
+  <!-- Filter & Table -->
+  <div class="card ani ani-2">
+    <!-- Filter Bar -->
+    <div class="card-header" style="display:flex; gap:12px; align-items:center;">
+      <div style="position:relative; flex:1; max-width:300px;">
+        <i class="fas fa-search" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--txt3);"></i>
+        <input type="text" id="search-input" class="form-input" style="padding-left:36px; margin:0;" placeholder="Tìm tên, SĐT, mã đối tác..." oninput="debounceFilter()">
+      </div>
+      <div style="flex:1;"></div>
+      <div class="filter-count" id="affiliate-count">Đang tải...</div>
+    </div>
+
+    <!-- Table -->
+    <div class="card-body" style="padding:0">
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="text-align:center; width:50px;">STT</th>
+              <th>Mã đối tác</th>
+              <th>Họ và tên</th>
+              <th>Số điện thoại</th>
+              <th>Email</th>
+              <th style="text-align:center;">Link MXH</th>
+              <th style="text-align:center;">Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="affiliate-tbody">
+            <tr>
+              <td colspan="7" class="loading-overlay">
+                <span class="spinner"></span> Đang tải dữ liệu...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script src="admin.js"></script>
+<script>
+// === Data ===
+let affiliates = [];
+let editingAffiliateId = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadData();
+});
+
+async function loadData() {
+  try {
+    const data = await apiGet('/affiliates');
+    // Sắp xếp theo ID hoặc ngày tạo
+    affiliates = data.sort((a, b) => a.id.localeCompare(b.id));
+    renderTable();
+  } catch(err) {
+    showToast('Không thể tải dữ liệu đối tác', 'error');
+  }
+}
+
+const debounceFilter = debounce(() => renderTable(), 300);
+
+function renderTable() {
+  const tbody = document.getElementById('affiliate-tbody');
+  const searchTxt = document.getElementById('search-input').value.toLowerCase();
+
+  let filtered = affiliates;
+  if (searchTxt) {
+    filtered = affiliates.filter(a => 
+      (a.name || '').toLowerCase().includes(searchTxt) ||
+      (a.partner_code || '').toLowerCase().includes(searchTxt) ||
+      (a.phone || '').toLowerCase().includes(searchTxt) ||
+      (a.email || '').toLowerCase().includes(searchTxt)
+    );
+  }
+
+  document.getElementById('affiliate-count').textContent = `Tổng cộng: ${filtered.length} đối tác`;
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:40px; color:var(--txt3);">Không tìm thấy đối tác nào phù hợp</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = filtered.map((item, index) => {
+    // Determine social icon based on link
+    let socialIcon = '<i class="fas fa-link" style="color:var(--txt3);"></i>';
+    let socialLink = item.social_link || '';
+    if (socialLink) {
+      if (socialLink.includes('facebook.com') || socialLink.includes('fb.com')) {
+        socialIcon = '<i class="fab fa-facebook" style="color:#1877F2;"></i>';
+      } else if (socialLink.includes('tiktok.com')) {
+        socialIcon = '<i class="fab fa-tiktok" style="color:#000000;"></i>';
+      } else if (socialLink.includes('youtube.com')) {
+        socialIcon = '<i class="fab fa-youtube" style="color:#FF0000;"></i>';
+      }
+    }
+
+    return `
+      <tr>
+        <td style="text-align:center; font-weight:600; color:var(--txt3);">${index + 1}</td>
+        <td>
+          <span style="font-family:monospace; background:#f1f5f9; padding:4px 8px; border-radius:4px; font-weight:600; color:var(--navy); font-size:12px;">
+            ${item.partner_code || '—'}
+          </span>
+        </td>
+        <td><strong style="color:var(--navy);">${item.name}</strong></td>
+        <td>${item.phone || '—'}</td>
+        <td>${item.email || '—'}</td>
+        <td style="text-align:center;">
+          ${socialLink ? 
+            `<a href="${socialLink}" target="_blank" title="${socialLink}" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; background:#f1f5f9; border-radius:50%; text-decoration:none; transition:all .2s;">
+              ${socialIcon}
+            </a>` 
+          : '<span style="color:var(--txt3)">—</span>'}
+        </td>
+        <td style="text-align:center;">
+          <div style="display:inline-flex; gap:6px; justify-content:center;">
+            <button class="btn btn-xs btn-outline" title="Sửa" onclick="openAffiliateForm('${item.id}')"><i class="fas fa-pen"></i></button>
+            <button class="btn btn-xs btn-danger" title="Xóa" onclick="deleteAffiliate('${item.id}')"><i class="fas fa-trash-can"></i></button>
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+// === Form handling ===
+function openAffiliateForm(id) {
+  editingAffiliateId = id || null;
+  const item = id ? affiliates.find(a => a.id === id) : {};
+  const isEdit = !!id;
+  const title = isEdit ? 'Chỉnh sửa thông tin đối tác' : 'Thêm đối tác mới';
+
+  const bodyHTML = `
+    <form id="affiliate-form" onsubmit="saveAffiliate(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Họ và tên <span class="required">*</span></label>
+          <input class="form-input" name="name" value="${item.name || ''}" placeholder="Nhập họ và tên" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mã đối tác <span class="required">*</span></label>
+          <input class="form-input" name="partner_code" value="${item.partner_code || ''}" placeholder="VD: 11198" required>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Số điện thoại</label>
+          <input class="form-input" name="phone" value="${item.phone || ''}" placeholder="Nhập SĐT">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" name="email" value="${item.email || ''}" placeholder="Nhập email">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Link Mạng Xã Hội (Facebook, TikTok...)</label>
+        <div style="position:relative;">
+          <i class="fas fa-link" style="position:absolute; left:12px; top:50%; transform:translateY(-50%); color:var(--txt3);"></i>
+          <input class="form-input" name="social_link" value="${item.social_link || ''}" style="padding-left:36px;" placeholder="https://facebook.com/username">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Cấp bậc (Tier)</label>
+          <select class="form-select" name="tier">
+            <option value="bronze" ${item.tier === 'bronze' ? 'selected' : ''}>Bronze</option>
+            <option value="silver" ${item.tier === 'silver' ? 'selected' : ''}>Silver</option>
+            <option value="gold" ${item.tier === 'gold' ? 'selected' : ''}>Gold</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Trạng thái</label>
+          <select class="form-select" name="status">
+            <option value="active" ${item.status === 'active' ? 'selected' : ''}>Đang hoạt động</option>
+            <option value="inactive" ${item.status === 'inactive' ? 'selected' : ''}>Đã khóa</option>
+          </select>
+        </div>
+      </div>
+    </form>
+  `;
+
+  const footerHTML = `
+    <button class="btn btn-outline" onclick="hideModal()">Hủy</button>
+    <button class="btn btn-primary" onclick="document.getElementById('affiliate-form').requestSubmit()">
+      <i class="fas fa-save"></i> Lưu thông tin
+    </button>
+  `;
+
+  showModal(title, bodyHTML, { footerHTML, maxWidth: '600px' });
+}
+
+async function saveAffiliate(e) {
+  e.preventDefault();
+  const form = document.getElementById('affiliate-form');
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+
+  try {
+    if (editingAffiliateId) {
+      await apiPut(\`/affiliates/\${editingAffiliateId}\`, data);
+      showToast('Cập nhật đối tác thành công!', 'success');
+    } else {
+      await apiPost('/affiliates', data);
+      showToast('Thêm đối tác mới thành công!', 'success');
+    }
+    hideModal();
+    await loadData();
+  } catch(err) {
+    showToast('Có lỗi xảy ra khi lưu đối tác', 'error');
+  }
+}
+
+async function deleteAffiliate(id) {
+  const item = affiliates.find(a => a.id === id);
+  const confirmed = await confirmAction(
+    \`Bạn có chắc muốn xóa đối tác <strong>"\${item ? item.name : ''}"</strong>?<br><span style="color:var(--txt3);font-size:12px;">Hành động này không thể hoàn tác.</span>\`,
+    { title: 'Xóa đối tác', confirmText: 'Xóa ngay', type: 'danger' }
+  );
+  if (!confirmed) return;
+
+  try {
+    await apiDelete(\`/affiliates/\${id}\`);
+    showToast('Đã xóa đối tác thành công', 'success');
+    await loadData();
+  } catch(err) {
+    showToast('Không thể xóa đối tác', 'error');
+  }
+}
+</script>
+</body>
+</html>
