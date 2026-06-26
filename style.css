@@ -282,9 +282,10 @@ a{text-decoration:none;color:inherit}ul{list-style:none}button{border:none;curso
 .ani-4{animation-delay:.35s}
 
 /* VIEW TOGGLE LOGIC */
-.view-lead { display: none; }
-body.mode-lead .view-revenue { display: none; }
-body.mode-lead .view-lead { display: block; }
+body.mode-lead .rev-only { display: none !important; }
+body.mode-lead .db-kpi-row { grid-template-columns: repeat(2, 1fr); }
+body.mode-lead .db-camp-stats { grid-template-columns: repeat(2, 1fr); }
+body.mode-lead .db-widget-grid { grid-template-columns: repeat(3, 1fr); }
 
 /* LEAD VIEW SPECIFICS */
 .suggest.blue { background: #eff6ff; border-color: #bfdbfe; color: #1e3a8a; }
