@@ -116,7 +116,6 @@
     </div>
     <div style="display:flex;gap:10px">
       <button class="btn-o" style="padding:10px 18px"><i class="fas fa-file-export" style="font-size:11px"></i> Xuất báo cáo</button>
-      <button class="btn-f" style="padding:10px 18px"><i class="fas fa-copy" style="font-size:11px"></i> Sao chép link của tôi</button>
     </div>
   </div>
 
@@ -129,7 +128,7 @@
     <div class="filter-group"><div class="filter-label">Trạng thái lead</div><select class="filter-select"><option>Tất cả</option></select></div>
     <div class="filter-group"><div class="filter-label">Chiến dịch</div><select class="filter-select"><option>Tất cả</option></select></div>
     <div class="filter-group"><div class="filter-label">Nguồn</div><select class="filter-select"><option>Tất cả</option></select></div>
-    <div class="filter-group"><div class="filter-label">Thời gian</div><select class="filter-select"><option>7 ngày qua</option></select></div>
+    <div class="filter-group"><div class="filter-label">Thời gian</div><select class="filter-select"><option>7 ngày qua</option><option>14 ngày qua</option><option>30 ngày qua</option><option>3 tháng qua</option></select></div>
     <div class="filter-group"><div class="filter-label">Trạng thái đơn</div><select class="filter-select"><option>Tất cả</option></select></div>
     <label class="toggle-switch">Chỉ hiện thị lead của tôi <div class="toggle-track"></div></label>
   </div>
@@ -146,20 +145,16 @@
   <div class="pipeline">
     <div class="pipeline-head">
       <div class="pipeline-title">📊 Tổng quan pipeline lead <i class="fas fa-circle-info" style="font-size:11px;color:var(--txt3)"></i></div>
-      <a href="#" class="pipeline-link">Xem chi tiết pipeline →</a>
     </div>
     <div class="pipeline-flow">
       <div class="pipeline-step"><div class="ps-label">Mới</div><div class="ps-val v-blue">52</div></div>
-      <div class="pipeline-step"><div class="ps-label">Đang gọi</div><div class="ps-val v-orange">18</div></div>
       <div class="pipeline-step"><div class="ps-label">Hợp lệ</div><div class="ps-val v-green">38</div></div>
-      <div class="pipeline-step"><div class="ps-label">Trùng</div><div class="ps-val v-yellow">4</div></div>
-      <div class="pipeline-step"><div class="ps-label">Đang xác minh</div><div class="ps-val v-purple">6</div></div>
       <div class="pipeline-step"><div class="ps-label">Bị loại</div><div class="ps-val v-red">4</div></div>
     </div>
   </div>
 
-  <div class="leads-layout">
-    <div class="leads-main">
+  <div>
+    <div>
       <!-- Table Header -->
       <div class="table-header">
         <div class="table-title">Danh sách lead & đơn hàng</div>
@@ -232,21 +227,6 @@
         <div class="pag-goto">Đi tới trang <input type="number" value="1"></div>
       </div>
     </div>
-
-    <!-- RIGHT PANEL -->
-    <div class="right-panel">
-
-      <!-- Rejection reasons -->
-      <div class="summary-card">
-        <div class="summary-title">🚫 Lý do lead bị loại</div>
-        <div class="reason-item"><span class="reason-label">Trùng data</span><div class="reason-bar-wrap"><div class="reason-bar" style="width:45%"></div></div><span class="reason-pct">45%</span></div>
-        <div class="reason-item"><span class="reason-label">Không liên lạc được</span><div class="reason-bar-wrap"><div class="reason-bar" style="width:25%;background:var(--orange)"></div></div><span class="reason-pct">25%</span></div>
-        <div class="reason-item"><span class="reason-label">Không có nhu cầu</span><div class="reason-bar-wrap"><div class="reason-bar" style="width:20%;background:var(--yellow)"></div></div><span class="reason-pct">20%</span></div>
-        <div class="reason-item"><span class="reason-label">Thông tin không chính xác</span><div class="reason-bar-wrap"><div class="reason-bar" style="width:10%;background:var(--red)"></div></div><span class="reason-pct">10%</span></div>
-        <a href="#" class="summary-link">Xem chi tiết →</a>
-      </div>
-    </div>
-  </div>
 </main>
 
 <script src="app.js"></script>

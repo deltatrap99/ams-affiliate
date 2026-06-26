@@ -1,175 +1,22 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AMS — Agent Management System | Dashboard</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="detail.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script>
-    if (!sessionStorage.getItem('ams_logged_in')) {
-      window.location.href = 'login.html';
-    }
-  </script>
-</head>
-<body>
+import re
 
-<!-- HEADER -->
-<header class="header">
-  <div class="header-left">
-    <a href="#" class="logo">
-      <div class="logo-icon">AMS</div>
-      <span class="logo-text">Agent Management System</span>
-    </a>
-    <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
-  </div>
-  <div class="header-right">
-    <div style="display:flex;align-items:center;background:rgba(0,0,0,.04);padding:4px;border-radius:100px;gap:4px">
-      <span class="com-label" style="margin-left:8px;margin-right:4px">Hình thức Affiliate:</span>
-      <button class="tog" id="togLead">Theo lead</button>
-      <button class="tog on" id="togRevenue">Theo doanh số <i class="fas fa-check" style="font-size:10px"></i></button>
-    </div>
-    <div class="notif-wrapper">
-      <button class="bell" id="bellTrigger"><i class="fas fa-bell"></i><span class="dot">3</span></button>
-      <div class="notif-dropdown" id="notifDropdown">
-        <div class="nd-header">
-          <div class="nd-title">Thông báo <span class="nd-count">3</span></div>
-          <button class="nd-mark-read" id="markAllRead">Đánh dấu đã đọc</button>
-        </div>
-        <div class="nd-tabs">
-          <button class="nd-tab on" data-filter="all">Tất cả</button>
-          <button class="nd-tab" data-filter="unread">Chưa đọc</button>
-          <button class="nd-tab" data-filter="lead">Lead</button>
-          <button class="nd-tab" data-filter="campaign">Chiến dịch</button>
-        </div>
-        <div class="nd-list">
-          <div class="nd-item unread" data-type="lead">
-            <div class="nd-icon ni-lead"><i class="fas fa-user-plus"></i></div>
-            <div class="nd-content">
-              <div class="nd-text"><strong>Lead mới</strong> — Nguyễn Hoàng Minh vừa đăng ký qua link V-ACT Hè 2026 của bạn.</div>
-              <div class="nd-time"><i class="fas fa-clock"></i> 10 phút trước</div>
-            </div>
-          </div>
-          <div class="nd-item unread" data-type="campaign">
-            <div class="nd-icon ni-warning"><i class="fas fa-exclamation-triangle"></i></div>
-            <div class="nd-content">
-              <div class="nd-text"><strong>Sắp hết hạn</strong> — Easy SPEAK for Adults còn <strong>2 ngày</strong> nữa là kết thúc. Hãy tăng tốc!</div>
-              <div class="nd-time"><i class="fas fa-clock"></i> 30 phút trước</div>
-            </div>
-          </div>
-          <div class="nd-item unread" data-type="lead">
-            <div class="nd-icon ni-payment"><i class="fas fa-check-circle"></i></div>
-            <div class="nd-content">
-              <div class="nd-text"><strong>Lead hợp lệ</strong> — Lê Đức Anh đã được xác nhận hợp lệ. Hoa hồng +420,000đ.</div>
-              <div class="nd-time"><i class="fas fa-clock"></i> 1 giờ trước</div>
-            </div>
-          </div>
-          <div class="nd-item" data-type="campaign">
-            <div class="nd-icon ni-campaign"><i class="fas fa-bullhorn"></i></div>
-            <div class="nd-content">
-              <div class="nd-text"><strong>Chiến dịch mới</strong> — TopCV – CV Pro 2026 vừa mở đăng ký. Hoa hồng 35,000đ/lead.</div>
-              <div class="nd-time"><i class="fas fa-clock"></i> 3 giờ trước</div>
-            </div>
-          </div>
-          <div class="nd-item" data-type="lead">
-            <div class="nd-icon ni-rank"><i class="fas fa-trophy"></i></div>
-            <div class="nd-content">
-              <div class="nd-text"><strong>Xếp hạng</strong> — Bạn đang đứng <strong>#2</strong> trong chiến dịch V-ACT Hè 2026 tuần này!</div>
-              <div class="nd-time"><i class="fas fa-clock"></i> 5 giờ trước</div>
-            </div>
-          </div>
-          <div class="nd-item" data-type="campaign">
-            <div class="nd-icon ni-system"><i class="fas fa-info-circle"></i></div>
-            <div class="nd-content">
-              <div class="nd-text"><strong>Đối soát</strong> — Kỳ đối soát tháng 5 đã hoàn tất. Xem chi tiết hoa hồng được duyệt.</div>
-              <div class="nd-time"><i class="fas fa-clock"></i> Hôm qua</div>
-            </div>
-          </div>
-          <div class="nd-item" data-type="lead">
-            <div class="nd-icon ni-lead"><i class="fas fa-user-xmark"></i></div>
-            <div class="nd-content">
-              <div class="nd-text"><strong>Lead bị loại</strong> — Hoàng Tuấn Anh (Easy SPEAK for Adults) bị loại do trùng data.</div>
-              <div class="nd-time"><i class="fas fa-clock"></i> Hôm qua</div>
-            </div>
-          </div>
-        </div>
-        <div class="nd-footer">
-          <a href="#">Xem tất cả thông báo <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
-        </div>
-      </div>
-    </div>
-    <div class="profile-wrapper">
-      <div class="avatar" id="avatarTrigger">NA</div>
-      <div class="profile-dropdown" id="profileDropdown">
-        <div class="pd-header">
-          <div class="pd-user">
-            <div class="pd-avatar">NA</div>
-            <div class="pd-info">
-              <div class="pd-name">Nguyễn Minh Anh</div>
-              <div class="pd-tier">🥈 Affiliate Silver</div>
-              <div class="pd-meta">Mã: AFF123 · <span class="pd-status">Đang hoạt động</span></div>
-            </div>
-          </div>
-          <div class="pd-copy-btns">
-            <button class="pd-copy" onclick="copyText('AFF123', this)"><i class="fas fa-copy"></i> Sao chép mã Affiliate</button>
-            <button class="pd-copy" onclick="copyText('https://ams.link/AFF123', this)"><i class="fas fa-link"></i> Sao chép link giới thiệu</button>
-          </div>
-        </div>
-        <div class="pd-group">
-          <div class="pd-group-label">Tài khoản & quyền lợi</div>
-          <div class="pd-item"><i class="fas fa-user"></i> Hồ sơ của tôi</div>
-          <div class="pd-item"><i class="fas fa-crown"></i> Cấp bậc & quyền lợi</div>
-          <div class="pd-item"><i class="fas fa-credit-card"></i> Thông tin thanh toán</div>
-          <div class="pd-item"><i class="fas fa-file-contract"></i> Thuế & hồ sơ hợp đồng</div>
-        </div>
-        <div class="pd-divider"></div>
-        <div class="pd-group">
-          <div class="pd-group-label">Cài đặt</div>
-          <div class="pd-item"><i class="fas fa-bell"></i> Cài đặt thông báo</div>
-          <div class="pd-item"><i class="fas fa-shield-halved"></i> Bảo mật tài khoản</div>
-        </div>
-        <div class="pd-divider"></div>
-        <div class="pd-group">
-          <div class="pd-group-label">Hỗ trợ</div>
-          <div class="pd-item"><i class="fas fa-headset"></i> Liên hệ AS Team</div>
-          <div class="pd-item"><i class="fas fa-life-ring"></i> Trung tâm hỗ trợ</div>
-        </div>
-        <div class="pd-divider"></div>
-        <div class="pd-logout"><i class="fas fa-right-from-bracket"></i> Đăng xuất</div>
-      </div>
-    </div>
-  </div>
-</header>
-<div class="dd-overlay" id="ddOverlay"></div>
+with open('index.html', 'r', encoding='utf-8') as f:
+    content = f.read()
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sidebar-nav">
-    <div><div class="s-label">Tổng quan</div>
-      <div class="s-item on"><span class="ic"><i class="fas fa-home"></i></span>Tổng quan</div></div>
-    <div><div class="s-label">Chiến dịch</div>
-      <div class="s-item" onclick="location.href='campaigns.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-bullhorn"></i></span>Chiến dịch</div>
-      <div class="s-item" onclick="location.href='leads.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-file-invoice"></i></span>Lead &amp; đơn hàng</div></div>
-    <div><div class="s-label">Hoa hồng &amp; đối soát</div>
-      <div class="s-item" onclick="location.href='commission.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-coins"></i></span>Hoa hồng &amp; thưởng</div></div>
-    <div><div class="s-label">Tài nguyên</div>
-      <div class="s-item" onclick="location.href='resources.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-images"></i></span>Tài nguyên nội dung</div></div>
-    <div><div class="s-label">Cộng đồng</div>
-      <div class="s-item" onclick="location.href='leaderboard.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-ranking-star"></i></span>Bảng xếp hạng</div></div>
-    <div><div class="s-label">Hỗ trợ</div>
-      <div class="s-item"><span class="ic"><i class="fas fa-life-ring"></i></span>Trung tâm hỗ trợ</div>
-      <div class="s-item"><span class="ic"><i class="fas fa-headset"></i></span>Liên hệ AS Team</div></div>
-  </div>
-  <div class="s-promo">
-    <h4>🚀 Bứt tốc thu nhập!</h4>
-    <p>Hoàn thành mục tiêu cấp bậc để mở khóa quyền lợi cao hơn.</p>
-    <a href="#" class="s-promo-btn">Xem cấp bậc của tôi <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
-  </div>
-</aside>
+# Replace header right part
+content = content.replace(
+    '<span class="com-label">Cơ chế hoa hồng:</span>\n    <button class="tog">Theo lead</button>\n    <button class="tog on">Theo doanh số</button>',
+    '<span class="com-label" style="color:var(--txt3)">Hình thức Affiliate:</span>\n    <button class="tog on" style="display:flex;align-items:center;gap:6px;background:none;border:1px solid #bfdbfe;color:#2563eb;padding:6px 12px;border-radius:var(--r-full)">Theo doanh số <i class="fas fa-chevron-down" style="font-size:10px"></i></button>'
+)
 
-<!-- MAIN -->
-<main class="main">
+# Extract everything before <main class="main"> and after </main>
+main_start = content.find('<main class="main">')
+main_end = content.find('</main>', main_start) + len('</main>')
+
+pre_main = content[:main_start]
+post_main = content[main_end:]
+
+new_main = """<main class="main">
   <!-- SECTION: KPI ROW -->
   <div class="db-section-title">Hiệu suất tổng quan <span><i class="fas fa-sync-alt"></i> Cập nhật hôm nay</span></div>
   <div class="db-kpi-row">
@@ -406,8 +253,7 @@
 
   </div>
 
-</main>
+</main>"""
 
-<script src="app.js"></script>
-</body>
-</html>
+with open('index.html', 'w', encoding='utf-8') as f:
+    f.write(pre_main + new_main + post_main)
