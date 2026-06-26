@@ -167,7 +167,7 @@ a{text-decoration:none;color:inherit}ul{list-style:none}button{border:none;curso
 .rev-btn.outline:hover{background:rgba(255,255,255,.15)}
 
 /* KPI ROW */
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px}
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
 .kpi{background:var(--card);border-radius:var(--r-lg);padding:24px;border:1px solid var(--border);transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);cursor:default;box-shadow:var(--sh-sm);position:relative;overflow:hidden}
 .kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;opacity:0;transition:var(--tr)}
 .kpi:hover{transform:translateY(-6px);box-shadow:var(--sh-md);border-color:transparent}
