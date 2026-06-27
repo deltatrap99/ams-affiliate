@@ -240,37 +240,70 @@ async function loadCampaignsList() {
       const leads = camp.kpis ? camp.kpis.leads : 0;
       const revenue = camp.kpis ? camp.kpis.revenue : 0;
       const revDisplay = revenue >= 1000000 ? (revenue/1000000).toFixed(0) + 'tr' : (revenue >= 1000 ? (revenue/1000).toFixed(0) + 'K' : revenue);
-      
+      const icons = ['📘','💬','🖥️','🎯','📊'];
+      const colors = ['c-blue','c-green','c-purple','c-orange','c-teal'];
+
       return `
-        <div class="featured" style="margin-bottom:0; box-shadow:var(--sh-sm);">
-          ${idx === 0 ? '<div class="featured-badge">💡 Gợi ý cho bạn</div>' : ''}
-          <div class="featured-icon">${idx === 0 ? '📘' : '⭐'}</div>
-          <div class="featured-content">
-            <div class="featured-top">
-              <a href="${detailPage}" class="featured-name" style="text-decoration:none;">${camp.name}</a>
-              ${idx === 0 ? '<span class="featured-priority">Nên ưu tiên</span>' : ''}
+        <div class="citem" style="cursor:pointer;" onclick="window.location.href='${detailPage}'">
+          <div class="citem-icon ${colors[idx % colors.length]}">${icons[idx % icons.length]}</div>
+          <div class="citem-body">
+            <div class="citem-header">
+              <span class="citem-name">${camp.name}</span>
+              ${idx === 0 ? '<span class="citem-status new">Nên ưu tiên</span>' : '<span class="citem-status joining">Đang tham gia</span>'}
             </div>
-            <div class="db-camp-tags" style="margin-top:8px;">
+            <div class="citem-tags" style="margin-top:6px;">
               <span class="tag tag-blue">COM ${comRate}% DS</span>
               <span class="tag tag-green">${camp.target_audience || camp.region || 'Toàn quốc'}</span>
             </div>
-            <div class="featured-desc" style="margin-top:12px; font-size:13px; color:var(--txt2); line-height:1.6;">${camp.description ? camp.description.replace(/<[^>]+>/g, '').substring(0, 250) + '...' : ''}</div>
-            <div class="db-camp-stats" style="margin-top:16px;">
-              <div><div class="db-cs-val"><i class="fas fa-users"></i> ${leads}</div><div class="db-cs-lbl">Lead</div></div>
-              <div><div class="db-cs-val green rev-only"><i class="fas fa-sack-dollar"></i> ${revDisplay}</div><div class="db-cs-lbl rev-only">Doanh thu</div></div>
-              <div><div class="db-cs-val orange"><i class="fas fa-clock"></i> ${daysLeft} ngày</div><div class="db-cs-lbl">Deadline còn</div></div>
+            <div class="citem-desc" style="margin-top:6px;">${camp.description ? camp.description.replace(/<[^>]+>/g, '').substring(0, 150) + '...' : ''}</div>
+            <div class="citem-stats" style="margin-top:10px;">
+              <div class="cs"><div class="cs-val">${leads}</div><div class="cs-label">LEAD</div></div>
+              <div class="cs rev-only"><div class="cs-val">${revDisplay}</div><div class="cs-label">DOANH THU</div></div>
+              <div class="cs"><div class="cs-val cs-val" style="color:var(--orange)">${daysLeft} ngày</div><div class="cs-label">DEADLINE CÒN</div></div>
             </div>
-            <div class="citem-btns" style="margin-top:16px; display:flex; gap:12px;">
-              <button class="btn-o" onclick="navigator.clipboard.writeText('https://ams.daisugiaoduc.vn/link/' + '${camp.id}'); showToast('Đã sao chép link Affiliate!')"><i class="fas fa-link"></i> Sao chép link</button>
-              <button class="btn-f" onclick="window.location.href='${detailPage}'">Xem chi tiết</button>
+          </div>
+          <div class="citem-right">
+            <div class="citem-btns" style="flex-direction:column;">
+              <button class="btn-o" onclick="event.stopPropagation(); navigator.clipboard.writeText('https://ams.daisugiaoduc.vn/link/${camp.id}'); showToast('Đã sao chép link!')"><i class="fas fa-link"></i> Sao chép link</button>
+              <button class="btn-f dark" onclick="event.stopPropagation(); window.location.href='${detailPage}'">Xem chi tiết</button>
             </div>
           </div>
         </div>
       `;
     }).join('');
   } catch (err) {
-    console.error(err);
-    list.innerHTML = '<div style="color:red;text-align:center;padding:20px;">Lỗi tải dữ liệu</div>';
+    console.warn('API unavailable, using static fallback:', err);
+    list.innerHTML = `
+      <div class="citem">
+        <div class="citem-icon c-blue">📘</div>
+        <div class="citem-body">
+          <div class="citem-header"><span class="citem-name">[HOCMAI] Lộ trình TopUni S-VACT</span><span class="citem-status new">Nên ưu tiên</span></div>
+          <div class="citem-tags" style="margin-top:6px;"><span class="tag tag-blue">COM 10% DS</span><span class="tag tag-green">Học sinh lớp 12 (2K9)</span><span class="tag tag-purple">Content kit</span></div>
+          <div class="citem-desc" style="margin-top:6px;">Luyện thi V-ACT lộ trình S cho học sinh lớp 12 / 2K9 — hệ thống hóa kiến thức, luyện đề theo giai đoạn.</div>
+          <div class="citem-stats" style="margin-top:10px;"><div class="cs"><div class="cs-val">52</div><div class="cs-label">LEAD</div></div><div class="cs"><div class="cs-val">84tr</div><div class="cs-label">DOANH THU</div></div><div class="cs"><div class="cs-val" style="color:var(--orange)">5 ngày</div><div class="cs-label">DEADLINE CÒN</div></div></div>
+        </div>
+        <div class="citem-right"><div class="citem-btns" style="flex-direction:column;"><button class="btn-o"><i class="fas fa-link"></i> Sao chép link</button><button class="btn-f dark" onclick="window.location.href='topuni-detail.html'">Xem chi tiết</button></div></div>
+      </div>
+      <div class="citem">
+        <div class="citem-icon c-green">💬</div>
+        <div class="citem-body">
+          <div class="citem-header"><span class="citem-name">[ICANCONNECT] Easy SPEAK for Adults</span><span class="citem-status joining">Đang tham gia</span></div>
+          <div class="citem-tags" style="margin-top:6px;"><span class="tag tag-blue">COM 10% DS</span><span class="tag tag-green">Người đi làm 18+</span></div>
+          <div class="citem-desc" style="margin-top:6px;">Tiếng Anh giao tiếp cho người đi làm, phù hợp người từ 18+ muốn cải thiện phản xạ và ứng dụng thực tế.</div>
+          <div class="citem-stats" style="margin-top:10px;"><div class="cs"><div class="cs-val">46</div><div class="cs-label">LEAD</div></div><div class="cs"><div class="cs-val">62tr</div><div class="cs-label">DOANH THU</div></div><div class="cs"><div class="cs-val" style="color:var(--orange)">4 ngày</div><div class="cs-label">DEADLINE CÒN</div></div></div>
+        </div>
+        <div class="citem-right"><div class="citem-btns" style="flex-direction:column;"><button class="btn-o"><i class="fas fa-link"></i> Sao chép link</button><button class="btn-f dark" onclick="window.location.href='easyspeak-detail.html'">Xem chi tiết</button></div></div>
+      </div>
+      <div class="citem">
+        <div class="citem-icon c-purple">🖥️</div>
+        <div class="citem-body">
+          <div class="citem-header"><span class="citem-name">Hội thảo FUNiX – AI Cơ bản</span><span class="citem-status joining">Đang tham gia</span></div>
+          <div class="citem-tags" style="margin-top:6px;"><span class="tag tag-teal">Hội thảo online</span><span class="tag tag-blue">COM 13.5% DS</span></div>
+          <div class="citem-desc" style="margin-top:6px;">Giới thiệu hội thảo AI miễn phí, mở ra cánh cửa vào thế giới công nghệ.</div>
+          <div class="citem-stats" style="margin-top:10px;"><div class="cs"><div class="cs-val">8</div><div class="cs-label">LEAD</div></div><div class="cs"><div class="cs-val">15tr</div><div class="cs-label">DOANH THU</div></div><div class="cs"><div class="cs-val" style="color:var(--orange)">7 ngày</div><div class="cs-label">DEADLINE CÒN</div></div></div>
+        </div>
+        <div class="citem-right"><div class="citem-btns" style="flex-direction:column;"><button class="btn-o"><i class="fas fa-link"></i> Sao chép link</button><button class="btn-f dark" onclick="window.location.href='funix-detail.html'">Xem chi tiết</button></div></div>
+      </div>`;
   }
 }
 
