@@ -1,5 +1,6 @@
 /* ============================================
    MOBILE RESPONSIVE — AMS Affiliate
+   Optimized for compact mobile viewing
    ============================================ */
 
 /* ========== HAMBURGER MENU ========== */
@@ -20,34 +21,39 @@
   .sidebar { width: 220px; }
   .main { margin-left: 220px; padding: 24px 20px 40px; }
   .header-right .com-label { display: none; }
-  .header-right .tog { display: none; }
-  .db-camp-grid { grid-template-columns: 1fr; }
-  .db-widget-grid { grid-template-columns: repeat(2, 1fr); }
+  .db-camp-grid { grid-template-columns: 1fr 1fr; }
+  .db-widget-grid { grid-template-columns: repeat(2, 1fr) !important; }
   .db-kpi-row { grid-template-columns: repeat(2, 1fr); }
   .dkpi-row { grid-template-columns: repeat(2, 1fr) !important; }
   .detail-grid { grid-template-columns: 1fr !important; }
   .req-grid { grid-template-columns: 1fr !important; }
   .res-grid { grid-template-columns: repeat(3, 1fr) !important; }
+  .ckpi-row { grid-template-columns: repeat(2, 1fr); }
+  .content-grid { grid-template-columns: 1fr !important; }
+  .page-layout { grid-template-columns: 1fr !important; }
 }
 
 /* ========== MOBILE (max 768px) ========== */
 @media (max-width: 768px) {
   :root { --header: 56px; }
   
-  /* Header */
-  .header { padding: 0 12px; }
+  /* Header — compact */
+  .header { padding: 0 12px; gap: 8px; }
+  .logo img { height: 26px !important; }
   .logo-text { display: none; }
   .nav-pill { display: none; }
   .mobile-menu-btn { display: flex; }
-  .header-right { gap: 8px; }
+  .header-right { gap: 6px; }
   .header-right .com-label,
-  .header-right .tog { display: none; }
-  .bell { width: 36px; height: 36px; font-size: 14px; }
-  .avatar { width: 34px; height: 34px; font-size: 11px; }
+  .header-right .tog,
+  .header-right > div:has(.com-label) { display: none; }
+  .bell { width: 34px; height: 34px; font-size: 13px; }
+  .bell .dot { min-width: 14px; height: 14px; font-size: 8px; top: 3px; right: 3px; }
+  .avatar { width: 32px; height: 32px; font-size: 10px; }
   
   /* Sidebar — slide overlay */
   .sidebar {
-    width: 280px;
+    width: 270px;
     transform: translateX(-100%);
     transition: transform .3s cubic-bezier(.4,0,.2,1);
     z-index: 200;
@@ -55,7 +61,7 @@
   }
   .sidebar.open {
     transform: translateX(0);
-    box-shadow: 8px 0 30px rgba(0,0,0,.15);
+    box-shadow: 8px 0 30px rgba(0,0,0,.2);
   }
   .sidebar-overlay {
     display: none;
@@ -65,100 +71,146 @@
     backdrop-filter: blur(2px);
   }
   .sidebar-overlay.show { display: block; }
+  .s-item { font-size: 13px; padding: 12px 20px; }
+  .s-promo { margin: 10px 10px 12px; padding: 16px 14px; }
   
-  /* Main */
+  /* Main — full width, compact padding */
   .main {
     margin-left: 0;
-    padding: 16px 14px 80px;
+    padding: 14px 12px 80px;
   }
   
-  /* KPIs */
+  /* Page header */
+  .page-title { font-size: 18px; }
+  .page-sub { font-size: 12px; }
+  
+  /* KPIs — 2 col compact */
   .db-kpi-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .db-kpi-card { padding: 16px; }
-  .db-kpi-val { font-size: 24px; }
+  .db-kpi-card { padding: 14px; border-radius: 14px; }
+  .db-kpi-val { font-size: 22px; }
+  .db-kpi-label { font-size: 11px; margin-bottom: 8px; }
+  .db-kpi-icon { width: 32px; height: 32px; font-size: 13px; border-radius: 8px; }
+  .db-kpi-sub { font-size: 10px; }
   .kpi-row { grid-template-columns: 1fr; }
+  .ckpi-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .ckpi { padding: 12px 14px; border-radius: 12px; gap: 10px; }
+  .ckpi-ic { width: 36px; height: 36px; font-size: 15px; }
+  .ckpi-val { font-size: 22px; }
+  .ckpi-label { font-size: 10px; }
+  .ckpi-sub { font-size: 9px; }
   
-  /* Campaign grid */
-  .db-camp-grid { grid-template-columns: 1fr; gap: 14px; }
-  .db-camp-card { padding: 18px; }
-  .db-camp-stats { grid-template-columns: repeat(3, 1fr); padding: 12px 8px; }
+  /* Campaign grid — single col */
+  .db-camp-grid { grid-template-columns: 1fr; gap: 12px; }
+  .db-camp-card { padding: 16px; border-radius: 14px; }
+  .db-camp-card.gold::after { font-size: 18px; top: -8px; right: -4px; }
+  .db-camp-name { font-size: 14px; }
+  .db-camp-stats { grid-template-columns: repeat(3, 1fr); padding: 12px 8px; gap: 6px; }
   .db-cs-val { font-size: 16px; }
+  .db-cs-lbl { font-size: 9px; }
+  .db-camp-btns { gap: 8px; }
+  .db-camp-btns .btn-o,
+  .db-camp-btns .btn-f { font-size: 11px; padding: 8px 12px; }
   
-  /* Widgets */
-  .db-widget-grid { grid-template-columns: 1fr; }
+  /* Section titles */
+  .db-section-title { font-size: 15px; margin-bottom: 12px; }
+  
+  /* Widgets — single col */
+  .db-widget-grid { grid-template-columns: 1fr !important; gap: 12px; }
+  .db-widget { padding: 16px; border-radius: 14px; }
+  .db-widget-title { font-size: 13px; margin-bottom: 14px; }
+  
+  /* Lead status grid inside widget */
+  .db-lead-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .db-ls { padding: 10px 4px; }
+  .db-ls-val { font-size: 18px; }
+  .db-ls-lbl { font-size: 8px; }
+  
+  /* Product list */
+  .db-prod-item { padding: 6px; }
+  .db-prod-icon { width: 32px; height: 32px; font-size: 12px; }
+  .db-prod-name { font-size: 11px; }
+  .db-prod-val { font-size: 13px; }
   
   /* Revenue Banner */
-  .rev-banner { padding: 20px 16px; border-radius: 16px; }
-  .rev-main-val { font-size: 26px; }
-  .rev-top { gap: 16px; }
-  .rev-breakdown { gap: 12px; }
-  .rev-item-val { font-size: 16px; }
-  .rev-actions { flex-wrap: wrap; }
+  .rev-banner { padding: 18px 14px; border-radius: 14px; }
+  .rev-main-val { font-size: 24px; }
+  .rev-top { gap: 12px; flex-direction: column; }
+  .rev-breakdown { gap: 10px; flex-wrap: wrap; }
+  .rev-item-val { font-size: 14px; }
+  .rev-actions { flex-wrap: wrap; gap: 6px; }
   .rev-illust { display: none; }
   .coin { display: none; }
   
-  /* Notifications dropdown */
+  /* Notifications dropdown — fullwidth */
   .notif-dropdown {
     position: fixed;
     top: var(--header); right: 0; left: 0;
     width: 100%; max-height: 70vh;
-    border-radius: 0 0 16px 16px;
+    border-radius: 0 0 14px 14px;
   }
   
   /* Profile dropdown */
   .profile-dropdown {
     position: fixed;
     top: var(--header); right: 0;
-    width: 100%; max-width: 320px;
-    border-radius: 0 0 0 16px;
+    width: 100%; max-width: 100%;
+    border-radius: 0 0 14px 14px;
   }
   
   /* Tables — horizontal scroll */
   .data-table { font-size: 11px; }
-  table { display: block; overflow-x: auto; white-space: nowrap; }
+  table { display: block; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
   thead, tbody, tr { display: table; width: 100%; table-layout: auto; }
+  
+  /* Campaign list items */
+  .citem { grid-template-columns: auto 1fr; padding: 14px; gap: 12px; }
+  .citem-right { grid-column: 1 / -1; flex-direction: row; align-items: center; }
+  .citem-btns { flex-direction: row !important; gap: 8px; width: 100%; }
+  .citem-btns .btn-o,
+  .citem-btns .btn-f { flex: 1; text-align: center; font-size: 11px; padding: 8px 10px; }
+  .citem-stats { gap: 12px; }
+  .cs-val { font-size: 14px; }
+  .citem-name { font-size: 13px; }
+  .citem-desc { font-size: 11px; line-height: 1.5; }
   
   /* Detail pages */
   .dkpi-row { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-  .dkpi { padding: 14px 16px !important; }
-  .dkpi-val { font-size: 20px !important; }
+  .dkpi { padding: 14px !important; }
+  .dkpi-val { font-size: 18px !important; }
   .detail-grid { grid-template-columns: 1fr !important; }
   .req-grid { grid-template-columns: 1fr !important; }
   
   /* Detail Hero */
   .cd-hero-new {
     flex-direction: column !important;
-    padding: 20px !important;
-    gap: 16px !important;
+    padding: 16px !important;
+    gap: 14px !important;
   }
   .cd-hero-new > div:first-child {
     flex-direction: column !important;
-    gap: 16px !important;
+    gap: 12px !important;
     align-items: flex-start !important;
   }
-  .cd-hero-new h2 { font-size: 16px !important; }
+  .cd-hero-new h2 { font-size: 15px !important; }
   
-  /* Tabs */
-  .dtabs { overflow-x: auto; gap: 0; -webkit-overflow-scrolling: touch; }
-  .dtab { white-space: nowrap; padding: 10px 14px; font-size: 12px; }
+  /* Tabs — horizontal scroll */
+  .dtabs { overflow-x: auto; gap: 0; -webkit-overflow-scrolling: touch; padding-bottom: 2px; }
+  .dtab { white-space: nowrap; padding: 10px 14px; font-size: 11px; }
   
   /* Resources grid */
   .res-grid { grid-template-columns: 1fr !important; }
-  .res-header { flex-direction: column !important; gap: 16px !important; }
-  .res-filters { flex-direction: column !important; gap: 12px !important; }
-  .res-tabs { gap: 16px !important; }
+  .res-header { flex-direction: column !important; gap: 12px !important; }
+  .res-filters { flex-direction: column !important; gap: 10px !important; }
+  .res-tabs { gap: 12px !important; flex-wrap: wrap !important; }
   
-  /* Filters */
+  /* Filters — wrap neatly */
   .filters { flex-wrap: wrap; gap: 8px; }
-  .filter-group { min-width: 45%; }
-  .search-box { width: 100% !important; min-width: unset !important; }
+  .filter-group { min-width: 45%; flex: 1; }
+  .search-box { width: 100% !important; min-width: unset !important; flex-basis: 100%; }
+  .filter-select { width: 100%; }
   
-  /* Pipeline */
-  .pipeline-flow { flex-wrap: wrap; }
-  .pipeline-step { min-width: 30%; }
-  
-  /* Pagination */
-  .pagination { flex-wrap: wrap; gap: 8px; }
+  /* Pagination compact */
+  .pagination { flex-wrap: wrap; gap: 6px; justify-content: center; }
   .pag-goto { display: none; }
   
   /* Two col */
@@ -166,61 +218,97 @@
   
   /* Campaign list page */
   .camp-grid { grid-template-columns: 1fr; }
+  .content-grid { grid-template-columns: 1fr !important; }
+  .page-layout { grid-template-columns: 1fr !important; }
+  .right-panel { order: -1; }
+  
+  /* Announcements */
+  .ann-card { padding: 16px; }
+  .ann-title { font-size: 14px; }
+  .ann-desc { font-size: 12px; }
+  .ann-filter-bar { gap: 6px; }
+  .ann-filter { padding: 6px 12px; font-size: 10px; }
   
   /* Lead pipeline */
   .lead-pipeline { flex-wrap: wrap; }
   .lead-stat { min-width: 30%; }
   
   /* Breadcrumb */
-  .breadcrumb { font-size: 12px; }
+  .breadcrumb { font-size: 11px; }
   
   /* Action buttons row */
   .cd-actions { flex-wrap: wrap; gap: 6px !important; }
   .cd-actions .btn-o,
-  .cd-actions .btn-f { font-size: 11px; padding: 8px 12px !important; }
+  .cd-actions .btn-f { font-size: 11px; padding: 8px 12px !important; flex: 1; min-width: 120px; text-align: center; }
   
   /* Profile Modal */
-  #profileModal > div { width: 95vw !important; padding: 20px !important; }
-  
-  /* Suggest bar */
-  .suggest { flex-direction: column; gap: 8px; }
+  #profileModal > div { width: 95vw !important; padding: 20px !important; border-radius: 14px !important; }
   
   /* Tier card */
   .tier-flow { flex-wrap: wrap; }
   
   /* Leaderboard */
   .lb-top3 { flex-direction: column; gap: 12px; }
+  
+  /* Table header on leads/commission */
+  .table-header { flex-direction: column; gap: 10px; align-items: flex-start !important; }
 }
 
 /* ========== SMALL MOBILE (max 480px) ========== */
 @media (max-width: 480px) {
-  .main { padding: 12px 10px 80px; }
+  .main { padding: 10px 8px 80px; }
   
+  /* KPIs — single column */
   .db-kpi-row { grid-template-columns: 1fr; gap: 8px; }
-  .db-kpi-card { padding: 14px; }
-  .db-kpi-val { font-size: 22px; }
+  .db-kpi-card { padding: 12px; }
+  .db-kpi-val { font-size: 20px; }
+  .db-kpi-icon { display: none; }
   
-  .db-camp-stats { grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  /* Campaign stats */
+  .db-camp-stats { gap: 4px; padding: 10px 6px; }
   .db-cs-val { font-size: 14px; }
   .db-cs-lbl { font-size: 8px; }
-  
   .db-camp-btns { grid-template-columns: 1fr; }
+  .db-camp-name { font-size: 13px; }
   
-  .rev-main-val { font-size: 22px; }
-  .rev-breakdown { flex-direction: column; gap: 8px; }
+  /* Revenue */
+  .rev-main-val { font-size: 20px; }
+  .rev-breakdown { flex-direction: column; gap: 6px; }
   
+  /* Detail KPIs */
   .dkpi-row { grid-template-columns: 1fr !important; }
+  .ckpi-row { grid-template-columns: 1fr; }
+  .ckpi { padding: 10px 12px; }
+  .ckpi-val { font-size: 20px; }
   
+  /* Hero compact */
   .cd-hero-new > div:first-child > div:first-child {
-    width: 80px !important; height: 80px !important;
+    width: 70px !important; height: 70px !important;
   }
-  .cd-hero-new img { width: 60% !important; }
+  .cd-hero-new img { width: 55% !important; }
   
-  .track-box { flex-direction: column; gap: 8px; }
+  .track-box { flex-direction: column; gap: 6px; }
   .track-box .track-copy { width: 100%; }
   
-  .profile-dropdown { max-width: 100%; }
-  
   .header { padding: 0 8px; }
-  .logo-icon { width: 32px; height: 32px; font-size: 11px; }
+  .logo img { height: 22px !important; }
+  .logo-icon { width: 30px; height: 30px; font-size: 10px; }
+  
+  /* Campaign list items compact */
+  .citem { padding: 12px; gap: 10px; }
+  .citem-icon { width: 40px; height: 40px; font-size: 18px; }
+  .citem-name { font-size: 12px; }
+  .citem-header { flex-wrap: wrap; gap: 6px; }
+  .citem-status { font-size: 9px; padding: 2px 8px; }
+  
+  /* Tags smaller */
+  .tag { font-size: 9px; padding: 2px 7px; }
+  
+  /* Announcements compact */
+  .ann-card { padding: 12px; }
+  .ann-title { font-size: 13px; }
+  .ann-desc { font-size: 11px; line-height: 1.6; }
+  .ann-header { gap: 6px; flex-wrap: wrap; }
+  .ann-badge { font-size: 9px; padding: 3px 8px; }
+  .ann-footer { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
