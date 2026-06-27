@@ -335,7 +335,7 @@ body.mode-lead .db-widget-grid { grid-template-columns: repeat(3, 1fr); }
 a.db-camp-name:hover { color: var(--blue); }
 .db-camp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
 .db-camp-desc { font-size: 12px; color: var(--txt2); line-height: 1.65; margin-bottom: 20px; flex: 1; }
-.db-camp-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: linear-gradient(135deg, #f8fafc, #f1f5f9); border-radius: var(--r-sm); padding: 16px 12px; margin-bottom: 18px; text-align: center; }
+.db-camp-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; background: linear-gradient(135deg, #eef4ff, #e0ecff); border-radius: var(--r-sm); padding: 16px 12px; margin-bottom: 18px; text-align: center; }
 .db-cs-val { font-size: 20px; font-weight: 800; color: var(--blue); margin-bottom: 4px; display: flex; align-items: center; justify-content: center; gap: 6px; letter-spacing: -0.02em; }
 .db-cs-val i { font-size: 13px; opacity: 0.4; }
 .green .db-cs-val, .db-cs-val.green { color: var(--green-dk); }
