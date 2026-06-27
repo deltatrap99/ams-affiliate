@@ -109,7 +109,7 @@ a{text-decoration:none;color:inherit}ul{list-style:none}button{border:none;curso
 /* Shared Dropdown Overlay - not used, close via document click */
 
 /* SIDEBAR — Dark Navy Theme */
-.sidebar{position:fixed;top:var(--header);left:0;bottom:0;width:var(--sidebar);background:linear-gradient(180deg,#0f172a 0%,#1e293b 100%);border-right:none;padding:16px 0;overflow-y:auto;z-index:50;display:flex;flex-direction:column}
+.sidebar{position:fixed;top:var(--header);left:0;bottom:0;width:var(--sidebar);background:linear-gradient(180deg,#1e3a5f 0%,#2a4a6b 100%);border-right:none;padding:16px 0;overflow-y:auto;z-index:50;display:flex;flex-direction:column}
 .sidebar-nav{flex:1}
 .s-label{padding:12px 20px 5px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.4px;color:rgba(148,163,184,.6)}
 .s-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:12.5px;font-weight:500;color:rgba(203,213,225,.8);cursor:pointer;position:relative;transition:var(--tr);margin:1px 10px;border-radius:var(--r-sm)}
