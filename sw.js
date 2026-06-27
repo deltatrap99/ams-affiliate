@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ams-affiliate-v1';
+const CACHE_NAME = 'ams-affiliate-v2';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',
