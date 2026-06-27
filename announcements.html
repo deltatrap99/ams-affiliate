@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMS — Thông báo từ Galaxy Education</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="detail.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    if (!sessionStorage.getItem('ams_logged_in')) {
+      window.location.href = 'login.html';
+    }
+  </script>
+  <link rel="stylesheet" href="mobile.css">
+  <style>
+    .ann-list { display: flex; flex-direction: column; gap: 16px; }
+    .ann-card { background: #fff; border: 1px solid rgba(0,0,0,.05); border-radius: var(--r-lg); padding: 24px; box-shadow: var(--sh-md); transition: all .3s ease; }
+    .ann-card:hover { box-shadow: var(--sh-lg); transform: translateY(-2px); }
+    .ann-card.pinned { border-left: 4px solid var(--blue); background: linear-gradient(135deg, #f8fbff, #fff); }
+    .ann-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .ann-badge { padding: 4px 12px; border-radius: var(--r-full); font-size: 10px; font-weight: 700; }
+    .ann-badge.policy { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #1e40af; }
+    .ann-badge.update { background: linear-gradient(135deg, #d1fae5, #a7f3d0); color: #065f46; }
+    .ann-badge.urgent { background: linear-gradient(135deg, #fee2e2, #fecaca); color: #991b1b; }
+    .ann-badge.event { background: linear-gradient(135deg, #ede9fe, #ddd6fe); color: #5b21b6; }
+    .ann-badge.pin { background: linear-gradient(135deg, #fef3c7, #fde68a); color: #92400e; }
+    .ann-date { font-size: 11px; color: var(--txt3); margin-left: auto; }
+    .ann-title { font-size: 16px; font-weight: 800; color: var(--navy); margin-bottom: 8px; letter-spacing: -0.02em; }
+    .ann-desc { font-size: 13px; color: var(--txt2); line-height: 1.7; margin-bottom: 14px; }
+    .ann-footer { display: flex; align-items: center; gap: 12px; }
+    .ann-author { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--txt3); }
+    .ann-author-avatar { width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6, #8b5cf6); display: flex; align-items: center; justify-content: center; color: #fff; font-size: 9px; font-weight: 700; }
+    .ann-read-more { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--blue); text-decoration: none; display: flex; align-items: center; gap: 4px; transition: var(--tr); }
+    .ann-read-more:hover { gap: 8px; }
+    .ann-filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .ann-filter { padding: 7px 16px; border-radius: var(--r-full); font-size: 11px; font-weight: 600; background: #fff; border: 1.5px solid var(--border); color: var(--txt2); cursor: pointer; transition: var(--tr); }
+    .ann-filter:hover { border-color: var(--blue); color: var(--blue); }
+    .ann-filter.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-left">
+    <button class="mobile-menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+    <a href="index.html" class="logo">
+      <img src="ge-logo.png" alt="Galaxy Education" style="height:32px;">
+    </a>
+    <a href="#" class="nav-pill"><i class="fas fa-bullhorn" style="margin-right:5px;font-size:11px"></i>Campaign Module</a>
+  </div>
+  <div class="header-right">
+    <div class="notif-wrapper">
+      <button class="bell" id="bellTrigger"><i class="fas fa-bell"></i><span class="dot">3</span></button>
+    </div>
+    <div class="profile-wrapper">
+      <div class="avatar" id="avatarTrigger">HD</div>
+    </div>
+  </div>
+</header>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-nav">
+    <div><div class="s-label">Tổng quan</div>
+      <div class="s-item" onclick="location.href='index.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-home"></i></span>Tổng quan</div></div>
+    <div><div class="s-label">Chiến dịch</div>
+      <div class="s-item" onclick="location.href='campaigns.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-bullhorn"></i></span>Chiến dịch</div>
+      <div class="s-item" onclick="location.href='leads.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-user-plus"></i></span>Lead & đơn hàng</div></div>
+    <div><div class="s-label">Hoa hồng &amp; đối soát</div>
+      <div class="s-item" onclick="location.href='commission.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-coins"></i></span>Hoa hồng &amp; thưởng</div></div>
+    <div><div class="s-label">Tài nguyên</div>
+      <div class="s-item" onclick="location.href='resources.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-images"></i></span>Tài nguyên nội dung</div></div>
+    <div><div class="s-label">Cộng đồng</div>
+      <div class="s-item" onclick="location.href='leaderboard.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-ranking-star"></i></span>Bảng xếp hạng</div></div>
+    <div><div class="s-label">Hỗ trợ</div>
+      <div class="s-item on" onclick="location.href='announcements.html'" style="cursor:pointer"><span class="ic"><i class="fas fa-bell"></i></span>Thông báo từ GE</div>
+      <div class="s-item"><span class="ic"><i class="fas fa-headset"></i></span>Liên hệ AS Team</div></div>
+  </div>
+  <div class="s-promo">
+    <h4>🚀 Bứt tốc thu nhập!</h4>
+    <p>Hoàn thành mục tiêu cấp bậc để mở khóa quyền lợi cao hơn.</p>
+    <a href="#" class="s-promo-btn">Xem cấp bậc của tôi <i class="fas fa-arrow-right" style="font-size:10px"></i></a>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="page-header">
+    <div class="page-title">📢 Thông báo từ Galaxy Education</div>
+    <div class="page-sub">Các chính sách, thay đổi quy định, và thông tin quan trọng dành cho đội ngũ Affiliate.</div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="ann-filter-bar">
+    <button class="ann-filter active" onclick="filterAnn(this,'all')">Tất cả</button>
+    <button class="ann-filter" onclick="filterAnn(this,'policy')">Chính sách</button>
+    <button class="ann-filter" onclick="filterAnn(this,'update')">Cập nhật</button>
+    <button class="ann-filter" onclick="filterAnn(this,'urgent')">Quan trọng</button>
+    <button class="ann-filter" onclick="filterAnn(this,'event')">Sự kiện</button>
+  </div>
+
+  <!-- Announcements List -->
+  <div class="ann-list">
+
+    <!-- Pinned -->
+    <div class="ann-card pinned" data-type="policy">
+      <div class="ann-header">
+        <span class="ann-badge pin"><i class="fas fa-thumbtack"></i> Ghim</span>
+        <span class="ann-badge policy">Chính sách</span>
+        <span class="ann-date"><i class="fas fa-clock"></i> 25/06/2026</span>
+      </div>
+      <div class="ann-title">Cập nhật chính sách hoa hồng Q3/2026 – Áp dụng từ 01/07/2026</div>
+      <div class="ann-desc">
+        Từ 01/07/2026, Galaxy Education sẽ áp dụng bảng hoa hồng mới cho toàn bộ chiến dịch. Cụ thể: mức COM cơ bản tăng từ 8% lên 10% cho tất cả sản phẩm HOCMAI; Bonus theo tier được tính lũy kế thay vì reset mỗi quý. Vui lòng đọc kỹ trước ngày hiệu lực.
+      </div>
+      <div class="ann-footer">
+        <div class="ann-author">
+          <div class="ann-author-avatar">GE</div>
+          <span>Ban điều hành Galaxy Education</span>
+        </div>
+        <a href="#" class="ann-read-more">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <!-- Urgent -->
+    <div class="ann-card" data-type="urgent">
+      <div class="ann-header">
+        <span class="ann-badge urgent"><i class="fas fa-exclamation-triangle"></i> Quan trọng</span>
+        <span class="ann-date"><i class="fas fa-clock"></i> 24/06/2026</span>
+      </div>
+      <div class="ann-title">Thay đổi quy trình xác minh Lead – Bắt buộc từ 28/06/2026</div>
+      <div class="ann-desc">
+        Tất cả lead từ chiến dịch TopUni và Easy SPEAK sẽ được xác minh qua 2 bước: xác nhận SĐT + email. Lead không đủ thông tin sẽ tự động chuyển sang trạng thái "Bị loại". Affiliate cần đảm bảo form đăng ký có đầy đủ trường bắt buộc.
+      </div>
+      <div class="ann-footer">
+        <div class="ann-author">
+          <div class="ann-author-avatar">QC</div>
+          <span>Bộ phận Đối soát</span>
+        </div>
+        <a href="#" class="ann-read-more">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <!-- Update -->
+    <div class="ann-card" data-type="update">
+      <div class="ann-header">
+        <span class="ann-badge update"><i class="fas fa-sync-alt"></i> Cập nhật</span>
+        <span class="ann-date"><i class="fas fa-clock"></i> 22/06/2026</span>
+      </div>
+      <div class="ann-title">Nâng cấp hệ thống AMS – Thêm tính năng theo dõi doanh thu realtime</div>
+      <div class="ann-desc">
+        AMS vừa được nâng cấp phiên bản mới với khả năng theo dõi doanh thu theo thời gian thực. Affiliate giờ đây có thể xem số liệu doanh thu được cập nhật mỗi 15 phút thay vì 24 giờ như trước. Giao diện Dashboard cũng đã được làm mới.
+      </div>
+      <div class="ann-footer">
+        <div class="ann-author">
+          <div class="ann-author-avatar">IT</div>
+          <span>Đội ngũ kỹ thuật AMS</span>
+        </div>
+        <a href="#" class="ann-read-more">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <!-- Policy -->
+    <div class="ann-card" data-type="policy">
+      <div class="ann-header">
+        <span class="ann-badge policy">Chính sách</span>
+        <span class="ann-date"><i class="fas fa-clock"></i> 18/06/2026</span>
+      </div>
+      <div class="ann-title">Quy định mới về nội dung quảng cáo cho Affiliate</div>
+      <div class="ann-desc">
+        Để đảm bảo thương hiệu Galaxy Education, tất cả Affiliate không được tự ý chỉnh sửa logo, thay đổi giá niêm yết, hoặc sử dụng ngôn ngữ gây hiểu lầm trong các bài đăng quảng cáo. Vi phạm sẽ bị cảnh cáo hoặc tạm khóa tài khoản.
+      </div>
+      <div class="ann-footer">
+        <div class="ann-author">
+          <div class="ann-author-avatar">MK</div>
+          <span>Phòng Marketing</span>
+        </div>
+        <a href="#" class="ann-read-more">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <!-- Event -->
+    <div class="ann-card" data-type="event">
+      <div class="ann-header">
+        <span class="ann-badge event"><i class="fas fa-calendar-star"></i> Sự kiện</span>
+        <span class="ann-date"><i class="fas fa-clock"></i> 15/06/2026</span>
+      </div>
+      <div class="ann-title">🎯 Cuộc thi "Top Affiliate tháng 7" – Giải thưởng lên đến 10 triệu đồng</div>
+      <div class="ann-desc">
+        Galaxy Education tổ chức cuộc thi dành riêng cho Affiliate trong tháng 7/2026. Top 3 người có doanh số cao nhất sẽ nhận giải thưởng tiền mặt + voucher học tập. Đăng ký tham gia ngay trên trang Dashboard.
+      </div>
+      <div class="ann-footer">
+        <div class="ann-author">
+          <div class="ann-author-avatar">HR</div>
+          <span>Ban tổ chức sự kiện</span>
+        </div>
+        <a href="#" class="ann-read-more">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+    <!-- Update -->
+    <div class="ann-card" data-type="update">
+      <div class="ann-header">
+        <span class="ann-badge update"><i class="fas fa-sync-alt"></i> Cập nhật</span>
+        <span class="ann-date"><i class="fas fa-clock"></i> 10/06/2026</span>
+      </div>
+      <div class="ann-title">Bổ sung Content Kit mới cho chiến dịch Easy SPEAK for Adults</div>
+      <div class="ann-desc">
+        Bộ Content Kit mới gồm: 5 mẫu Story, 3 mẫu bài viết Facebook, 2 video ngắn TikTok đã được tải lên mục Tài nguyên nội dung. Affiliate có thể tải về và sử dụng ngay để tăng hiệu quả quảng bá.
+      </div>
+      <div class="ann-footer">
+        <div class="ann-author">
+          <div class="ann-author-avatar">CT</div>
+          <span>Đội Content Marketing</span>
+        </div>
+        <a href="#" class="ann-read-more">Xem chi tiết <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script src="app.js"></script>
+<script>
+function filterAnn(btn, type) {
+  document.querySelectorAll('.ann-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ann-card').forEach(card => {
+    if (type === 'all' || card.dataset.type === type) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+
+</body>
+</html>
