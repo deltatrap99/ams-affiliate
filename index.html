@@ -400,8 +400,73 @@ async function loadCampaignsFromAPI() {
     }).join('');
 
   } catch(err) {
-    console.error('Failed to load campaigns:', err);
-    // Fallback — keep the loading message
+    console.warn('API unavailable, using static fallback:', err);
+    // Fallback — render static campaign data
+    grid.innerHTML = `
+    <div class="db-camp-card gold">
+      <div class="db-camp-head">
+        <div class="db-camp-num">1</div>
+        <a href="topuni-detail.html" class="db-camp-name" style="text-decoration:none;">TopUni 2027 — Lộ trình S V-ACT</a>
+      </div>
+      <div class="db-camp-tags">
+        <span class="tag tag-yellow">⭐ Trọng điểm</span>
+        <span class="tag tag-blue">COM 10% DS</span>
+        <span class="tag tag-green">Bonus đến +30%</span>
+        <span class="tag tag-purple">Content kit</span>
+      </div>
+      <div class="db-camp-desc">Luyện thi V-ACT lộ trình S cho học sinh lớp 12 / 2K9 — hệ thống hóa kiến thức, luyện đề theo giai đoạn, tối ưu điểm số xét tuyển đại học.</div>
+      <div class="db-camp-stats">
+        <div><div class="db-cs-val"><i class="fas fa-users"></i> 26</div><div class="db-cs-lbl">Lead</div></div>
+        <div><div class="db-cs-val green rev-only"><i class="fas fa-sack-dollar"></i> 42tr</div><div class="db-cs-lbl rev-only">Doanh thu</div></div>
+        <div><div class="db-cs-val orange"><i class="fas fa-clock"></i> 5 ngày</div><div class="db-cs-lbl">Deadline còn</div></div>
+      </div>
+      <div class="db-camp-btns">
+        <button class="btn-o" onclick="copyLink('topuni-svact')"><i class="fas fa-link"></i> Sao chép link</button>
+        <button class="btn-f dark" onclick="window.location.href='topuni-detail.html'">Xem brief</button>
+      </div>
+    </div>
+    <div class="db-camp-card">
+      <div class="db-camp-head">
+        <div class="db-camp-num">2</div>
+        <a href="easyspeak-detail.html" class="db-camp-name" style="text-decoration:none;">Easy SPEAK for Adults</a>
+      </div>
+      <div class="db-camp-tags">
+        <span class="tag tag-green">Người đi làm</span>
+        <span class="tag tag-blue">COM 10% DS</span>
+        <span class="tag tag-orange">Ưu đãi</span>
+        <span class="tag tag-purple">Content kit</span>
+      </div>
+      <div class="db-camp-desc">Tiếng Anh giao tiếp cho người đi làm, phù hợp người từ 18+ muốn cải thiện phản xạ và ứng dụng thực tế.</div>
+      <div class="db-camp-stats">
+        <div><div class="db-cs-val"><i class="fas fa-users"></i> 18</div><div class="db-cs-lbl">Lead</div></div>
+        <div><div class="db-cs-val green rev-only"><i class="fas fa-sack-dollar"></i> 18tr</div><div class="db-cs-lbl rev-only">Doanh thu</div></div>
+        <div><div class="db-cs-val orange"><i class="fas fa-clock"></i> 4 ngày</div><div class="db-cs-lbl">Deadline còn</div></div>
+      </div>
+      <div class="db-camp-btns">
+        <button class="btn-o" onclick="copyLink('easyspeak-adults')"><i class="fas fa-link"></i> Sao chép link</button>
+        <button class="btn-f dark" onclick="window.location.href='easyspeak-detail.html'">Xem brief</button>
+      </div>
+    </div>
+    <div class="db-camp-card">
+      <div class="db-camp-head">
+        <div class="db-camp-num">3</div>
+        <a href="funix-detail.html" class="db-camp-name" style="text-decoration:none;">Hội thảo FUNiX – AI Cơ bản</a>
+      </div>
+      <div class="db-camp-tags">
+        <span class="tag tag-teal">Hội thảo online</span>
+        <span class="tag tag-blue">COM 13.5% DS</span>
+      </div>
+      <div class="db-camp-desc">Giới thiệu hội thảo AI miễn phí, mở ra cánh cửa vào thế giới công nghệ.</div>
+      <div class="db-camp-stats">
+        <div><div class="db-cs-val"><i class="fas fa-users"></i> 8</div><div class="db-cs-lbl">Lead</div></div>
+        <div><div class="db-cs-val green rev-only"><i class="fas fa-sack-dollar"></i> 15tr</div><div class="db-cs-lbl rev-only">Doanh thu</div></div>
+        <div><div class="db-cs-val orange"><i class="fas fa-clock"></i> 7 ngày</div><div class="db-cs-lbl">Deadline còn</div></div>
+      </div>
+      <div class="db-camp-btns">
+        <button class="btn-o" onclick="copyLink('funix-workshop')"><i class="fas fa-link"></i> Sao chép link</button>
+        <button class="btn-f dark" onclick="window.location.href='funix-detail.html'">Xem brief</button>
+      </div>
+    </div>`;
   }
 }
 
